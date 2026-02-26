@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import tools from '../../lib/toolRegistry';
 import useHistoryStore from '../../stores/useHistoryStore';
+import SEOHead from '../common/SEOHead';
 
 const CATEGORY_MAP = {
   image: { name: 'Images', icon: '🎯', path: '/category/image' },
@@ -264,6 +265,12 @@ export default function ToolPage() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
+      <SEOHead
+        title={tool.name}
+        description={tool.description}
+        path={tool.path}
+        tool={tool}
+      />
       {/* Main content */}
       <div className="flex-1 min-w-0">
         {/* Breadcrumb */}

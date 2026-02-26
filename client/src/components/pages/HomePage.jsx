@@ -226,7 +226,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.4 }}
-          className="relative z-10 max-w-lg mx-auto mb-8"
+          className="relative z-20 max-w-lg mx-auto mb-8"
         >
           <CommandBar />
         </motion.div>
@@ -236,7 +236,7 @@ function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.45, duration: 0.4 }}
-          className="relative z-10 flex items-center justify-center gap-4 sm:gap-6 text-xs text-surface-500 font-medium"
+          className="relative z-0 flex items-center justify-center gap-4 sm:gap-6 text-xs text-surface-500 font-medium"
         >
           <span className="flex items-center gap-1.5">
             <span className="text-sm" aria-hidden="true">🔓</span>
