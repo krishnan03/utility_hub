@@ -2,9 +2,9 @@
 inclusion: always
 ---
 
-# UtilityHub — Engineering & Design Standards
+# ToolPilot — Engineering & Design Standards
 
-These standards apply to ALL work on the UtilityHub project. Never compromise on these.
+These standards apply to ALL work on the ToolPilot project. Never compromise on these.
 
 ## UI/UX Excellence
 
@@ -55,6 +55,12 @@ These standards apply to ALL work on the UtilityHub project. Never compromise on
 - Server services must have integration tests with supertest
 - Error handling: every API returns consistent JSON `{ success, error: { code, message } }`
 - Custom error classes (ValidationError, ProcessingError, NotFoundError, ForbiddenError)
+
+## Git Workflow
+
+- NEVER auto-push to remote. Only commit locally.
+- ALWAYS ask the user "Ready to push?" before running `git push`.
+- Batch related changes into a single commit when possible — avoid noisy commit history.
 
 ## Tool Discovery
 

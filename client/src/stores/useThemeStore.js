@@ -61,7 +61,7 @@ const useThemeStore = create(
       },
     }),
     {
-      name: 'utility-hub-theme',
+      name: 'toolpilot-theme',
       partialize: (state) => ({ mode: state.mode }),
       onRehydrateStorage: () => (state) => {
         if (!state) return;

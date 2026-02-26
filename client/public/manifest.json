@@ -1,6 +1,6 @@
 {
-  "name": "UtilityHub",
-  "short_name": "UtilityHub",
+  "name": "ToolPilot",
+  "short_name": "ToolPilot",
   "description": "All-in-one utility tools",
   "start_url": "/",
   "display": "standalone",

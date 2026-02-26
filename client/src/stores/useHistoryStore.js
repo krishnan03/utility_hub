@@ -16,7 +16,7 @@ const useHistoryStore = create(
         }),
     }),
     {
-      name: 'utility-hub-history',
+      name: 'toolpilot-history',
     },
   ),
 );

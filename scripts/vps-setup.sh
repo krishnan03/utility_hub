@@ -1,11 +1,11 @@
 #!/bin/bash
-# ── UtilityHub VPS Initial Setup ─────────────────────────────────────
+# ── ToolPilot VPS Initial Setup ─────────────────────────────────────
 # Run this ONCE on your OVH VPS (Ubuntu 24.04) to set up the production environment.
 # Usage: ssh root@40.160.231.246 'bash -s' < scripts/vps-setup.sh
 
 set -euo pipefail
 
-echo "🚀 Setting up UtilityHub production environment..."
+echo "🚀 Setting up ToolPilot production environment..."
 
 # Ensure we have sudo
 if [ "$EUID" -ne 0 ]; then
@@ -73,7 +73,7 @@ docker compose up -d
 
 echo ""
 echo "════════════════════════════════════════════════════════"
-echo "  ✅ UtilityHub is running!"
+echo "  ✅ ToolPilot is running!"
 echo "  🌐 http://40.160.231.246"
 echo "════════════════════════════════════════════════════════"
 echo ""

@@ -29,7 +29,7 @@ export default function Navbar({ onToggleMobileMenu }) {
             </svg>
           </button>
 
-          <Link to="/" className="flex items-center gap-2.5 group" aria-label="UtilityHub home">
+          <Link to="/" className="flex items-center gap-2.5 group" aria-label="ToolPilot home">
             {/* Raycast-style icon */}
             <motion.div
               whileHover={{ scale: 1.05 }}

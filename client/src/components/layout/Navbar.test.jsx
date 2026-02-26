@@ -45,10 +45,10 @@ beforeEach(() => {
 describe('Navbar', () => {
   it('renders logo with link to home', () => {
     renderNavbar();
-    const link = screen.getByLabelText('UtilityHub home');
+    const link = screen.getByLabelText('ToolPilot home');
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/');
-    expect(screen.getByText(/UtilityHub|Utility/)).toBeInTheDocument();
+    expect(screen.getByText(/ToolPilot|Utility/)).toBeInTheDocument();
   });
 
   it('renders hamburger menu button with aria-label', () => {

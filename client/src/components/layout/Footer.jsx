@@ -6,7 +6,7 @@ export default function Footer() {
       style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
     >
       <div className="max-w-screen-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-surface-500">
-        <p className="font-medium">© {new Date().getFullYear()} UtilityHub</p>
+        <p className="font-medium">© {new Date().getFullYear()} ToolPilot</p>
         <div className="flex items-center gap-5">
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse" aria-hidden="true" />

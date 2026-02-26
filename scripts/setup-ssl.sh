@@ -16,14 +16,14 @@ echo "🔒 Setting up SSL for $DOMAIN..."
 apt-get install -y certbot
 
 # Stop containers temporarily to free port 80
-cd /opt/utility-hub
+cd /opt/toolpilot
 docker compose down
 
 # Get certificate
 certbot certonly --standalone -d "$DOMAIN" -d "www.$DOMAIN" --email "$EMAIL" --agree-tos --non-interactive
 
 # Create Nginx SSL config
-cat > /opt/utility-hub/nginx-ssl.conf << NGINX_EOF
+cat > /opt/toolpilot/nginx-ssl.conf << NGINX_EOF
 server {
     listen 80;
     server_name $DOMAIN www.$DOMAIN;
@@ -80,7 +80,7 @@ NGINX_EOF
 docker compose up -d
 
 # Set up auto-renewal cron
-(crontab -l 2>/dev/null; echo "0 3 * * * certbot renew --quiet --deploy-hook 'cd /opt/utility-hub && docker compose restart client'") | crontab -
+(crontab -l 2>/dev/null; echo "0 3 * * * certbot renew --quiet --deploy-hook 'cd /opt/toolpilot && docker compose restart client'") | crontab -
 
 echo ""
 echo "✅ SSL configured for $DOMAIN"

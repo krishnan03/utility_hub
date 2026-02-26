@@ -32,7 +32,7 @@ describe('Footer', () => {
   it('displays copyright text with current year', () => {
     render(<Footer />);
     const year = new Date().getFullYear().toString();
-    expect(screen.getByText(new RegExp(`© ${year} UtilityHub`))).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`© ${year} ToolPilot`))).toBeInTheDocument();
   });
 
   it('displays auto-delete notice', () => {

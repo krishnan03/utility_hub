@@ -117,9 +117,9 @@ describe('useThemeStore', () => {
   });
 
   describe('persistence', () => {
-    it('only persists the mode field to utility-hub-theme key', () => {
+    it('only persists the mode field to toolpilot-theme key', () => {
       useThemeStore.getState().setMode('light');
-      const stored = JSON.parse(localStorage.getItem('utility-hub-theme'));
+      const stored = JSON.parse(localStorage.getItem('toolpilot-theme'));
       expect(stored).toBeTruthy();
       expect(stored.state.mode).toBe('light');
       // isDark should NOT be persisted

@@ -161,7 +161,7 @@ describe('MobileMenu', () => {
     expect(closeBtn).toHaveFocus();
   });
 
-  it('renders UtilityHub branding in the panel header', () => {
+  it('renders ToolPilot branding in the panel header', () => {
     renderMenu();
     expect(screen.getByText(/Utility/)).toBeInTheDocument();
     expect(screen.getByText('Hub')).toBeInTheDocument();

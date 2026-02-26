@@ -58,7 +58,7 @@ function Theme2() {
       <div style={{ position: 'absolute', bottom: 20, left: '40%', width: 160, height: 160, background: 'radial-gradient(circle, #00D4FF33, transparent 70%)', borderRadius: '50%', filter: 'blur(30px)' }} />
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px', backdropFilter: 'blur(12px)', background: '#ffffff08', borderBottom: '1px solid #ffffff11', position: 'relative', zIndex: 2 }}>
-        <span style={{ background: 'linear-gradient(90deg, #00D4FF, #FF006E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 800, fontSize: 14 }}>UtilityHub</span>
+        <span style={{ background: 'linear-gradient(90deg, #00D4FF, #FF006E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: 800, fontSize: 14 }}>ToolPilot</span>
         <div style={{ display: 'flex', gap: 16 }}>
           {['Tools', 'Blog'].map(n => <span key={n} style={{ fontSize: 11, color: '#ffffff77' }}>{n}</span>)}
         </div>
@@ -98,7 +98,7 @@ function Theme3() {
     <div style={{ background: '#fff', color: '#000', fontFamily: '-apple-system, BlinkMacSystemFont, Inter, sans-serif', height: '100%', overflow: 'hidden' }}>
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 28px', borderBottom: '1px solid #f0f0f0' }}>
-        <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>UtilityHub</span>
+        <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>ToolPilot</span>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Tools', 'Blog', 'About'].map(n => <span key={n} style={{ fontSize: 11, color: '#666' }}>{n}</span>)}
         </div>
@@ -143,7 +143,7 @@ function Theme4() {
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, #00000033 2px, #00000033 4px)', pointerEvents: 'none', zIndex: 10 }} />
       {/* Nav */}
       <div style={{ padding: '10px 20px', borderBottom: '1px solid #00FF4133', display: 'flex', justifyContent: 'space-between' }}>
-        <span style={{ fontSize: 11, fontWeight: 700 }}>root@utilityhub:~$</span>
+        <span style={{ fontSize: 11, fontWeight: 700 }}>root@toolpilot:~$</span>
         <span style={{ fontSize: 10, color: '#00FF4177' }}>v2.0.1 [ONLINE]</span>
       </div>
       {/* Hero */}
@@ -202,7 +202,7 @@ function Theme5() {
       <div style={{ position: 'absolute', bottom: 0, right: '10%', width: 180, height: 180, background: 'radial-gradient(circle, #06B6D444, transparent 70%)', filter: 'blur(40px)' }} />
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px', background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.1)', position: 'relative', zIndex: 2 }}>
-        <span style={{ fontWeight: 700, fontSize: 13, background: 'linear-gradient(90deg,#A78BFA,#67E8F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>UtilityHub</span>
+        <span style={{ fontWeight: 700, fontSize: 13, background: 'linear-gradient(90deg,#A78BFA,#67E8F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ToolPilot</span>
         <div style={{ display: 'flex', gap: 14 }}>
           {['Tools', 'Blog'].map(n => <span key={n} style={{ fontSize: 10, color: '#ffffff66' }}>{n}</span>)}
         </div>
@@ -288,7 +288,7 @@ function Theme7() {
       <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 200, height: 120, background: 'radial-gradient(ellipse, #06B6D422, transparent 70%)', filter: 'blur(20px)' }} />
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px', position: 'relative', zIndex: 2, borderBottom: '1px solid #7C3AED33' }}>
-        <span style={{ fontWeight: 700, fontSize: 13, color: '#A78BFA' }}>⬡ UtilityHub</span>
+        <span style={{ fontWeight: 700, fontSize: 13, color: '#A78BFA' }}>⬡ ToolPilot</span>
         <div style={{ display: 'flex', gap: 14 }}>
           {['Mission', 'Tools', 'Log'].map(n => <span key={n} style={{ fontSize: 10, color: '#ffffff55' }}>{n}</span>)}
         </div>
@@ -332,7 +332,7 @@ function Theme8() {
     <div style={{ background: '#FFF8F0', color: '#1A1A1A', fontFamily: 'Inter, sans-serif', height: '100%', overflow: 'hidden' }}>
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', borderBottom: '1px solid #FFD70033' }}>
-        <span style={{ fontWeight: 800, fontSize: 13, background: 'linear-gradient(90deg,#FF6B6B,#FFA500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>UtilityHub 🌅</span>
+        <span style={{ fontWeight: 800, fontSize: 13, background: 'linear-gradient(90deg,#FF6B6B,#FFA500)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ToolPilot 🌅</span>
         <div style={{ display: 'flex', gap: 16 }}>
           {['Tools', 'Blog'].map(n => <span key={n} style={{ fontSize: 11, color: '#888' }}>{n}</span>)}
         </div>
@@ -501,7 +501,7 @@ function Theme11() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', borderBottom: '1px solid #ffffff0F', position: 'relative', zIndex: 2 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 20, height: 20, background: 'linear-gradient(135deg, #5E6AD2, #8B5CF6)', borderRadius: 5 }} />
-          <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>UtilityHub</span>
+          <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>ToolPilot</span>
         </div>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Tools', 'Docs', 'Blog'].map(n => <span key={n} style={{ fontSize: 11, color: '#ffffff55', letterSpacing: '-0.1px' }}>{n}</span>)}
@@ -546,7 +546,7 @@ function Theme12() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', borderBottom: '1px solid #333' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <svg width="18" height="18" viewBox="0 0 76 65" fill="white"><path d="M37.5274 0L75.0548 65H0L37.5274 0Z" /></svg>
-          <span style={{ fontWeight: 700, fontSize: 13 }}>UtilityHub</span>
+          <span style={{ fontWeight: 700, fontSize: 13 }}>ToolPilot</span>
         </div>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Tools', 'Docs', 'Blog'].map(n => <span key={n} style={{ fontSize: 11, color: '#888' }}>{n}</span>)}
@@ -578,7 +578,7 @@ function Theme12() {
               <span style={{ fontSize: 14 }}>{icon}</span>
               <div>
                 <div style={{ fontSize: 11, fontWeight: 600 }}>{name}</div>
-                <div style={{ fontSize: 9, color: '#555', marginTop: 1 }}>utilityhub.io/tools</div>
+                <div style={{ fontSize: 9, color: '#555', marginTop: 1 }}>toolpilot.io/tools</div>
               </div>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
@@ -602,7 +602,7 @@ function Theme13() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px', position: 'relative', zIndex: 2 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 22, height: 22, background: 'linear-gradient(135deg, #FF6363, #FF9F43)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>⚡</div>
-          <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>UtilityHub</span>
+          <span style={{ fontWeight: 700, fontSize: 13, letterSpacing: '-0.3px' }}>ToolPilot</span>
         </div>
         <div style={{ background: '#2C2C2E', border: '1px solid #3A3A3C', borderRadius: 8, padding: '5px 12px', display: 'flex', alignItems: 'center', gap: 8, width: 180 }}>
           <span style={{ fontSize: 11, color: '#ffffff44' }}>🔍</span>
@@ -651,7 +651,7 @@ function Theme14() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 24px', position: 'relative', zIndex: 2 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 24, height: 24, background: 'linear-gradient(135deg, #635BFF, #00D4FF)', borderRadius: '50%' }} />
-          <span style={{ fontWeight: 700, fontSize: 14, letterSpacing: '-0.5px' }}>UtilityHub</span>
+          <span style={{ fontWeight: 700, fontSize: 14, letterSpacing: '-0.5px' }}>ToolPilot</span>
         </div>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Products', 'Docs', 'Pricing'].map(n => <span key={n} style={{ fontSize: 11, color: '#ffffff88' }}>{n}</span>)}
@@ -695,7 +695,7 @@ function Theme15() {
       <div style={{ position: 'absolute', top: '5%', left: '50%', transform: 'translateX(-50%)', width: 300, height: 300, background: 'conic-gradient(from 0deg, #FF006E, #7C3AED, #00D4FF, #00FF88, #FFD700, #FF006E)', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.25, pointerEvents: 'none' }} />
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 22px', position: 'relative', zIndex: 2 }}>
-        <span style={{ fontWeight: 800, fontSize: 14, letterSpacing: '-0.5px', background: 'linear-gradient(90deg, #fff, #ffffff88)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>UtilityHub</span>
+        <span style={{ fontWeight: 800, fontSize: 14, letterSpacing: '-0.5px', background: 'linear-gradient(90deg, #fff, #ffffff88)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ToolPilot</span>
         <div style={{ display: 'flex', gap: 14 }}>
           {['Explore', 'Blog'].map(n => <span key={n} style={{ fontSize: 11, color: '#ffffff44' }}>{n}</span>)}
         </div>
