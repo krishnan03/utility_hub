@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Confirm before git push",
+  "description": "Blocks git push commands and reminds the agent to ask the user for explicit confirmation before pushing. Each push triggers CI/CD and consumes GitHub Actions minutes.",
+  "version": "1",
+  "when": {
+    "type": "preToolUse",
+    "toolTypes": [
+      "shell"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "STOP — if this is a git push command, you MUST NOT proceed without explicit user confirmation in this conversation. Ask \"Ready to push?\" and wait for the user to say yes. Each push triggers CI/CD and costs GitHub Actions minutes. Batch commits locally first."
+  }
+}

@@ -59,8 +59,11 @@ These standards apply to ALL work on the ToolsPilot project. Never compromise on
 ## Git Workflow
 
 - NEVER auto-push to remote. Only commit locally.
-- ALWAYS ask the user "Ready to push?" before running `git push`.
+- ALWAYS ask the user "Ready to push?" before running `git push`. Wait for explicit confirmation — do NOT push on your own.
+- Even if the user says "let's push" in a previous message, always confirm again before the actual `git push` command.
 - Batch related changes into a single commit when possible — avoid noisy commit history.
+- CI/CD runs on every push to main (tests + deploy). Each push consumes GitHub Actions minutes, so minimize pushes by batching commits.
+- When fixing multiple issues, commit all fixes locally first, then ask once to push everything together.
 
 ## Tool Discovery
 
