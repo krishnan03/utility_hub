@@ -319,8 +319,31 @@ export default function ExcelEditor() {
       setFileName(baseName);
 
       const univerData = sheetJSToUniverData(wb, baseName);
-      await initUniver(univerData);
-      showToast(`Imported "${file.name}" successfully`);
+
+      // If Univer is already running, dispose active workbook and create new one
+      // without recreating the entire Univer instance
+      if (univerRef.current) {
+        try {
+          const activeWb = univerRef.current.getActiveWorkbook();
+          if (activeWb) {
+            // Close the active workbook by its ID
+            const wbId = activeWb.getId();
+            if (wbId) {
+              try { univerRef.current.disposeUnit(wbId); } catch { /* noop */ }
+            }
+          }
+        } catch { /* noop */ }
+
+        // Create new workbook with imported data
+        univerRef.current.createWorkbook(univerData);
+        setStatus('ready');
+        setStats(getWorkbookStats(univerRef.current));
+        showToast(`Imported "${file.name}" successfully`);
+      } else {
+        // Univer not initialized yet — full init
+        await initUniver(univerData);
+        showToast(`Imported "${file.name}" successfully`);
+      }
     } catch (err) {
       console.error('Import failed:', err);
       setStatus('error');
@@ -365,8 +388,24 @@ export default function ExcelEditor() {
   const handleNew = useCallback(async () => {
     setFileName('Untitled Spreadsheet');
     localStorage.removeItem(AUTOSAVE_KEY);
-    await initUniver(null);
-    showToast('New spreadsheet created');
+
+    if (univerRef.current) {
+      try {
+        const activeWb = univerRef.current.getActiveWorkbook();
+        if (activeWb) {
+          const wbId = activeWb.getId();
+          if (wbId) {
+            try { univerRef.current.disposeUnit(wbId); } catch { /* noop */ }
+          }
+        }
+      } catch { /* noop */ }
+      univerRef.current.createWorkbook({});
+      setStats(getWorkbookStats(univerRef.current));
+      showToast('New spreadsheet created');
+    } else {
+      await initUniver(null);
+      showToast('New spreadsheet created');
+    }
   }, [initUniver, showToast]);
 
   // ── Drag & drop ──────────────────────────────────────────────────
