@@ -172,6 +172,7 @@ const toolComponents = {
   '/tools/pdf/ocr': lazy(() => import('../tools/document/PDFOcr')),
   '/tools/pdf/flatten': lazy(() => import('../tools/document/PDFFlatten')),
   // Document tools
+  '/tools/document/word-editor': lazy(() => import('../tools/document/WordEditor')),
   '/tools/document/convert': lazy(() => import('../tools/document/DocumentConverter')),
   '/tools/document/word-to-pdf': lazy(() => import('../tools/document/WordToPDF')),
   '/tools/document/pdf-to-word': lazy(() => import('../tools/document/PDFToWord')),
