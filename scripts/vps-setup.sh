@@ -30,6 +30,15 @@ fi
 # ── 3. Install Docker Compose plugin ─────────────────────────────────
 if ! docker compose version &> /dev/null; then
   echo "📦 Installing Docker Compose..."
+  # Add Docker's official apt repo if not present
+  if [ ! -f /etc/apt/sources.list.d/docker.list ]; then
+    apt-get install -y ca-certificates curl
+    install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    chmod a+r /etc/apt/keyrings/docker.asc
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" > /etc/apt/sources.list.d/docker.list
+    apt-get update
+  fi
   apt-get install -y docker-compose-plugin
   echo "✅ Docker Compose installed"
 else
