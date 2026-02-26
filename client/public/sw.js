@@ -23,6 +23,9 @@ self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (request.method !== 'GET') return;
 
+  // Skip chrome-extension and other non-http(s) schemes
+  if (!request.url.startsWith('http')) return;
+
   // Network-first for API calls — never cache file processing responses
   if (request.url.includes('/api/')) {
     event.respondWith(

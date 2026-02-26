@@ -7,14 +7,41 @@ import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistorySt
 import SearchBar from '../common/SearchBar';
 
 const QUICK_ACTIONS = [
-  { id: 'image-convert',    label: 'Convert Image',    emoji: '🔀' },
-  { id: 'pdf-merge',        label: 'Merge PDF',        emoji: '🔗' },
-  { id: 'image-compress',   label: 'Compress Image',   emoji: '🗜️' },
-  { id: 'json-yaml-xml',    label: 'Format JSON',      emoji: '🧩' },
-  { id: 'image-resize',     label: 'Resize Image',     emoji: '↔️' },
+  { id: 'excel-editor',       label: 'Excel Editor',   emoji: '📊' },
+  { id: 'word-editor',        label: 'Word Editor',    emoji: '📝' },
+  { id: 'pdf-editor',         label: 'PDF Editor',     emoji: '📄' },
+  { id: 'pdf-merge',          label: 'Merge PDF',      emoji: '🔗' },
+  { id: 'image-compress',     label: 'Compress Image', emoji: '🗜️' },
+  { id: 'json-yaml-xml',      label: 'Format JSON',    emoji: '🧩' },
   { id: 'password-generator', label: 'Password',       emoji: '🔐' },
-  { id: 'ai-detector',      label: 'Detect AI',        emoji: '🧠' },
-  { id: 'text-utilities',   label: 'Text Tools',       emoji: '🔡' },
+  { id: 'ai-detector',        label: 'Detect AI',      emoji: '🧠' },
+];
+
+const FLAGSHIP_EDITORS = [
+  {
+    icon: '📊',
+    title: 'Online Excel Editor',
+    description: 'Full spreadsheet editing with formulas, formatting, and XLSX import/export',
+    features: ['Formulas', 'Multi-sheet', 'XLSX Import/Export', 'Auto-save'],
+    link: '/tools/spreadsheet/excel-editor',
+    accentColor: '#10B981',
+  },
+  {
+    icon: '📝',
+    title: 'Online Word Editor',
+    description: 'Rich document editing with tables, images, and DOCX import/export',
+    features: ['Rich Text', 'Tables', 'Images', 'DOCX Import/Export'],
+    link: '/tools/document/word-editor',
+    accentColor: '#3B82F6',
+  },
+  {
+    icon: '📄',
+    title: 'Online PDF Editor',
+    description: 'Edit PDFs directly — add text, images, annotations, and more',
+    features: ['Add Text', 'Images', 'Annotations', 'E-Signature'],
+    link: '/tools/document/pdf-editor',
+    accentColor: '#FF6363',
+  },
 ];
 
 const CATEGORY_ACCENT = {
@@ -57,6 +84,69 @@ function toolsForCategory(id) {
   return tools.filter((t) => t.category === id);
 }
 
+/* ─── Flagship Card ─────────────────────────────────────────────────── */
+
+function FlagshipCard({ icon, title, description, features, link, accentColor }) {
+  return (
+    <Link to={link} className="block">
+      <motion.div
+        whileHover={{ scale: 1.02, y: -4 }}
+        whileTap={{ scale: 0.98 }}
+        className="relative group rounded-3xl p-6 sm:p-8 overflow-hidden transition-all duration-300 h-full"
+        style={{
+          background: 'rgba(44,44,46,0.6)',
+          backdropFilter: 'blur(20px)',
+          border: `1px solid ${accentColor}22`,
+        }}
+      >
+        {/* Gradient glow on hover */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: `radial-gradient(ellipse at 50% 0%, ${accentColor}15, transparent 70%)` }}
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10">
+          {/* No signup badge */}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-4xl block">{icon}</span>
+            <span
+              className="text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wide"
+              style={{ background: `${accentColor}15`, color: accentColor, border: `1px solid ${accentColor}33` }}
+            >
+              No signup
+            </span>
+          </div>
+          <h3 className="text-xl font-bold text-surface-50 mb-2">{title}</h3>
+          <p className="text-sm text-surface-400 mb-4 leading-relaxed">{description}</p>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {features.map((f) => (
+              <span
+                key={f}
+                className="px-2.5 py-1 rounded-full text-xs font-medium"
+                style={{ background: `${accentColor}15`, color: accentColor }}
+              >
+                {f}
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: accentColor }}>
+            Open Editor
+            <svg
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </div>
+      </motion.div>
+    </Link>
+  );
+}
+
 /* ─── Hero ─────────────────────────────────────────────────────────── */
 
 function HeroSection() {
@@ -93,10 +183,15 @@ function HeroSection() {
       </div>
 
       <section className="relative text-center py-16 lg:py-24 overflow-hidden">
-        {/* Orange glow orb */}
+        {/* Animated gradient mesh background */}
         <div
-          className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255,99,99,0.12), transparent 70%)' }}
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(ellipse at 20% 50%, rgba(255,99,99,0.08), transparent 50%), ' +
+              'radial-gradient(ellipse at 80% 50%, rgba(59,130,246,0.08), transparent 50%), ' +
+              'radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.06), transparent 50%)',
+          }}
           aria-hidden="true"
         />
 
@@ -104,58 +199,106 @@ function HeroSection() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative z-10 mb-4"
+          className="relative z-10 mb-6"
         >
-          {/* Badge */}
+          {/* Animated tool count badge */}
           <div
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6"
             style={{ background: 'rgba(255,99,99,0.12)', border: '1px solid rgba(255,99,99,0.25)', color: '#FF6363' }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            {tools.length} tools · Free · No signup
+            <span className="tabular-nums">{animatedCount}</span> tools · Free · No signup
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-            <span className="text-surface-50">Supercharge your</span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+            <span className="text-surface-50">Your All-in-One</span>
             <br />
-            <span className="text-gradient">workflow.</span>
+            <span className="text-gradient">Productivity Suite</span>
           </h1>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative z-10 mb-4"
-        >
-          <span className="text-7xl sm:text-8xl font-black text-gradient tabular-nums">
-            {animatedCount}
-          </span>
-          <p className="text-surface-500 text-base font-medium mt-1">tools available</p>
         </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.35, duration: 0.4 }}
-          className="relative z-10 text-surface-400 text-base max-w-lg mx-auto leading-relaxed mb-8"
+          transition={{ delay: 0.25, duration: 0.4 }}
+          className="relative z-10 text-surface-400 text-base max-w-xl mx-auto leading-relaxed mb-8"
         >
-          Images, PDFs, text, code, finance, media — everything in one place.
+          Edit Excel, Word, and PDF files right in your browser.
           <br className="hidden sm:block" />
-          Privacy first. No account needed.
+          Plus {tools.length}+ free tools for images, code, finance, and more.
         </motion.p>
 
         <motion.div
           ref={searchRef}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45, duration: 0.4 }}
-          className="relative z-10 max-w-lg mx-auto"
+          transition={{ delay: 0.35, duration: 0.4 }}
+          className="relative z-10 max-w-lg mx-auto mb-8"
         >
           <SearchBar />
         </motion.div>
+
+        {/* Trust badges */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.45, duration: 0.4 }}
+          className="relative z-10 flex items-center justify-center gap-4 sm:gap-6 text-xs text-surface-500 font-medium"
+        >
+          <span className="flex items-center gap-1.5">
+            <span className="text-sm" aria-hidden="true">🔓</span>
+            No Signup Required
+          </span>
+          <span className="w-1 h-1 rounded-full bg-surface-700" aria-hidden="true" />
+          <span className="flex items-center gap-1.5">
+            <span className="text-sm" aria-hidden="true">✨</span>
+            100% Free
+          </span>
+          <span className="w-1 h-1 rounded-full bg-surface-700" aria-hidden="true" />
+          <span className="flex items-center gap-1.5">
+            <span className="text-sm" aria-hidden="true">🛡️</span>
+            Privacy First
+          </span>
+        </motion.div>
       </section>
     </>
+  );
+}
+
+/* ─── Flagship Editors ──────────────────────────────────────────────── */
+
+function FlagshipEditorsSection() {
+  return (
+    <section>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-8"
+      >
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-surface-50 mb-2">
+          Powerful Online Editors
+        </h2>
+        <p className="text-sm text-surface-400 max-w-md mx-auto">
+          No downloads, no signups. Open your files and start editing instantly.
+        </p>
+      </motion.div>
+
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: '-60px' }}
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6"
+      >
+        {FLAGSHIP_EDITORS.map((editor) => (
+          <motion.div key={editor.title} variants={fadeUp}>
+            <FlagshipCard {...editor} />
+          </motion.div>
+        ))}
+      </motion.div>
+    </section>
   );
 }
 
@@ -309,7 +452,7 @@ function AllToolsGrid() {
         ))}
       </div>
 
-      {/* Tools grid — CSS-only transitions, no Framer Motion */}
+      {/* Tools grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {filteredTools.map((tool) => (
           <div key={tool.id}>
@@ -380,7 +523,7 @@ function RecentlyUsed() {
 /* ─── Stats Bar ─────────────────────────────────────────────────────── */
 
 function StatsBar() {
-  const stats = [`${tools.length} Tools`, `${categories.length} Categories`, '100% Free', 'Privacy First'];
+  const stats = [`${tools.length}+ Tools`, `${categories.length} Categories`, '100% Free', 'Privacy First', 'No Signup'];
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -418,7 +561,9 @@ export default function HomePage() {
   return (
     <div className="space-y-14 lg:space-y-18 pb-12">
       <HeroSection />
+      <FlagshipEditorsSection />
       <QuickActionsStrip />
+      <SectionHeader title="Explore 150+ Free Tools" />
       <CategoryShowcase />
       <RecentlyUsed />
       <AllToolsGrid />

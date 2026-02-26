@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ErrorBoundary from './ErrorBoundary';
 import AppShell from './components/layout/AppShell';
 import HomePage from './components/pages/HomePage';
 import CategoryPage from './components/pages/CategoryPage';
@@ -21,19 +22,23 @@ function LazyFallback() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppShell>
-        <Suspense fallback={<LazyFallback />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/category/:categoryId" element={<CategoryPage />} />
-            <Route path="/tools/*" element={<ToolPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/ui-showcase" element={<UIShowcase />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </AppShell>
+      <ErrorBoundary>
+        <AppShell>
+          <Suspense fallback={<LazyFallback />}>
+            <ErrorBoundary>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/category/:categoryId" element={<CategoryPage />} />
+                <Route path="/tools/*" element={<ToolPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                <Route path="/ui-showcase" element={<UIShowcase />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </ErrorBoundary>
+          </Suspense>
+        </AppShell>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
