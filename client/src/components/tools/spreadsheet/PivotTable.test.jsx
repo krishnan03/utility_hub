@@ -42,9 +42,9 @@ describe('PivotTable', () => {
     expect(btn).toBeDisabled();
   });
 
-  it('shows privacy notice', () => {
+  it('shows the paste data textarea', () => {
     renderComponent();
-    expect(screen.getByText(/100% client-side/)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/name,region,sales/i)).toBeInTheDocument();
   });
 
   it('has a hidden file input for CSV upload', () => {

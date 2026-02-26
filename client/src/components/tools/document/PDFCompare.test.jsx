@@ -31,10 +31,10 @@ describe('PDFCompare', () => {
     expect(btn).toBeDisabled();
   });
 
-  it('shows privacy notice about client-side processing', () => {
+  it('renders the page title area', () => {
     renderComponent();
-    expect(screen.getByText(/100% client-side/)).toBeInTheDocument();
-    expect(screen.getByText(/pdf\.js/i)).toBeInTheDocument();
+    expect(screen.getByText('Original PDF')).toBeInTheDocument();
+    expect(screen.getByText('Modified PDF')).toBeInTheDocument();
   });
 
   // ── Upload zones ───────────────────────────────────────────────────────

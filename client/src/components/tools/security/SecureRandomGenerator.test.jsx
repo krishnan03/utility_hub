@@ -37,9 +37,9 @@ describe('SecureRandomGenerator', () => {
     expect(screen.getByText('🔀 Shuffle')).toBeInTheDocument();
   });
 
-  it('shows privacy notice about crypto.getRandomValues', () => {
+  it('renders the generate button on Numbers tab', () => {
     renderComponent();
-    expect(screen.getByText(/crypto\.getRandomValues/)).toBeInTheDocument();
+    expect(screen.getByText(/generate random numbers/i)).toBeInTheDocument();
   });
 
   // ── Numbers tab ────────────────────────────────────────────────────────

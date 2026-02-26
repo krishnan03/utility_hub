@@ -101,9 +101,9 @@ describe('PDFFormFiller', () => {
     expect(screen.getByText(/or click to browse/i)).toBeInTheDocument();
   });
 
-  it('shows privacy notice', () => {
+  it('shows the upload instructions', () => {
     renderComponent();
-    expect(screen.getByText(/your pdf never leaves your browser/i)).toBeInTheDocument();
+    expect(screen.getByText(/drag & drop a pdf with form fields/i)).toBeInTheDocument();
   });
 
   it('has a hidden file input accepting PDFs', () => {

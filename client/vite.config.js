@@ -1,37 +1,43 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { createRequire } from 'module';
 
-const require = createRequire(import.meta.url);
-
-// Resolve the exact path to React in the root node_modules
-// This ensures ALL packages use the same React instance
-const reactPath = path.dirname(require.resolve('react/package.json'));
-const reactDomPath = path.dirname(require.resolve('react-dom/package.json'));
+// Resolve to the EXACT same React files for all imports
+const reactPath = path.resolve(__dirname, '../node_modules/react');
+const reactDomPath = path.resolve(__dirname, '../node_modules/react-dom');
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    dedupe: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      'framer-motion',
-    ],
     alias: {
+      // Force every import of 'react' and 'react-dom' to the same physical path
+      // This prevents any duplicate React instances from Univer or other packages
       'react': reactPath,
       'react-dom': reactDomPath,
     },
+    dedupe: [
+      'react',
+      'react-dom',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
+      'react-router-dom',
+      'framer-motion',
+    ],
   },
   optimizeDeps: {
     include: [
       'react',
       'react-dom',
       'react-dom/client',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
       'react-router-dom',
       'framer-motion',
+      'pdfjs-dist',
+      '@univerjs/presets',
+      '@univerjs/preset-sheets-core',
     ],
+    force: true,
   },
   server: {
     port: 5173,

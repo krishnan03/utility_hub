@@ -43,9 +43,9 @@ describe('MathSolver', () => {
     expect(btn).toBeDisabled();
   });
 
-  it('shows privacy notice', () => {
+  it('shows the equation input', () => {
     renderComponent();
-    expect(screen.getByText(/100% client-side/)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('2x + 3 = 7')).toBeInTheDocument();
   });
 
   // ── Problem type switching ─────────────────────────────────────────────
