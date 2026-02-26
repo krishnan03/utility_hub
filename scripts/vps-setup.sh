@@ -7,6 +7,12 @@ set -euo pipefail
 
 echo "🚀 Setting up UtilityHub production environment..."
 
+# Ensure we have sudo
+if [ "$EUID" -ne 0 ]; then
+  echo "⚠️  Not running as root. Re-running with sudo..."
+  exec sudo bash "$0" "$@"
+fi
+
 # ── 1. System updates ────────────────────────────────────────────────
 apt-get update && apt-get upgrade -y
 
@@ -34,13 +40,14 @@ fi
 apt-get install -y git
 
 # ── 5. Clone the repo ────────────────────────────────────────────────
-if [ ! -d /opt/utility-hub ]; then
+REPO_DIR="/home/ubuntu/utility_hub"
+if [ ! -d "$REPO_DIR" ]; then
   echo "📥 Cloning repository..."
-  git clone https://github.com/krishnan03/utility_hub.git /opt/utility-hub
+  git clone https://github.com/krishnan03/utility_hub.git "$REPO_DIR"
   echo "✅ Repository cloned"
 else
   echo "✅ Repository already exists, pulling latest..."
-  cd /opt/utility-hub && git pull origin main
+  cd "$REPO_DIR" && git pull origin main
 fi
 
 # ── 6. Set up firewall ───────────────────────────────────────────────
@@ -51,7 +58,7 @@ ufw --force enable
 echo "✅ Firewall configured"
 
 # ── 7. Build and start ───────────────────────────────────────────────
-cd /opt/utility-hub
+cd "$REPO_DIR"
 docker compose build
 docker compose up -d
 

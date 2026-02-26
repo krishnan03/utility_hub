@@ -88,7 +88,7 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: 22
           script: |
-            cd /opt/utility-hub || exit 1
+            cd /home/ubuntu/utility_hub || exit 1
             
             # Pull latest code
             git pull origin main
