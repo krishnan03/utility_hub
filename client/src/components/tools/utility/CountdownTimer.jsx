@@ -331,10 +331,6 @@ export default function CountdownTimer() {
         </AnimatePresence>
       </motion.button>
 
-      {/* Privacy note */}
-      <p className="text-center text-[11px] text-surface-600">
-        ⏳ 100% client-side — no data is sent to any server.
-      </p>
     </motion.div>
   );
 }

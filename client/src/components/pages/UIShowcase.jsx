@@ -66,7 +66,7 @@ function Theme2() {
       {/* Hero */}
       <div style={{ textAlign: 'center', padding: '36px 20px 20px', position: 'relative', zIndex: 2 }}>
         <div style={{ fontSize: 48, fontWeight: 900, background: 'linear-gradient(135deg, #00D4FF, #7C3AED, #FF006E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>Every Tool<br/>You Need</div>
-        <div style={{ fontSize: 11, color: '#ffffff66', marginTop: 8 }}>122 free tools · No signup · Instant results</div>
+        <div style={{ fontSize: 11, color: '#ffffff66', marginTop: 8 }}>122 free tools · Instant results</div>
         <div style={{ marginTop: 14, background: '#ffffff0D', backdropFilter: 'blur(16px)', border: '1px solid #ffffff22', borderRadius: 50, padding: '8px 16px', maxWidth: 260, margin: '14px auto 0', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 12, color: '#00D4FF' }}>🔍</span>
           <span style={{ fontSize: 11, color: '#ffffff44' }}>Search 122 tools...</span>
@@ -389,7 +389,7 @@ function Theme9() {
             <div style={{ width: 60, height: 3, background: '#FF0000', marginTop: 4 }} />
           </div>
         </div>
-        <div style={{ fontSize: 11, color: '#555', marginTop: 10, fontFamily: 'Arial, sans-serif', lineHeight: 1.5 }}>Professional-grade utilities for images, PDFs, text, and development. No signup required.</div>
+        <div style={{ fontSize: 11, color: '#555', marginTop: 10, fontFamily: 'Arial, sans-serif', lineHeight: 1.5 }}>Professional-grade utilities for images, PDFs, text, and development.</div>
         <div style={{ marginTop: 12, display: 'flex', gap: 0 }}>
           <input readOnly placeholder="Search tools..." style={{ flex: 1, border: '2px solid #000', padding: '7px 12px', fontSize: 11, fontFamily: 'Arial, sans-serif', outline: 'none', maxWidth: 220 }} />
           <button style={{ background: '#FF0000', color: '#fff', border: '2px solid #FF0000', padding: '7px 14px', fontSize: 11, fontFamily: 'Arial, sans-serif', fontWeight: 700, cursor: 'pointer' }}>SEARCH</button>
@@ -517,7 +517,7 @@ function Theme11() {
         <div style={{ fontSize: 38, fontWeight: 800, lineHeight: 1.1, letterSpacing: '-1.5px', maxWidth: 320 }}>
           Build faster with<br /><span style={{ color: '#5E6AD2' }}>every tool</span> you need.
         </div>
-        <div style={{ fontSize: 12, color: '#ffffff55', marginTop: 10, lineHeight: 1.6, maxWidth: 280 }}>Free, instant, no signup. Images, PDFs, text, code — all in one place.</div>
+        <div style={{ fontSize: 12, color: '#ffffff55', marginTop: 10, lineHeight: 1.6, maxWidth: 280 }}>Free and instant. Images, PDFs, text, code — all in one place.</div>
         <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', background: '#ffffff08', border: '1px solid #ffffff11', borderRadius: 8, padding: '8px 12px', maxWidth: 280, gap: 8 }}>
           <span style={{ fontSize: 11, color: '#ffffff33' }}>⌘</span>
           <span style={{ fontSize: 11, color: '#ffffff33', flex: 1 }}>Search tools...</span>

@@ -445,10 +445,6 @@ export default function PDFCompare() {
         </>
       )}
 
-      {/* ── Privacy notice ─────────────────────────────────────────────── */}
-      <p className="text-[11px] text-surface-600 text-center leading-relaxed">
-        🔐 100% client-side — your PDFs never leave your browser. Powered by pdf.js.
-      </p>
     </motion.div>
   );
 }

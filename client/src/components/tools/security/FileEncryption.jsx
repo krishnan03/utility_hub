@@ -409,7 +409,6 @@ export default function FileEncryption() {
         <div className="flex items-start gap-3">
           <span className="text-lg shrink-0" aria-hidden="true">🛡️</span>
           <div>
-            <p className="text-sm font-semibold text-surface-300">Your file never leaves your browser</p>
             <p className="text-xs text-surface-500 mt-1">
               All encryption and decryption happens locally using AES-256-GCM via the Web Crypto API.
               PBKDF2 with 100,000 iterations derives the key from your password. No data is transmitted to any server.

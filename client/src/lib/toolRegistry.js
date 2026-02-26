@@ -667,12 +667,12 @@ const tools = [
   { id: 'chmod-calculator', name: 'Chmod Calculator', description: 'Calculate Unix file permissions with a visual checkbox interface', category: 'developer', keywords: ['chmod', 'permissions', 'unix', 'linux', 'file', 'calculator', 'rwx'], path: '/tools/developer/chmod-calculator', icon: '🔐', isClientSide: true },
 
   // ── Advanced Editors ───────────────────────────────────────────────
-  { id: 'word-editor', name: 'Online Word Editor', description: 'Create and edit documents in your browser with rich formatting, tables, images, and DOCX import/export — no signup required', category: 'document', keywords: ['word', 'editor', 'document', 'docx', 'doc', 'online', 'rich text', 'write', 'format', 'tables'], path: '/tools/document/word-editor', icon: '📝', isClientSide: true },
+  { id: 'word-editor', name: 'Online Word Editor', description: 'Create and edit documents in your browser with rich formatting, tables, images, and DOCX import/export', category: 'document', keywords: ['word', 'editor', 'document', 'docx', 'doc', 'online', 'rich text', 'write', 'format', 'tables'], path: '/tools/document/word-editor', icon: '📝', isClientSide: true },
   { id: 'pdf-editor', name: 'Online PDF Editor', description: 'Edit PDFs online — add text, images, annotations, highlights, and save', category: 'document', keywords: ['pdf', 'editor', 'online', 'edit', 'text', 'image', 'annotate', 'highlight', 'save'], path: '/tools/document/pdf-editor', icon: '📝', isClientSide: false },
   { id: 'photo-editor', name: 'Online Photo Editor', description: 'Edit photos with filters, adjustments, text overlay, crop, and download', category: 'image', keywords: ['photo', 'editor', 'online', 'filter', 'adjust', 'brightness', 'contrast', 'crop', 'text'], path: '/tools/image/photo-editor', icon: '🎨', isClientSide: true },
 
   // ── Spreadsheet (flagship) ─────────────────────────────────────────
-  { id: 'excel-editor', name: 'Online Excel Editor', description: 'Edit Excel spreadsheets in your browser with formulas, formatting, charts, and XLSX import/export — no signup required', category: 'spreadsheet', keywords: ['excel', 'editor', 'spreadsheet', 'xlsx', 'xls', 'online', 'formula', 'edit', 'cells', 'sheets'], path: '/tools/spreadsheet/excel-editor', icon: '📊', isClientSide: true },
+  { id: 'excel-editor', name: 'Online Excel Editor', description: 'Edit Excel spreadsheets in your browser with formulas, formatting, charts, and XLSX import/export', category: 'spreadsheet', keywords: ['excel', 'editor', 'spreadsheet', 'xlsx', 'xls', 'online', 'formula', 'edit', 'cells', 'sheets'], path: '/tools/spreadsheet/excel-editor', icon: '📊', isClientSide: true },
 ];
 
 export default tools;

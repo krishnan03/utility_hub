@@ -12,7 +12,7 @@ const BLOG_POSTS = [
   },
   {
     slug: 'merge-pdf-files-free',
-    title: 'How to Merge PDF Files for Free — No Sign-Up Required',
+    title: 'How to Merge PDF Files for Free',
     excerpt: 'Combine multiple PDF documents into one file with drag-and-drop ordering. Fast, free, and your files are auto-deleted in 24 hours.',
     date: '2026-02-18',
     category: 'Documents',

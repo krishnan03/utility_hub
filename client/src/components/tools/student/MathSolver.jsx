@@ -421,10 +421,6 @@ export default function MathSolver() {
         )}
       </AnimatePresence>
 
-      {/* ── Privacy notice ─────────────────────────────────────────────── */}
-      <p className="text-[11px] text-surface-600 text-center leading-relaxed">
-        🔐 100% client-side — all calculations happen in your browser. No data is sent to any server.
-      </p>
     </motion.div>
   );
 }

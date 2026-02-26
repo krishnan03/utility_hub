@@ -504,10 +504,6 @@ export default function PDFFormFiller() {
         </>
       )}
 
-      {/* ── Privacy notice ─────────────────────────────────────────────── */}
-      <p className="text-[11px] text-surface-600 text-center leading-relaxed">
-        🔐 100% client-side — your PDF never leaves your browser. Powered by pdf-lib.
-      </p>
     </motion.div>
   );
 }

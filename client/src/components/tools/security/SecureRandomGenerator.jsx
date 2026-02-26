@@ -495,10 +495,6 @@ export default function SecureRandomGenerator() {
         </div>
       )}
 
-      {/* ── Privacy notice ─────────────────────────────────────────────── */}
-      <p className="text-[11px] text-surface-600 text-center leading-relaxed">
-        🔐 Uses <code className="font-mono text-surface-500">crypto.getRandomValues()</code> — cryptographically secure, 100% client-side.
-      </p>
     </motion.div>
   );
 }

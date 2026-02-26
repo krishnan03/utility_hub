@@ -107,15 +107,8 @@ function FlagshipCard({ icon, title, description, features, link, accentColor })
         />
 
         <div className="relative z-10">
-          {/* No signup badge */}
           <div className="flex items-center justify-between mb-4">
             <span className="text-4xl block">{icon}</span>
-            <span
-              className="text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wide"
-              style={{ background: `${accentColor}15`, color: accentColor, border: `1px solid ${accentColor}33` }}
-            >
-              No signup
-            </span>
           </div>
           <h3 className="text-xl font-bold text-surface-50 mb-2">{title}</h3>
           <p className="text-sm text-surface-400 mb-4 leading-relaxed">{description}</p>
@@ -207,7 +200,7 @@ function HeroSection() {
             style={{ background: 'rgba(255,99,99,0.12)', border: '1px solid rgba(255,99,99,0.25)', color: '#FF6363' }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            <span className="tabular-nums">{animatedCount}</span> tools · Free · No signup
+            <span className="tabular-nums">{animatedCount}</span>+ free tools
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
@@ -281,7 +274,7 @@ function FlagshipEditorsSection() {
           Powerful Online Editors
         </h2>
         <p className="text-sm text-surface-400 max-w-md mx-auto">
-          No downloads, no signups. Open your files and start editing instantly.
+          Open your files and start editing instantly — right in your browser.
         </p>
       </motion.div>
 
@@ -523,7 +516,7 @@ function RecentlyUsed() {
 /* ─── Stats Bar ─────────────────────────────────────────────────────── */
 
 function StatsBar() {
-  const stats = [`${tools.length}+ Tools`, `${categories.length} Categories`, '100% Free', 'Privacy First', 'No Signup'];
+  const stats = [`${tools.length}+ Tools`, `${categories.length} Categories`, '100% Free', 'Privacy First'];
   return (
     <motion.section
       initial={{ opacity: 0 }}

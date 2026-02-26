@@ -371,7 +371,7 @@ export default function PasswordGenerator() {
               </AnimatePresence>
 
               <p className="text-[11px] text-surface-600 leading-relaxed">
-                🔐 Only the first 5 chars of the SHA-1 hash are sent — your password never leaves your browser.
+                🔐 Only the first 5 chars of the SHA-1 hash are sent.
               </p>
             </GlassCard>
           </motion.div>
