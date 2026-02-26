@@ -1,4 +1,4 @@
-const CACHE_NAME = 'utilityhub-v1';
+const CACHE_NAME = 'utilityhub-v2';
 const STATIC_ASSETS = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {
@@ -34,7 +34,20 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for static assets
+  // NEVER cache Vite dev deps or HMR — these change on every rebuild
+  if (request.url.includes('.vite/') || request.url.includes('node_modules/') || request.url.includes('@vite/') || request.url.includes('/@react-refresh')) {
+    return;
+  }
+
+  // Network-first for source files in dev mode (localhost)
+  if (request.url.includes('localhost') && request.url.includes('/src/')) {
+    event.respondWith(
+      fetch(request).catch(() => caches.match(request))
+    );
+    return;
+  }
+
+  // Cache-first for production static assets only
   event.respondWith(
     caches.match(request).then((cached) => {
       if (cached) return cached;
