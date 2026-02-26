@@ -40,9 +40,8 @@ describe('Footer', () => {
     expect(screen.getByText(/auto-deleted in 24h/i)).toBeInTheDocument();
   });
 
-  it('displays made with love message', () => {
+  it('displays built by AI tagline', () => {
     render(<Footer />);
-    expect(screen.getByText(/Made with/)).toBeInTheDocument();
-    expect(screen.getByText(/for productivity/)).toBeInTheDocument();
+    expect(screen.getByText(/Built by AI for Humans/)).toBeInTheDocument();
   });
 });

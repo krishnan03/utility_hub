@@ -19,7 +19,7 @@ export default function Footer() {
             Your data is auto-deleted in 24h
           </span>
         </div>
-        <p>Made with <span className="text-gradient font-bold">♥</span> for productivity</p>
+        <p>Built by AI for Humans <span className="text-gradient font-bold">♥</span></p>
       </div>
     </footer>
   );
