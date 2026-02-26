@@ -224,7 +224,7 @@ describe('ExcelEditor', () => {
   });
 
   it('clears localStorage autosave on New', async () => {
-    localStorage.setItem('toolpilot_excel_autosave', JSON.stringify({ snapshot: {}, fileName: 'Old' }));
+    localStorage.setItem('toolspilot_excel_autosave', JSON.stringify({ snapshot: {}, fileName: 'Old' }));
     const user = userEvent.setup();
     renderEditor();
 
@@ -234,7 +234,7 @@ describe('ExcelEditor', () => {
 
     await user.click(screen.getByText('New'));
 
-    expect(localStorage.getItem('toolpilot_excel_autosave')).toBeNull();
+    expect(localStorage.getItem('toolspilot_excel_autosave')).toBeNull();
   });
 
   // ── Stats display ─────────────────────────────────────────────────

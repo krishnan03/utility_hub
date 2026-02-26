@@ -161,7 +161,7 @@ describe('MobileMenu', () => {
     expect(closeBtn).toHaveFocus();
   });
 
-  it('renders ToolPilot branding in the panel header', () => {
+  it('renders ToolsPilot branding in the panel header', () => {
     renderMenu();
     expect(screen.getByText('Pilot')).toBeInTheDocument();
   });

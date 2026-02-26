@@ -410,14 +410,14 @@ describe('WordEditor', () => {
   });
 
   it('clears localStorage on New Document', async () => {
-    localStorage.setItem('toolpilot_word_editor', JSON.stringify({ title: 'Old', content: {} }));
+    localStorage.setItem('toolspilot_word_editor', JSON.stringify({ title: 'Old', content: {} }));
     const user = userEvent.setup();
     renderEditor();
 
     const newBtn = screen.getByTitle(/New Document/);
     await user.click(newBtn);
 
-    expect(localStorage.getItem('toolpilot_word_editor')).toBeNull();
+    expect(localStorage.getItem('toolspilot_word_editor')).toBeNull();
   });
 
   // ── Autosave ───────────────────────────────────────────────────────
@@ -428,7 +428,7 @@ describe('WordEditor', () => {
       content: { type: 'doc', content: [] },
       savedAt: Date.now(),
     };
-    localStorage.setItem('toolpilot_word_editor', JSON.stringify(savedData));
+    localStorage.setItem('toolspilot_word_editor', JSON.stringify(savedData));
 
     renderEditor();
 
@@ -446,7 +446,7 @@ describe('WordEditor', () => {
     fireEvent.keyDown(document, { key: 's', ctrlKey: true });
 
     await waitFor(() => {
-      const saved = localStorage.getItem('toolpilot_word_editor');
+      const saved = localStorage.getItem('toolspilot_word_editor');
       expect(saved).not.toBeNull();
       const data = JSON.parse(saved);
       expect(data.title).toBe('Untitled Document');

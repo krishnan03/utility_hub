@@ -28,7 +28,7 @@ export default function Navbar({ onToggleMobileMenu }) {
             </svg>
           </button>
 
-          <Link to="/" className="flex items-center gap-2.5 group" aria-label="ToolPilot home">
+          <Link to="/" className="flex items-center gap-2.5 group" aria-label="ToolsPilot home">
             {/* TP logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -39,7 +39,7 @@ export default function Navbar({ onToggleMobileMenu }) {
               TP
             </motion.div>
             <span className="text-base font-bold tracking-tight text-surface-50">
-              Tool<span className="text-gradient">Pilot</span>
+              Tools<span className="text-gradient">Pilot</span>
             </span>
           </Link>
 

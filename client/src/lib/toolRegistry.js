@@ -1,5 +1,5 @@
 /**
- * Tool Registry — central catalog of all tools in the ToolPilot.
+ * Tool Registry — central catalog of all tools in the ToolsPilot.
  * Each entry defines metadata used for search, navigation, and rendering.
  */
 

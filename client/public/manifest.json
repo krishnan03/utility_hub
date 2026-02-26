@@ -1,6 +1,6 @@
 {
-  "name": "ToolPilot",
-  "short_name": "ToolPilot",
+  "name": "ToolsPilot",
+  "short_name": "ToolsPilot",
   "description": "Free online tools for everyone",
   "start_url": "/",
   "display": "standalone",

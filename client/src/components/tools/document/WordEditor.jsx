@@ -16,7 +16,7 @@ import mammoth from 'mammoth';
 import { saveAs } from 'file-saver';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const AUTOSAVE_KEY = 'toolpilot_word_editor';
+const AUTOSAVE_KEY = 'toolspilot_word_editor';
 const AUTOSAVE_DELAY = 2000;
 
 /* ── Toolbar Button ─────────────────────────────────────────────────── */

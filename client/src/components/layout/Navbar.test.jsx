@@ -45,7 +45,7 @@ beforeEach(() => {
 describe('Navbar', () => {
   it('renders logo with link to home', () => {
     renderNavbar();
-    const link = screen.getByLabelText('ToolPilot home');
+    const link = screen.getByLabelText('ToolsPilot home');
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/');
     expect(screen.getByText(/Tool/)).toBeInTheDocument();

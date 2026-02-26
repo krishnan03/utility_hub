@@ -18,7 +18,7 @@ const STYLES = [
   { label: 'Vancouver', value: 'vancouver' },
 ];
 
-const LS_KEY = 'toolpilot_bibliography';
+const LS_KEY = 'toolspilot_bibliography';
 const EMPTY_FIELDS = { author: '', title: '', year: '', publisher: '', url: '', journal: '', volume: '', issue: '', pages: '', doi: '', director: '' };
 
 const cardStyle = { background: 'rgba(44,44,46,0.8)', border: '1px solid rgba(255,255,255,0.08)' };

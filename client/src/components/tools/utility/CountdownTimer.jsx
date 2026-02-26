@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const STORAGE_KEY = 'toolpilot_countdown_last';
+const STORAGE_KEY = 'toolspilot_countdown_last';
 
 const PRESETS = [
   { label: '🎆 New Year', getDate: () => { const y = new Date().getMonth() === 11 && new Date().getDate() === 31 ? new Date().getFullYear() + 1 : (new Date().getMonth() >= 0 ? new Date().getFullYear() + 1 : new Date().getFullYear()); return new Date(y, 0, 1, 0, 0, 0); } },

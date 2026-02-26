@@ -2,9 +2,9 @@
 inclusion: always
 ---
 
-# ToolPilot — Engineering & Design Standards
+# ToolsPilot — Engineering & Design Standards
 
-These standards apply to ALL work on the ToolPilot project. Never compromise on these.
+These standards apply to ALL work on the ToolsPilot project. Never compromise on these.
 
 ## UI/UX Excellence
 

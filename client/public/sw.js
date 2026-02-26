@@ -1,4 +1,4 @@
-const CACHE_NAME = 'toolpilot-v2';
+const CACHE_NAME = 'toolspilot-v2';
 const STATIC_ASSETS = ['/', '/index.html'];
 
 self.addEventListener('install', (event) => {

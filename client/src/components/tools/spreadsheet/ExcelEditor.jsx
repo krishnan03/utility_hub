@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
  */
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
-const AUTOSAVE_KEY = 'toolpilot_excel_autosave';
+const AUTOSAVE_KEY = 'toolspilot_excel_autosave';
 const AUTOSAVE_DELAY = 3000;
 const ACCEPTED_EXTENSIONS = ['.xlsx', '.xls', '.csv'];
 
