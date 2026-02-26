@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { categories } from '../layout/Sidebar';
 import tools from '../../lib/toolRegistry';
 import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistoryStore';
-import SearchBar from '../common/SearchBar';
+import CommandBar from '../common/CommandBar';
 
 const QUICK_ACTIONS = [
   { id: 'excel-editor',       label: 'Excel Editor',   emoji: '📊' },
@@ -171,11 +171,11 @@ function HeroSection() {
         }}
       >
         <div className="max-w-xl mx-auto">
-          <SearchBar />
+          <CommandBar />
         </div>
       </div>
 
-      <section className="relative text-center py-16 lg:py-24 overflow-hidden">
+      <section className="relative text-center pt-6 pb-16 lg:pt-8 lg:pb-24 overflow-hidden">
         {/* Animated gradient mesh background */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -228,7 +228,7 @@ function HeroSection() {
           transition={{ delay: 0.35, duration: 0.4 }}
           className="relative z-10 max-w-lg mx-auto mb-8"
         >
-          <SearchBar />
+          <CommandBar />
         </motion.div>
 
         {/* Trust badges */}
@@ -609,7 +609,10 @@ function SectionHeader({ title }) {
 export default function HomePage() {
   return (
     <div className="space-y-12 lg:space-y-16 pb-12">
-      <HeroSection />
+      {/* Negative margin pulls hero up to eliminate gap from AppShell padding */}
+      <div className="-mt-4 sm:-mt-6 lg:-mt-8 -mx-4 sm:-mx-6 lg:-mx-8">
+        <HeroSection />
+      </div>
       <FlagshipEditorsSection />
       <QuickActionsStrip />
       <RecentlyUsed />

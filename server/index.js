@@ -16,6 +16,7 @@ import qrRouter from './routes/qr.js';
 import ocrRouter from './routes/ocr.js';
 import seoRouter from './routes/seo.js';
 import faviconRouter from './routes/favicon.js';
+import toolsRouter from './routes/tools.js';
 import { startCleanup } from './services/cleanupService.js';
 
 const app = express();
@@ -68,6 +69,7 @@ app.use('/api/favicon', faviconRouter);
 app.use('/api/gif', placeholderRouter('gif'));
 app.use('/api/signature', signatureRouter);
 app.use('/api/files', filesRouter);
+app.use('/api/tools', toolsRouter);
 
 // Global error handler — MUST be last middleware
 app.use(errorHandler);

@@ -3,6 +3,14 @@ import { motion } from 'framer-motion';
 
 const BLOG_POSTS = [
   {
+    slug: 'toolspilot-api-llms-smart-search',
+    title: 'ToolsPilot Now Has a Public API, llms.txt, and AI-Powered Smart Search',
+    excerpt: 'We launched a public REST API for programmatic access to our tools, added llms.txt for AI discoverability, and shipped a Spotlight-style command bar that understands natural language like "fix messy JSON".',
+    date: '2026-02-25',
+    category: 'Product',
+    readTime: '5 min',
+  },
+  {
     slug: 'how-to-convert-images-online',
     title: 'How to Convert Images Online — PNG, JPG, WEBP, and More',
     excerpt: 'Learn how to convert images between formats instantly without installing software. Support for PNG, JPG, WEBP, SVG, GIF, AVIF, and more.',

@@ -1,0 +1,101 @@
+# ToolsPilot.work — Free Online Utilities
+
+> ToolsPilot is a collection of 159+ privacy-first, browser-based web tools. No sign-up, no tracking, 100% free.
+
+## Key Features
+
+- No sign-up or login required.
+- 100% free to use — no hidden paywalls.
+- Local processing — data never leaves the user's browser for client-side tools.
+- Files auto-deleted within 24 hours for server-processed tools.
+- Dark-mode-first, responsive UI.
+
+## Core Tool Categories
+
+### Document Tools
+- PDF Editor: https://toolspilot.work/tools/document/pdf-editor
+- PDF Merger: https://toolspilot.work/tools/pdf/merge
+- PDF Splitter: https://toolspilot.work/tools/pdf/split
+- PDF Compressor: https://toolspilot.work/tools/pdf/compress
+- PDF to Word: https://toolspilot.work/tools/document/pdf-to-word
+- Word to PDF: https://toolspilot.work/tools/document/word-to-pdf
+- PDF to Excel: https://toolspilot.work/tools/document/pdf-to-excel
+- Online Word Editor: https://toolspilot.work/tools/document/word-editor
+- E-Signature: https://toolspilot.work/tools/pdf/esignature
+
+### Spreadsheet Tools
+- Online Excel Editor: https://toolspilot.work/tools/spreadsheet/excel-editor
+- Excel to CSV: https://toolspilot.work/tools/spreadsheet/excel-to-csv
+- CSV to Excel: https://toolspilot.work/tools/spreadsheet/csv-to-excel
+- CSV Viewer & Editor: https://toolspilot.work/tools/spreadsheet/csv-viewer
+- Pivot Table Generator: https://toolspilot.work/tools/spreadsheet/pivot-table
+- JSON Flattener: https://toolspilot.work/tools/spreadsheet/json-flattener
+
+### Image Tools
+- Image Converter: https://toolspilot.work/tools/image/convert
+- Image Compressor: https://toolspilot.work/tools/image/compress
+- Image Resizer: https://toolspilot.work/tools/image/resize
+- Background Remover: https://toolspilot.work/tools/image/background-remove
+- Photo Editor: https://toolspilot.work/tools/image/photo-editor
+- HEIC to JPG: https://toolspilot.work/tools/image/heic-to-jpg
+
+### Developer Tools
+- JSON / YAML / XML Formatter: https://toolspilot.work/tools/developer/json-yaml-xml
+- JWT Decoder: https://toolspilot.work/tools/developer/jwt-decoder
+- Regex Tester: https://toolspilot.work/tools/developer/regex-tester
+- Cron Parser: https://toolspilot.work/tools/developer/cron-parser
+- Diff Checker: https://toolspilot.work/tools/developer/diff-checker
+- SQL Formatter: https://toolspilot.work/tools/developer/sql-formatter
+- API Request Builder: https://toolspilot.work/tools/developer/api-builder
+- Timestamp Converter: https://toolspilot.work/tools/developer/timestamp-converter
+- Base64 File Encoder: https://toolspilot.work/tools/developer/base64-file
+- Chmod Calculator: https://toolspilot.work/tools/developer/chmod-calculator
+
+### Text & Writing Tools
+- Text Utilities (case, count, hash, diff): https://toolspilot.work/tools/text/utilities
+- Grammar Checker: https://toolspilot.work/tools/text/grammar-checker
+- Paraphrasing Tool: https://toolspilot.work/tools/text/paraphraser
+- Text Summarizer: https://toolspilot.work/tools/text/summarizer
+- OCR — Image to Text: https://toolspilot.work/tools/text/ocr
+- Markdown Editor: https://toolspilot.work/tools/text/markdown-editor
+- Writing Templates: https://toolspilot.work/tools/text/writing-templates
+
+### Security & Privacy Tools
+- Password Generator: https://toolspilot.work/tools/security/password-generator
+- Hash Generator: https://toolspilot.work/tools/security/hash-generator
+- File Encryption (AES-256): https://toolspilot.work/tools/security/file-encryption
+- UUID Generator: https://toolspilot.work/tools/security/uuid-generator
+- TOTP Generator: https://toolspilot.work/tools/security/totp-generator
+- Breach Checker: https://toolspilot.work/tools/security/breach-checker
+
+### Finance & Trading Tools
+- Compound Interest Calculator: https://toolspilot.work/tools/finance/compound-interest
+- Options Profit Calculator: https://toolspilot.work/tools/finance/options-calculator
+- Currency Converter: https://toolspilot.work/tools/finance/currency-converter
+- SIP Calculator: https://toolspilot.work/tools/finance/sip-calculator
+- Tax Calculator: https://toolspilot.work/tools/finance/tax-calculator
+- Retirement Calculator: https://toolspilot.work/tools/finance/retirement-calculator
+
+### SEO Tools
+- SEO Analyzer: https://toolspilot.work/tools/seo/seo-analyzer
+- Meta Tag Generator: https://toolspilot.work/tools/seo/meta-tag-generator
+- Sitemap Generator: https://toolspilot.work/tools/seo/sitemap-generator
+- Page Speed Insights: https://toolspilot.work/tools/seo/page-speed
+
+### Utility Tools
+- QR Code Generator: https://toolspilot.work/tools/utility/qr-barcode
+- Unit & Currency Converter: https://toolspilot.work/tools/utility/unit-converter
+- World Clock: https://toolspilot.work/tools/utility/world-clock
+
+## API Access
+
+ToolsPilot provides a public API for programmatic access to server-side tools.
+
+- Base URL: https://toolspilot.work/api
+- Tool catalog: GET https://toolspilot.work/api/tools
+- No authentication required. Rate limited to 100 requests per 15 minutes.
+- Files auto-deleted within 24 hours.
+
+## Blog
+
+https://toolspilot.work/blog
