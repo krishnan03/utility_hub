@@ -204,9 +204,9 @@ function HeroSection() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
-            <span className="text-surface-50">Your All-in-One</span>
+            <span className="text-surface-50">Free Online Tools</span>
             <br />
-            <span className="text-gradient">Productivity Suite</span>
+            <span className="text-gradient">Built for Everyone</span>
           </h1>
         </motion.div>
 
@@ -216,9 +216,9 @@ function HeroSection() {
           transition={{ delay: 0.25, duration: 0.4 }}
           className="relative z-10 text-surface-400 text-base max-w-xl mx-auto leading-relaxed mb-8"
         >
-          Edit Excel, Word, and PDF files right in your browser.
+          PDF, Excel & Word editors. Image converters. Dev tools. Finance calculators.
           <br className="hidden sm:block" />
-          Plus {tools.length}+ free tools for images, code, finance, and more.
+          {tools.length}+ tools, zero signup, 100% free.
         </motion.p>
 
         <motion.div
@@ -342,58 +342,125 @@ function QuickActionsStrip() {
 /* ─── Category Showcase ─────────────────────────────────────────────── */
 
 function CategoryShowcase() {
+  const [expandedCat, setExpandedCat] = useState(null);
+
   return (
     <section>
-      <SectionHeader title="Browse by Category" />
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: '-60px' }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4"
-      >
-        {categories.map((cat) => {
+      <div className="text-center mb-10">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-surface-50 mb-2">
+          {tools.length}+ Tools, 13 Categories
+        </h2>
+        <p className="text-sm text-surface-400">Click a category to explore.</p>
+      </div>
+
+      {/* Category grid — interactive cards */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {categories.map((cat, i) => {
           const catTools = toolsForCategory(cat.id);
           const accent = CATEGORY_ACCENT[cat.id] || '#94a3b8';
+          const isExpanded = expandedCat === cat.id;
+
           return (
-            <motion.div key={cat.id} variants={fadeUp}>
-              <Link
-                to={cat.path}
-                className="card-hover group relative block p-5 h-full"
-                style={{ borderLeft: `2px solid ${accent}33` }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderLeftColor = `${accent}88`; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderLeftColor = `${accent}33`; }}
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <span className="text-3xl group-hover:scale-110 transition-transform duration-200" aria-hidden="true">
-                    {cat.icon}
-                  </span>
+            <motion.div
+              key={cat.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.3, delay: i * 0.03 }}
+              layout
+              className={`relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 ${isExpanded ? 'col-span-2 sm:col-span-3 lg:col-span-4 row-span-2' : ''}`}
+              style={{
+                background: isExpanded ? 'rgba(44,44,46,0.9)' : 'rgba(44,44,46,0.5)',
+                border: `1px solid ${isExpanded ? accent + '40' : 'rgba(255,255,255,0.06)'}`,
+                backdropFilter: 'blur(12px)',
+              }}
+              onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
+            >
+              {/* Glow effect */}
+              <div
+                className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}12, transparent 70%)` }}
+              />
+
+              {/* Collapsed view */}
+              <div className="relative z-10 p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-2xl">{cat.icon}</span>
                   <span
-                    className="text-xs font-semibold px-2 py-0.5 rounded-full"
-                    style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}33` }}
+                    className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                    style={{ background: `${accent}20`, color: accent }}
                   >
                     {catTools.length}
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-surface-100 mb-2 group-hover:text-primary-400 transition-colors">
-                  {cat.name}
-                </h3>
-                <ul className="space-y-1" aria-label={`${cat.name} tools preview`}>
-                  {catTools.slice(0, 3).map((tool) => (
-                    <li key={tool.id} className="text-xs text-surface-500 truncate">
-                      <span aria-hidden="true" className="mr-1">{tool.icon}</span>
-                      {tool.name}
-                    </li>
-                  ))}
-                  {catTools.length > 3 && (
-                    <li className="text-xs text-surface-600 font-medium">+{catTools.length - 3} more</li>
-                  )}
-                </ul>
-              </Link>
+                <h3 className="text-sm font-bold text-surface-100 mb-0.5">{cat.name}</h3>
+
+                {/* Stacked tool preview (3 overlapping pills) */}
+                {!isExpanded && (
+                  <div className="flex items-center mt-2 -space-x-1">
+                    {catTools.slice(0, 3).map((tool, j) => (
+                      <div
+                        key={tool.id}
+                        className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] border-2"
+                        style={{
+                          background: 'rgba(28,28,30,0.9)',
+                          borderColor: 'rgba(255,255,255,0.1)',
+                          zIndex: 3 - j,
+                        }}
+                      >
+                        {tool.icon}
+                      </div>
+                    ))}
+                    {catTools.length > 3 && (
+                      <span className="text-[10px] text-surface-500 ml-2">+{catTools.length - 3}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Expanded view — tool grid */}
+              {isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="px-4 pb-4"
+                >
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mt-1">
+                    {catTools.map((tool) => (
+                      <Link
+                        key={tool.id}
+                        to={tool.path}
+                        onClick={(e) => e.stopPropagation()}
+                        className="group flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all duration-200 hover:scale-[1.02]"
+                        style={{
+                          background: 'rgba(255,255,255,0.04)',
+                          border: '1px solid rgba(255,255,255,0.06)',
+                        }}
+                      >
+                        <span className="text-sm shrink-0">{tool.icon}</span>
+                        <span className="text-xs font-medium text-surface-300 group-hover:text-surface-100 truncate">
+                          {tool.name}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-3 text-center">
+                    <Link
+                      to={cat.path}
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-xs font-semibold transition-colors"
+                      style={{ color: accent }}
+                    >
+                      View all {cat.name} tools →
+                    </Link>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
           );
         })}
-      </motion.div>
+      </div>
     </section>
   );
 }
@@ -552,14 +619,12 @@ function SectionHeader({ title }) {
 
 export default function HomePage() {
   return (
-    <div className="space-y-14 lg:space-y-18 pb-12">
+    <div className="space-y-12 lg:space-y-16 pb-12">
       <HeroSection />
       <FlagshipEditorsSection />
       <QuickActionsStrip />
-      <SectionHeader title="Explore 150+ Free Tools" />
-      <CategoryShowcase />
       <RecentlyUsed />
-      <AllToolsGrid />
+      <CategoryShowcase />
       <StatsBar />
     </div>
   );

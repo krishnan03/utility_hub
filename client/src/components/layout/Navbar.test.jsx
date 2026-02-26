@@ -65,34 +65,6 @@ describe('Navbar', () => {
     expect(onToggleMobileMenu).toHaveBeenCalledOnce();
   });
 
-  it('shows sun icon in dark mode with correct aria-label', () => {
-    useThemeStore.setState({ mode: 'dark', isDark: true });
-    renderNavbar();
-    expect(screen.getByLabelText('Dark mode — click to switch to light')).toBeInTheDocument();
-  });
-
-  it('shows moon icon in light mode with correct aria-label', () => {
-    useThemeStore.setState({ mode: 'light', isDark: false });
-    renderNavbar();
-    expect(screen.getByLabelText('Light mode — click to switch to dark')).toBeInTheDocument();
-  });
-
-  it('shows system icon in system mode with correct aria-label', () => {
-    useThemeStore.setState({ mode: 'system', isDark: false });
-    renderNavbar();
-    expect(screen.getByLabelText('System mode — click to switch to dark')).toBeInTheDocument();
-  });
-
-  it('cycles theme mode when theme button is clicked', async () => {
-    const user = userEvent.setup();
-    useThemeStore.setState({ mode: 'dark', isDark: true });
-    renderNavbar();
-
-    // dark -> light
-    await user.click(screen.getByLabelText('Dark mode — click to switch to light'));
-    expect(useThemeStore.getState().mode).toBe('light');
-  });
-
   it('has sticky positioning and backdrop blur', () => {
     renderNavbar();
     const header = screen.getByRole('banner');

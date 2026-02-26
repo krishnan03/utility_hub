@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import ThemeToggle from '../common/ThemeToggle.jsx';
 
 export default function Navbar({ onToggleMobileMenu }) {
   return (
@@ -30,14 +29,14 @@ export default function Navbar({ onToggleMobileMenu }) {
           </button>
 
           <Link to="/" className="flex items-center gap-2.5 group" aria-label="ToolPilot home">
-            {/* Raycast-style icon */}
+            {/* TP logo */}
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-sm font-bold shadow-lg"
+              className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-xs font-extrabold shadow-lg"
               style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)', boxShadow: '0 2px 12px rgba(255,99,99,0.4)' }}
             >
-              ⚡
+              TP
             </motion.div>
             <span className="text-base font-bold tracking-tight text-surface-50">
               Tool<span className="text-gradient">Pilot</span>
@@ -58,8 +57,8 @@ export default function Navbar({ onToggleMobileMenu }) {
           </nav>
         </div>
 
-        {/* Right: theme toggle */}
-        <ThemeToggle />
+        {/* Right side spacer */}
+        <div className="w-9" />
       </div>
     </header>
   );

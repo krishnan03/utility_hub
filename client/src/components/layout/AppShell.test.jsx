@@ -63,18 +63,4 @@ describe('AppShell', () => {
     renderWithRouter(<AppShell><p>hi</p></AppShell>);
     expect(document.documentElement.classList.contains('dark')).toBe(true);
   });
-
-  it('toggles theme when theme button is clicked', async () => {
-    const user = userEvent.setup();
-    useThemeStore.setState({ mode: 'dark', isDark: true });
-    renderWithRouter(<AppShell><p>hi</p></AppShell>);
-
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
-
-    const themeBtn = screen.getByLabelText('Dark mode — click to switch to light');
-    await user.click(themeBtn);
-
-    expect(useThemeStore.getState().mode).toBe('light');
-    expect(useThemeStore.getState().isDark).toBe(false);
-  });
 });
