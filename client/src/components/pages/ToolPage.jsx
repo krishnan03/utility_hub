@@ -146,6 +146,7 @@ const toolComponents = {
   '/tools/spreadsheet/deduplicate': lazy(() => import('../tools/spreadsheet/CSVDeduplicate')),
   '/tools/spreadsheet/pivot-table': lazy(() => import('../tools/spreadsheet/PivotTable')),
   '/tools/spreadsheet/json-flattener': lazy(() => import('../tools/spreadsheet/JSONFlattener')),
+  '/tools/spreadsheet/excel-editor': lazy(() => import('../tools/spreadsheet/ExcelEditor')),
   // Utility tools (additional)
   '/tools/utility/loan-calculator': lazy(() => import('../tools/utility/LoanCalculator')),
   '/tools/utility/world-clock': lazy(() => import('../tools/utility/WorldClock')),
