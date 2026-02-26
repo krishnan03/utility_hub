@@ -145,6 +145,7 @@ export default function PDFEditor() {
       if (ann.type === 'text') {
         ctx.font = `${ann.fontSize || 16}px -apple-system, Inter, sans-serif`;
         ctx.fillStyle = ann.color || '#000';
+        ctx.textBaseline = 'top';
         ctx.fillText(ann.text, ann.x, ann.y);
       } else if (ann.type === 'draw') {
         ctx.strokeStyle = ann.color || '#000';
@@ -181,13 +182,27 @@ export default function PDFEditor() {
 
       ctx.restore();
 
-      // Draw selection border for selected image
+      // Draw selection border + resize handles for selected image
       if (ann.type === 'image' && idx === selectedAnnIdx) {
+        const w = ann.width || 200;
+        const h = ann.height || 150;
         ctx.save();
         ctx.strokeStyle = '#3b82f6';
         ctx.lineWidth = 2;
         ctx.setLineDash([4, 4]);
-        ctx.strokeRect(ann.x - 2, ann.y - 2, (ann.width || 200) + 4, (ann.height || 150) + 4);
+        ctx.strokeRect(ann.x - 2, ann.y - 2, w + 4, h + 4);
+        ctx.setLineDash([]);
+        // Corner resize handles (8x8 squares)
+        const hs = 8;
+        ctx.fillStyle = '#3b82f6';
+        // top-left
+        ctx.fillRect(ann.x - hs / 2, ann.y - hs / 2, hs, hs);
+        // top-right
+        ctx.fillRect(ann.x + w - hs / 2, ann.y - hs / 2, hs, hs);
+        // bottom-left
+        ctx.fillRect(ann.x - hs / 2, ann.y + h - hs / 2, hs, hs);
+        // bottom-right
+        ctx.fillRect(ann.x + w - hs / 2, ann.y + h - hs / 2, hs, hs);
         ctx.restore();
       }
     });
@@ -236,29 +251,81 @@ export default function PDFEditor() {
     render();
   }, [pdfDoc, currentPage, result]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Drag state for moving/resizing images with select tool
+  const [isDraggingImage, setIsDraggingImage] = useState(false);
+  const [resizeCorner, setResizeCorner] = useState(null); // 'tl' | 'tr' | 'bl' | 'br' | null
+  const dragStartRef = useRef(null);
+
+  // Check if pos is near a resize handle of the selected image
+  const getResizeHandle = useCallback((pos) => {
+    if (selectedAnnIdx === null) return null;
+    const ann = (annotations[currentPage] || [])[selectedAnnIdx];
+    if (!ann || ann.type !== 'image') return null;
+    const w = ann.width || 200;
+    const h = ann.height || 150;
+    const threshold = 12;
+    const corners = {
+      tl: { x: ann.x, y: ann.y },
+      tr: { x: ann.x + w, y: ann.y },
+      bl: { x: ann.x, y: ann.y + h },
+      br: { x: ann.x + w, y: ann.y + h },
+    };
+    for (const [key, corner] of Object.entries(corners)) {
+      if (Math.abs(pos.x - corner.x) < threshold && Math.abs(pos.y - corner.y) < threshold) {
+        return key;
+      }
+    }
+    return null;
+  }, [selectedAnnIdx, annotations, currentPage]);
+
   // ── Pointer Handlers ─────────────────────────────────────────────────
 
   const handlePointerDown = (e) => {
+    const pos = getPos(e);
+
+    // Always check image interaction first (resize handle or click on image)
+    const handle = getResizeHandle(pos);
+    if (handle && selectedAnnIdx !== null) {
+      setResizeCorner(handle);
+      setIsDraggingImage(true);
+      const ann = annotations[currentPage][selectedAnnIdx];
+      dragStartRef.current = { x: pos.x, y: pos.y, origAnn: { ...ann } };
+      return;
+    }
+
+    const imgIdx = getImageAtPos(pos);
+    if (imgIdx >= 0) {
+      setSelectedAnnIdx(imgIdx);
+      setIsDraggingImage(true);
+      setResizeCorner(null);
+      dragStartRef.current = { x: pos.x, y: pos.y, origAnn: { ...annotations[currentPage][imgIdx] } };
+      return;
+    }
+
+    // Click was not on an image — deselect any selected image
+    if (selectedAnnIdx !== null) setSelectedAnnIdx(null);
+
     if (activeTool === 'select') {
-      const idx = getImageAtPos(getPos(e));
-      setSelectedAnnIdx(idx >= 0 ? idx : null);
       return;
     }
 
     if (activeTool === 'text') {
-      const pos = getPos(e);
-      setTextInput({ visible: true, x: pos.x, y: pos.y, value: '' });
+      // Store both canvas coords and screen-relative position for the input box
+      const canvas = annotCanvasRef.current;
+      const rect = canvas?.getBoundingClientRect();
+      const screenX = (e.touches ? e.touches[0].clientX : e.clientX) - (rect?.left || 0);
+      const screenY = (e.touches ? e.touches[0].clientY : e.clientY) - (rect?.top || 0);
+      setTextInput({ visible: true, x: pos.x, y: pos.y, screenX, screenY, value: '' });
       setTimeout(() => textInputRef.current?.focus(), 50);
       return;
     }
 
     if (activeTool === 'image') {
-      setStartPoint(getPos(e));
+      setStartPoint(pos);
       imageInputRef.current?.click();
       return;
     }
 
-    const pos = getPos(e);
     setIsDrawing(true);
     setStartPoint(pos);
 
@@ -268,6 +335,53 @@ export default function PDFEditor() {
   };
 
   const handlePointerMove = (e) => {
+    // Handle image dragging/resizing with select tool
+    if (isDraggingImage && selectedAnnIdx !== null && dragStartRef.current) {
+      const pos = getPos(e);
+      const dx = pos.x - dragStartRef.current.x;
+      const dy = pos.y - dragStartRef.current.y;
+      const orig = dragStartRef.current.origAnn;
+
+      if (resizeCorner) {
+        // Resize from corner
+        setAnnotations(prev => {
+          const anns = [...(prev[currentPage] || [])];
+          const ann = { ...anns[selectedAnnIdx] };
+          const ow = orig.width || 200;
+          const oh = orig.height || 150;
+
+          if (resizeCorner === 'br') {
+            ann.width = Math.max(30, ow + dx);
+            ann.height = Math.max(30, oh + dy);
+          } else if (resizeCorner === 'bl') {
+            ann.x = orig.x + dx;
+            ann.width = Math.max(30, ow - dx);
+            ann.height = Math.max(30, oh + dy);
+          } else if (resizeCorner === 'tr') {
+            ann.y = orig.y + dy;
+            ann.width = Math.max(30, ow + dx);
+            ann.height = Math.max(30, oh - dy);
+          } else if (resizeCorner === 'tl') {
+            ann.x = orig.x + dx;
+            ann.y = orig.y + dy;
+            ann.width = Math.max(30, ow - dx);
+            ann.height = Math.max(30, oh - dy);
+          }
+
+          anns[selectedAnnIdx] = ann;
+          return { ...prev, [currentPage]: anns };
+        });
+      } else {
+        // Move
+        setAnnotations(prev => {
+          const anns = [...(prev[currentPage] || [])];
+          anns[selectedAnnIdx] = { ...anns[selectedAnnIdx], x: orig.x + dx, y: orig.y + dy };
+          return { ...prev, [currentPage]: anns };
+        });
+      }
+      return;
+    }
+
     if (!isDrawing) return;
     const pos = getPos(e);
     const canvas = annotCanvasRef.current;
@@ -321,6 +435,14 @@ export default function PDFEditor() {
   };
 
   const handlePointerUp = (e) => {
+    // Stop image dragging/resizing
+    if (isDraggingImage) {
+      setIsDraggingImage(false);
+      setResizeCorner(null);
+      dragStartRef.current = null;
+      return;
+    }
+
     if (!isDrawing) return;
     setIsDrawing(false);
     const pos = getPos(e);
@@ -404,23 +526,107 @@ export default function PDFEditor() {
     setSaving(true);
     setError(null);
     try {
-      const fd = new FormData();
-      fd.append('file', file);
-      fd.append('annotations', JSON.stringify(annotations));
-      fd.append('canvasWidth', String(canvasDims.width));
-      fd.append('canvasHeight', String(canvasDims.height));
-      const res = await fetch('/api/pdf/edit', { method: 'POST', body: fd, credentials: 'include' });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message || 'Save failed');
-      setResult(data);
+      const { PDFDocument } = await import('pdf-lib');
+      const newPdf = await PDFDocument.create();
+
+      // For each page, render PDF + annotations to a combined canvas, then embed as image
+      for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+        const page = await pdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2 }); // 2x for quality
+
+        // Create offscreen canvas for the PDF page
+        const offscreen = document.createElement('canvas');
+        offscreen.width = viewport.width;
+        offscreen.height = viewport.height;
+        const ctx = offscreen.getContext('2d');
+
+        // Render PDF page
+        await page.render({ canvasContext: ctx, viewport }).promise;
+
+        // Draw annotations on top
+        const pageAnns = annotations[pageNum] || [];
+        if (pageAnns.length > 0) {
+          // Scale factor: our annotation canvas dims → offscreen canvas dims
+          const scaleX = viewport.width / canvasDims.width;
+          const scaleY = viewport.height / canvasDims.height;
+
+          ctx.save();
+          ctx.scale(scaleX, scaleY);
+
+          for (const ann of pageAnns) {
+            ctx.save();
+            ctx.globalAlpha = ann.opacity ?? 1;
+
+            if (ann.type === 'text') {
+              ctx.font = `${ann.fontSize || 16}px -apple-system, Inter, sans-serif`;
+              ctx.fillStyle = ann.color || '#000';
+              ctx.textBaseline = 'top';
+              ctx.fillText(ann.text, ann.x, ann.y);
+            } else if (ann.type === 'draw' && ann.points?.length >= 2) {
+              ctx.strokeStyle = ann.color || '#000';
+              ctx.lineWidth = ann.strokeWidth || 2;
+              ctx.lineCap = 'round';
+              ctx.lineJoin = 'round';
+              ctx.beginPath();
+              ann.points.forEach((pt, i) => {
+                if (i === 0) ctx.moveTo(pt.x, pt.y);
+                else ctx.lineTo(pt.x, pt.y);
+              });
+              ctx.stroke();
+            } else if (ann.type === 'highlight') {
+              ctx.fillStyle = ann.color || '#FFFF00';
+              ctx.globalAlpha = 0.35;
+              ctx.fillRect(ann.x, ann.y, ann.width, ann.height);
+            } else if (ann.type === 'rect') {
+              ctx.strokeStyle = ann.color || '#000';
+              ctx.lineWidth = ann.strokeWidth || 2;
+              ctx.strokeRect(ann.x, ann.y, ann.width, ann.height);
+            } else if (ann.type === 'image' && ann.dataUrl) {
+              const cached = imgCacheRef.current[ann.dataUrl];
+              if (cached) {
+                ctx.drawImage(cached, ann.x, ann.y, ann.width || 200, ann.height || 150);
+              }
+            }
+
+            ctx.restore();
+          }
+
+          ctx.restore();
+        }
+
+        // Convert canvas to JPEG and embed in new PDF
+        const jpegDataUrl = offscreen.toDataURL('image/jpeg', 0.92);
+        const jpegBytes = Uint8Array.from(atob(jpegDataUrl.split(',')[1]), c => c.charCodeAt(0));
+        const jpegImage = await newPdf.embedJpg(jpegBytes);
+
+        // Get original page size for the output PDF
+        const origViewport = page.getViewport({ scale: 1 });
+        const newPage = newPdf.addPage([origViewport.width, origViewport.height]);
+        newPage.drawImage(jpegImage, {
+          x: 0,
+          y: 0,
+          width: origViewport.width,
+          height: origViewport.height,
+        });
+      }
+
+      const savedBytes = await newPdf.save();
+      const blob = new Blob([savedBytes], { type: 'application/pdf' });
+      const blobUrl = URL.createObjectURL(blob);
+      const outputName = file.name.replace(/\.pdf$/i, '') + '_edited.pdf';
+      setResult({ downloadUrl: blobUrl, metadata: { outputName } });
     } catch (e) {
-      setError(e.message);
+      console.error('Save failed:', e);
+      setError('Save failed: ' + e.message);
     } finally {
       setSaving(false);
     }
   };
 
   const reset = () => {
+    if (result?.downloadUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(result.downloadUrl);
+    }
     setFile(null);
     setPdfDoc(null);
     setTotalPages(0);
@@ -468,12 +674,12 @@ export default function PDFEditor() {
             Download Edited PDF
           </a>
           <p className="text-xs text-surface-500 flex items-center gap-1.5">
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Your data is auto-deleted in 24h
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            100% client-side — your PDF never left your browser
           </p>
         </div>
         <div className="flex gap-3">
-          <button onClick={() => setResult(null)} className="flex-1 btn-secondary">Continue Editing</button>
+          <button onClick={() => { if (result?.downloadUrl?.startsWith('blob:')) URL.revokeObjectURL(result.downloadUrl); setResult(null); }} className="flex-1 btn-secondary">Continue Editing</button>
           <button onClick={reset} className="flex-1 btn-secondary">Edit Another PDF</button>
         </div>
       </motion.div>
@@ -705,7 +911,7 @@ export default function PDFEditor() {
           ref={annotCanvasRef}
           className="absolute inset-0 w-full h-full"
           style={{
-            cursor: activeTool === 'select' ? 'default'
+            cursor: activeTool === 'select' ? (isDraggingImage ? (resizeCorner ? 'nwse-resize' : 'grabbing') : 'default')
               : activeTool === 'text' ? 'text'
               : activeTool === 'eraser' ? 'cell'
               : 'crosshair',
@@ -726,37 +932,83 @@ export default function PDFEditor() {
           onTouchEnd={handlePointerUp}
         />
 
-        {/* Inline text input */}
+        {/* Inline text input — draggable */}
         {textInput.visible && (
-          <input
-            ref={textInputRef}
-            type="text"
-            value={textInput.value}
-            onChange={(e) => setTextInput((prev) => ({ ...prev, value: e.target.value }))}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') placeText();
-              if (e.key === 'Escape') setTextInput({ visible: false, x: 0, y: 0, value: '' });
-            }}
-            onBlur={() => { /* commit only on Enter/Escape/next canvas click */ }}
-            className="absolute outline-none caret-white text-white placeholder-white/50"
+          <div
+            className="absolute"
             style={{
-              left: `${(textInput.x / canvasDims.width) * 100}%`,
-              top: `${(textInput.y / canvasDims.height) * 100}%`,
-              fontSize: `${fontSize}px`,
-              color: color === '#000000' ? '#ffffff' : color,
-              minWidth: 160,
-              maxWidth: 300,
-              fontFamily: '-apple-system, Inter, sans-serif',
-              background: 'rgba(0,0,0,0.6)',
-              border: '1px solid rgba(255,99,99,0.8)',
-              borderRadius: '4px',
-              padding: '4px 8px',
-              backdropFilter: 'blur(4px)',
+              left: `${textInput.screenX}px`,
+              top: `${textInput.screenY - 20}px`,
               zIndex: 20,
             }}
-            placeholder="Type here..."
-            autoFocus
-          />
+            onMouseDown={(e) => {
+              // Only drag if clicking the wrapper, not the input
+              if (e.target === e.currentTarget || e.target.classList.contains('drag-hint')) {
+                e.preventDefault();
+                const startX = e.clientX;
+                const startY = e.clientY;
+                const origScreenX = textInput.screenX;
+                const origScreenY = textInput.screenY;
+                const origX = textInput.x;
+                const origY = textInput.y;
+                const canvas = annotCanvasRef.current;
+                const rect = canvas?.getBoundingClientRect();
+                const scaleX = canvas ? canvas.width / rect.width : 1;
+                const scaleY = canvas ? canvas.height / rect.height : 1;
+
+                const onMove = (me) => {
+                  const dx = me.clientX - startX;
+                  const dy = me.clientY - startY;
+                  setTextInput(prev => ({
+                    ...prev,
+                    screenX: origScreenX + dx,
+                    screenY: origScreenY + dy,
+                    x: origX + dx * scaleX,
+                    y: origY + dy * scaleY,
+                  }));
+                };
+                const onUp = () => {
+                  window.removeEventListener('mousemove', onMove);
+                  window.removeEventListener('mouseup', onUp);
+                };
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onUp);
+              }
+            }}
+          >
+            <div className="drag-hint flex items-center gap-1 px-1 py-0.5 select-none rounded-t" style={{ background: 'rgba(255,99,99,0.3)', cursor: 'move' }}>
+              <span className="text-[10px] text-white/60">⠿</span>
+              <span className="text-[10px] text-white/50">drag to move</span>
+              <span className="text-[10px] text-white/30 ml-auto">Enter ↵</span>
+            </div>
+            <input
+              ref={textInputRef}
+              type="text"
+              value={textInput.value}
+              onChange={(e) => setTextInput((prev) => ({ ...prev, value: e.target.value }))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') placeText();
+                if (e.key === 'Escape') setTextInput({ visible: false, x: 0, y: 0, value: '' });
+              }}
+              onBlur={() => { /* commit only on Enter/Escape/next canvas click */ }}
+              className="outline-none caret-white text-white placeholder-white/50 block"
+              style={{
+                fontSize: `${fontSize}px`,
+                color: color === '#000000' ? '#ffffff' : color,
+                minWidth: 160,
+                maxWidth: 300,
+                fontFamily: '-apple-system, Inter, sans-serif',
+                background: 'rgba(0,0,0,0.6)',
+                border: '1px solid rgba(255,99,99,0.8)',
+                borderTop: 'none',
+                borderRadius: '0 0 4px 4px',
+                padding: '2px 4px',
+                backdropFilter: 'blur(4px)',
+              }}
+              placeholder="Type here..."
+              autoFocus
+            />
+          </div>
         )}
 
         {/* Hidden image file input */}
@@ -787,6 +1039,10 @@ export default function PDFEditor() {
                   opacity,
                 };
                 addAnnotation(ann);
+                // Auto-select the newly placed image and switch to select tool
+                const newIdx = (annotations[currentPage] || []).length; // will be at this index after add
+                setSelectedAnnIdx(newIdx);
+                setActiveTool('select');
               };
               img.src = dataUrl;
             };

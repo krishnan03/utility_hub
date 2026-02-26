@@ -101,12 +101,44 @@ export default function DiffChecker() {
   const [right, setRight] = useState('');
   const [view, setView] = useState('unified');
   const [copied, setCopied] = useState(false);
+  const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
+
+  // Normalize a line for whitespace-insensitive comparison
+  const norm = useCallback((s) => s.replace(/\s+/g, ' ').trim(), []);
 
   /* line-level diff */
   const diff = useMemo(() => {
     if (!left && !right) return [];
-    return lcs(left.split('\n'), right.split('\n'));
-  }, [left, right]);
+    const leftLines = left.split('\n');
+    const rightLines = right.split('\n');
+
+    if (ignoreWhitespace) {
+      // Diff on normalized lines, then map results back to originals
+      const normLeft = leftLines.map(norm);
+      const normRight = rightLines.map(norm);
+      const normDiff = lcs(normLeft, normRight);
+
+      // Walk through the diff and pull original lines using counters
+      let li = 0, ri = 0;
+      return normDiff.map(d => {
+        if (d.type === 'same') {
+          const val = leftLines[li] || d.val;
+          li++; ri++;
+          return { type: 'same', val };
+        } else if (d.type === 'remove') {
+          const val = leftLines[li] || d.val;
+          li++;
+          return { type: 'remove', val };
+        } else {
+          const val = rightLines[ri] || d.val;
+          ri++;
+          return { type: 'add', val };
+        }
+      });
+    }
+
+    return lcs(leftLines, rightLines);
+  }, [left, right, ignoreWhitespace, norm]);
 
   /* paired diff for word-level highlighting */
   const pairedDiff = useMemo(() => pairDiffLines(diff), [diff]);
@@ -281,6 +313,16 @@ export default function DiffChecker() {
                 <ClipboardIcon /> {copied ? 'Copied!' : 'Copy Diff'}
               </motion.button>
             )}
+
+            {/* Ignore whitespace */}
+            <button
+              onClick={() => setIgnoreWhitespace(p => !p)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${ignoreWhitespace ? 'text-white' : 'text-surface-400 hover:text-surface-200'}`}
+              style={ignoreWhitespace ? { background: 'rgba(99,102,241,0.3)', border: '1px solid rgba(99,102,241,0.5)' } : { background: 'rgba(255,255,255,0.04)', border: '1px solid transparent' }}
+              title="Ignore whitespace differences"
+            >
+              {ignoreWhitespace ? '✓ ' : ''}Ignore Whitespace
+            </button>
 
             {/* View toggle */}
             <div className="flex rounded-lg overflow-hidden" style={{ background: 'rgba(255,255,255,0.04)' }}>

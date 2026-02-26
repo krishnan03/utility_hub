@@ -141,38 +141,86 @@ export default function JSONYAMLXMLFormatter() {
     setCopied(true); setTimeout(() => setCopied(false), 1500);
   };
 
-  const btnClass = 'px-3 py-1.5 text-white rounded-xl text-sm font-medium transition-colors';
+  // Auto-detect and format on Ctrl+Enter
+  const autoFormat = () => {
+    const fmt = detectFormat(input);
+    if (fmt === 'json') run(() => JSON.stringify(JSON.parse(input), null, 2));
+    else if (fmt === 'xml') run(() => formatXML(input));
+    else run(() => toYAML(parseYAML(input)));
+  };
+
+  const handleKeyDown = (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      autoFormat();
+    }
+  };
+
+  const inputLines = input ? input.split('\n').length : 0;
+  const outputLines = output ? output.split('\n').length : 0;
+  const detectedFormat = input.trim() ? detectFormat(input) : null;
+
+  const btnClass = 'px-3 py-1.5 text-white rounded-xl text-sm font-medium transition-all hover:brightness-110 active:scale-95 min-h-[36px]';
+  const btnSecondary = 'px-3 py-1.5 rounded-xl text-sm font-medium transition-all hover:bg-white/10 text-surface-300 min-h-[36px]';
 
   return (
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="space-y-4">
       <div className="rounded-2xl p-6 space-y-4" style={{ background: 'rgba(44,44,46,0.8)', border: '1px solid rgba(255,255,255,0.08)' }}>
         <div>
-          <label className="text-sm font-medium text-surface-300 block mb-1">Input (JSON / YAML / XML)</label>
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-sm font-medium text-surface-300">Input (JSON / YAML / XML)</label>
+            <div className="flex items-center gap-2">
+              {detectedFormat && (
+                <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: 'rgba(255,99,99,0.1)', color: '#FF6363' }}>
+                  {detectedFormat.toUpperCase()}
+                </span>
+              )}
+              <span className="text-xs text-surface-500 tabular-nums">{inputLines} line{inputLines !== 1 ? 's' : ''}</span>
+            </div>
+          </div>
           <textarea
             rows={8}
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Paste JSON, YAML, or XML here..."
+            onKeyDown={handleKeyDown}
+            placeholder="Paste JSON, YAML, or XML here... (Ctrl+Enter to auto-format)"
             className="w-full px-3 py-2 rounded-xl text-surface-100 focus:outline-none focus:ring-2 focus:ring-primary-500/40 font-mono text-sm"
             style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
           />
         </div>
+
+        {/* Auto-format button */}
         <div className="flex flex-wrap gap-2">
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => JSON.stringify(JSON.parse(input), null, 2))}>Format JSON</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => { const fmt = detectFormat(input); if (fmt === 'json') return toYAML(JSON.parse(input)); if (fmt === 'xml') { const doc = new DOMParser().parseFromString(input, 'application/xml'); return toYAML(xmlToObj(doc.documentElement)); } return toYAML(parseYAML(input)); })}>Format YAML</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => formatXML(input))}>Format XML</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => toYAML(JSON.parse(input)))}>JSON→YAML</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => formatXML(objToXML(JSON.parse(input))))}>JSON→XML</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => JSON.stringify(parseYAML(input), null, 2))}>YAML→JSON</button>
-          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={() => run(() => { const doc = new DOMParser().parseFromString(input, 'application/xml'); if (doc.querySelector('parsererror')) throw new Error('Invalid XML'); return JSON.stringify(xmlToObj(doc.documentElement), null, 2); })}>XML→JSON</button>
+          <button className={btnClass} style={{ background: 'linear-gradient(135deg, #FF6363, #FF9F43)' }} onClick={autoFormat}>
+            ⚡ Auto-Format <span className="text-xs opacity-70 ml-1">⌘↵</span>
+          </button>
+          <div className="w-px h-8 bg-white/10 self-center" />
+          <button className={btnClass} style={{ background: 'rgba(255,255,255,0.08)' }} onClick={() => run(() => JSON.stringify(JSON.parse(input), null, 2))}>Format JSON</button>
+          <button className={btnClass} style={{ background: 'rgba(255,255,255,0.08)' }} onClick={() => run(() => { const fmt = detectFormat(input); if (fmt === 'json') return toYAML(JSON.parse(input)); if (fmt === 'xml') { const doc = new DOMParser().parseFromString(input, 'application/xml'); return toYAML(xmlToObj(doc.documentElement)); } return toYAML(parseYAML(input)); })}>Format YAML</button>
+          <button className={btnClass} style={{ background: 'rgba(255,255,255,0.08)' }} onClick={() => run(() => formatXML(input))}>Format XML</button>
         </div>
-        {error && <p className="text-red-400 text-sm rounded-xl px-3 py-2" style={{ background: 'rgba(239,68,68,0.08)' }}>{error}</p>}
+
+        {/* Convert buttons */}
+        <div className="flex flex-wrap gap-2">
+          <span className="text-xs text-surface-500 self-center mr-1">Convert:</span>
+          <button className={btnSecondary} style={{ background: 'rgba(255,255,255,0.04)' }} onClick={() => run(() => toYAML(JSON.parse(input)))}>JSON→YAML</button>
+          <button className={btnSecondary} style={{ background: 'rgba(255,255,255,0.04)' }} onClick={() => run(() => formatXML(objToXML(JSON.parse(input))))}>JSON→XML</button>
+          <button className={btnSecondary} style={{ background: 'rgba(255,255,255,0.04)' }} onClick={() => run(() => JSON.stringify(parseYAML(input), null, 2))}>YAML→JSON</button>
+          <button className={btnSecondary} style={{ background: 'rgba(255,255,255,0.04)' }} onClick={() => run(() => { const doc = new DOMParser().parseFromString(input, 'application/xml'); if (doc.querySelector('parsererror')) throw new Error('Invalid XML'); return JSON.stringify(xmlToObj(doc.documentElement), null, 2); })}>XML→JSON</button>
+          <div className="w-px h-8 bg-white/10 self-center" />
+          <span className="text-xs text-surface-500 self-center mr-1">Minify:</span>
+          <button className={btnSecondary} style={{ background: 'rgba(255,255,255,0.04)' }} onClick={() => run(() => JSON.stringify(JSON.parse(input)))}>Minify JSON</button>
+        </div>
+
+        {error && <p className="text-red-400 text-sm rounded-xl px-3 py-2" style={{ background: 'rgba(239,68,68,0.08)' }}>⚠️ {error}</p>}
         {output && (
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-sm font-medium text-surface-300">Output</label>
-              <button onClick={copy} className="text-xs px-3 py-1 rounded-lg transition-colors hover:bg-white/5" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                {copied ? '✓ Copied' : 'Copy'}
+              <label className="text-sm font-medium text-surface-300">
+                Output <span className="text-xs text-surface-500 ml-2 tabular-nums">{outputLines} line{outputLines !== 1 ? 's' : ''}</span>
+              </label>
+              <button onClick={copy} className="text-xs px-3 py-1.5 rounded-lg transition-all hover:bg-white/10 min-h-[32px]" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                {copied ? '✓ Copied' : '📋 Copy'}
               </button>
             </div>
             <textarea
