@@ -163,7 +163,6 @@ describe('MobileMenu', () => {
 
   it('renders ToolPilot branding in the panel header', () => {
     renderMenu();
-    expect(screen.getByText(/Utility/)).toBeInTheDocument();
-    expect(screen.getByText('Hub')).toBeInTheDocument();
+    expect(screen.getByText('Pilot')).toBeInTheDocument();
   });
 });

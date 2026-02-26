@@ -48,7 +48,7 @@ describe('Navbar', () => {
     const link = screen.getByLabelText('ToolPilot home');
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/');
-    expect(screen.getByText(/ToolPilot|Utility/)).toBeInTheDocument();
+    expect(screen.getByText(/Tool/)).toBeInTheDocument();
   });
 
   it('renders hamburger menu button with aria-label', () => {

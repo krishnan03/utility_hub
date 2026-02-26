@@ -40,7 +40,7 @@ export default function Navbar({ onToggleMobileMenu }) {
               ⚡
             </motion.div>
             <span className="text-base font-bold tracking-tight text-surface-50">
-              Utility<span className="text-gradient">Hub</span>
+              Tool<span className="text-gradient">Pilot</span>
             </span>
           </Link>
 

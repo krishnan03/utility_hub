@@ -100,14 +100,14 @@ export default function MobileMenu({ isOpen, onClose }) {
               style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
             >
               <span className="text-base font-bold text-surface-50">
-                Utility<span
+                Tool<span
                   style={{
                     background: 'linear-gradient(135deg, #FF6363, #FF9F43)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',
                   }}
-                >Hub</span>
+                >Pilot</span>
               </span>
               <button
                 ref={closeButtonRef}

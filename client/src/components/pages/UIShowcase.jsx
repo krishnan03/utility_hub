@@ -12,7 +12,7 @@ function Theme1() {
       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(circle, #D4A85322 1px, transparent 1px)', backgroundSize: '28px 28px', pointerEvents: 'none' }} />
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1px solid #D4A85333', position: 'relative', zIndex: 1 }}>
-        <span style={{ color: '#D4A853', fontWeight: 700, letterSpacing: '0.15em', fontSize: 13 }}>UTILITY HUB</span>
+        <span style={{ color: '#D4A853', fontWeight: 700, letterSpacing: '0.15em', fontSize: 13 }}>TOOLPILOT</span>
         <div style={{ display: 'flex', gap: 20 }}>
           {['Tools', 'Blog', 'About'].map(n => <span key={n} style={{ fontSize: 11, color: '#ffffff88', letterSpacing: '0.1em' }}>{n}</span>)}
         </div>
@@ -148,7 +148,7 @@ function Theme4() {
       </div>
       {/* Hero */}
       <div style={{ padding: '20px 20px 12px' }}>
-        <div style={{ fontSize: 9, color: '#00FF4188', marginBottom: 4 }}>// UTILITY HUB — SYSTEM INITIALIZED</div>
+        <div style={{ fontSize: 9, color: '#00FF4188', marginBottom: 4 }}>// TOOLPILOT — SYSTEM INITIALIZED</div>
         <pre style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.2, color: '#00FF41', margin: 0 }}>{`██╗   ██╗██╗  ██╗
 ██║   ██║██║  ██║
 ██║   ██║███████║
@@ -210,7 +210,7 @@ function Theme5() {
       {/* Hero glass card */}
       <div style={{ margin: '24px 20px 16px', background: 'rgba(255,255,255,0.07)', backdropFilter: 'blur(24px)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 16, padding: '20px', position: 'relative', zIndex: 2 }}>
         <div style={{ fontSize: 11, color: '#A78BFA', letterSpacing: '0.15em', marginBottom: 6 }}>✦ 122 TOOLS AVAILABLE</div>
-        <div style={{ fontSize: 36, fontWeight: 800, lineHeight: 1.1 }}>Next-Gen<br/><span style={{ background: 'linear-gradient(90deg,#A78BFA,#67E8F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Utility Suite</span></div>
+        <div style={{ fontSize: 36, fontWeight: 800, lineHeight: 1.1 }}>Next-Gen<br/><span style={{ background: 'linear-gradient(90deg,#A78BFA,#67E8F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Tool Suite</span></div>
         <div style={{ marginTop: 12, background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 50, padding: '7px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ fontSize: 10, color: '#A78BFA' }}>⌕</span>
           <span style={{ fontSize: 10, color: '#ffffff44' }}>Search tools...</span>
@@ -235,7 +235,7 @@ function Theme6() {
     <div style={{ background: '#F5F0E8', color: '#000', fontFamily: 'Georgia, serif', height: '100%', overflow: 'hidden' }}>
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px', borderBottom: '3px solid #000' }}>
-        <span style={{ fontWeight: 900, fontSize: 14, letterSpacing: '-0.5px', fontFamily: 'Georgia, serif' }}>UTILITY HUB</span>
+        <span style={{ fontWeight: 900, fontSize: 14, letterSpacing: '-0.5px', fontFamily: 'Georgia, serif' }}>TOOLPILOT</span>
         <div style={{ display: 'flex', gap: 0 }}>
           {['TOOLS', 'BLOG', 'ABOUT'].map(n => <span key={n} style={{ fontSize: 9, fontWeight: 700, padding: '4px 10px', borderLeft: '2px solid #000', fontFamily: 'Arial, sans-serif', letterSpacing: '0.1em' }}>{n}</span>)}
         </div>
@@ -374,7 +374,7 @@ function Theme9() {
     <div style={{ background: '#fff', color: '#000', fontFamily: 'Georgia, "Times New Roman", serif', height: '100%', overflow: 'hidden' }}>
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 24px', borderBottom: '2px solid #000' }}>
-        <span style={{ fontWeight: 900, fontSize: 14, fontFamily: 'Arial Black, sans-serif', letterSpacing: '-0.5px' }}>UTILITY HUB</span>
+        <span style={{ fontWeight: 900, fontSize: 14, fontFamily: 'Arial Black, sans-serif', letterSpacing: '-0.5px' }}>TOOLPILOT</span>
         <div style={{ display: 'flex', gap: 16 }}>
           {['Tools', 'Blog', 'About'].map(n => <span key={n} style={{ fontSize: 10, fontFamily: 'Arial, sans-serif', color: '#555' }}>{n}</span>)}
         </div>
@@ -431,7 +431,7 @@ function Theme10() {
       {/* Nav */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 22px', borderBottom: '2px solid #FF2D78', position: 'relative', zIndex: 2 }}>
         <div>
-          <span style={{ fontWeight: 900, fontSize: 14, color: '#FF2D78', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Utility</span>
+          <span style={{ fontWeight: 900, fontSize: 14, color: '#FF2D78', letterSpacing: '0.1em', textTransform: 'uppercase' }}>ToolPilot</span>
           <span style={{ fontWeight: 900, fontSize: 14, color: '#FFE600', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Hub</span>
         </div>
         <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
