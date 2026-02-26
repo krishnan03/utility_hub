@@ -182,6 +182,10 @@ const toolComponents = {
   '/tools/document/html-to-pdf': lazy(() => import('../tools/document/HTMLToPDF')),
   '/tools/pdf/form-filler': lazy(() => import('../tools/document/PDFFormFiller')),
   '/tools/pdf/compare': lazy(() => import('../tools/document/PDFCompare')),
+  '/tools/pdf/page-numbers': lazy(() => import('../tools/document/PDFPageNumbers')),
+  '/tools/pdf/unlock': lazy(() => import('../tools/document/PDFUnlock')),
+  '/tools/pdf/crop': lazy(() => import('../tools/document/PDFCrop')),
+  '/tools/pdf/redact': lazy(() => import('../tools/document/PDFRedact')),
   // Media tools
   '/tools/media/audio-convert': lazy(() => import('../tools/media/AudioConverter')),
   '/tools/media/video-convert': lazy(() => import('../tools/media/VideoConverter')),
