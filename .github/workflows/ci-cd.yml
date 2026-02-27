@@ -39,7 +39,11 @@ jobs:
         run: npm test
         working-directory: client
 
-      - name: Build client
+      - name: Install Chromium for prerendering
+        run: npx puppeteer browsers install chrome
+        working-directory: client
+
+      - name: Build client (includes prerender)
         run: npm run build
         working-directory: client
 
