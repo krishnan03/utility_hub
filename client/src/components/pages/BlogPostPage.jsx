@@ -3,56 +3,7 @@ import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BLOG_POSTS } from './BlogPage';
 import SEOHead from '../common/SEOHead';
-
-// ── Full blog post content (keyed by slug) ───────────────────────────
-const BLOG_CONTENT = {
-  'toolspilot-api-llms-smart-search': {
-    sections: [
-      {
-        heading: 'A Public API for Your Scripts and Workflows',
-        body: `We've opened up a REST API so you can hit ToolsPilot programmatically — no browser required. Whether you're batch-converting images in a CI pipeline or compressing PDFs from a cron job, the API has you covered.`,
-      },
-      {
-        heading: 'Quick Start',
-        code: `# Browse the full tool catalog
-curl https://toolspilot.work/api/tools
-
-# Search for a specific tool
-curl "https://toolspilot.work/api/tools?q=json"
-
-# Filter by category
-curl "https://toolspilot.work/api/tools?category=developer"
-
-# Get details + curl example for a single tool
-curl https://toolspilot.work/api/tools/pdf-compress
-
-# Compress a PDF via the API
-curl -X POST https://toolspilot.work/api/pdf/compress \\
-  -F "file=@report.pdf" -F "quality=medium"
-
-# Convert an image to WebP
-curl -X POST https://toolspilot.work/api/image/convert \\
-  -F "file=@photo.png" -F "format=webp"`,
-      },
-      {
-        heading: 'No Auth, No Signup',
-        body: `The API requires zero authentication. It's rate-limited to 100 requests per 15 minutes per IP. Uploaded files are auto-deleted within 24 hours — same privacy guarantees as the web UI.`,
-      },
-      {
-        heading: 'llms.txt — Making ToolsPilot Visible to AI',
-        body: `We added a /llms.txt file at the root of our domain. This is a plain-text manifest that tells AI models (ChatGPT, Claude, Gemini, Perplexity) exactly what ToolsPilot offers, with direct links to every tool category. When an AI is deciding which tool to recommend for "compress a PDF" or "format JSON", llms.txt gives it structured context to point users our way.`,
-      },
-      {
-        heading: 'Schema Markup for Search Engines',
-        body: `We also added WebApplication structured data (JSON-LD) to our HTML head. This uses Schema.org's SoftwareApplication type with hasPart sub-applications for our flagship tools. Google, Bing, and AI-powered search engines can now parse our tool catalog as structured data rather than scraping page content.`,
-      },
-      {
-        heading: 'Smart Search: Just Describe What You Need',
-        body: `The old search bar matched keywords. The new Command Bar understands intent. Type "fix messy JSON" and it surfaces the JSON Formatter with a "Format JSON" action hint. Type "make text lowercase" and it jumps to Text Utilities. Type "compress my PDF" and it knows exactly where to send you.\n\nIt works like Raycast or Spotlight — hit ⌘K from anywhere, type naturally, arrow-key to your tool, hit Enter. 150+ intent patterns cover every tool in the catalog, with keyword fallback for anything the patterns don't catch.`,
-      },
-    ],
-  },
-};
+import BLOG_CONTENT from '../../lib/blogContent';
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -151,6 +102,16 @@ export default function BlogPostPage() {
                   <pre className="p-4 rounded-xl text-sm font-mono overflow-x-auto" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <code className="text-surface-200">{section.code}</code>
                   </pre>
+                )}
+                {section.links && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {section.links.map((link) => (
+                      <Link key={link.path} to={link.path} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors" style={{ background: 'rgba(255,99,99,0.08)', border: '1px solid rgba(255,99,99,0.15)' }}>
+                        {link.icon && <span aria-hidden="true">{link.icon}</span>}
+                        {link.label} →
+                      </Link>
+                    ))}
+                  </div>
                 )}
               </div>
             ))}
