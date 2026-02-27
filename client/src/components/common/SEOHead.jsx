@@ -48,13 +48,15 @@ export default function SEOHead({ title, description, path, tool = null }) {
     setMeta('property', 'og:url', url);
     setMeta('property', 'og:type', 'website');
     setMeta('property', 'og:site_name', 'ToolsPilot');
-    setMeta('property', 'og:image', `${BASE_URL}/og-image.png`);
+    setMeta('property', 'og:image', `${BASE_URL}/og-image.svg`);
+    setMeta('property', 'og:image:width', '1200');
+    setMeta('property', 'og:image:height', '630');
 
     // Twitter Card
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', fullTitle);
     setMeta('name', 'twitter:description', desc);
-    setMeta('name', 'twitter:image', `${BASE_URL}/og-image.png`);
+    setMeta('name', 'twitter:image', `${BASE_URL}/og-image.svg`);
 
     // Per-tool structured data
     let scriptEl = document.getElementById('tool-structured-data');

@@ -1,6 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { BLOG_POSTS } from './BlogPage';
+import SEOHead from '../common/SEOHead';
 
 // ── Full blog post content (keyed by slug) ───────────────────────────
 const BLOG_CONTENT = {
@@ -56,6 +58,36 @@ export default function BlogPostPage() {
   const { slug } = useParams();
   const post = BLOG_POSTS.find((p) => p.slug === slug);
 
+  // Inject Article structured data for blog posts
+  useEffect(() => {
+    if (!post) return;
+    let scriptEl = document.getElementById('article-structured-data');
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.date,
+      dateModified: post.date,
+      url: `https://toolspilot.work/blog/${post.slug}`,
+      author: { '@type': 'Organization', name: 'ToolsPilot' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'ToolsPilot',
+        logo: { '@type': 'ImageObject', url: 'https://toolspilot.work/favicon.svg' },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': `https://toolspilot.work/blog/${post.slug}` },
+    };
+    if (!scriptEl) {
+      scriptEl = document.createElement('script');
+      scriptEl.id = 'article-structured-data';
+      scriptEl.type = 'application/ld+json';
+      document.head.appendChild(scriptEl);
+    }
+    scriptEl.textContent = JSON.stringify(schema);
+    return () => { if (scriptEl) scriptEl.remove(); };
+  }, [post]);
+
   if (!post) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
@@ -73,6 +105,11 @@ export default function BlogPostPage() {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-3xl mx-auto pb-12"
     >
+      <SEOHead
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.slug}`}
+      />
       <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-surface-400 hover:text-primary-500 transition-colors mb-6">
         ← Back to Blog
       </Link>

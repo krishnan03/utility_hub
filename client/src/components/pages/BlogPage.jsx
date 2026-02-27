@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEOHead from '../common/SEOHead';
 
 const BLOG_POSTS = [
   {
@@ -107,6 +108,11 @@ export { BLOG_POSTS };
 export default function BlogPage() {
   return (
     <div className="space-y-10 pb-12">
+      <SEOHead
+        title="Blog"
+        description="Tips, guides, and tutorials for getting the most out of free online tools — PDF editing, image conversion, developer utilities, and more."
+        path="/blog"
+      />
       <div>
         <h1 className="text-4xl lg:text-5xl font-extrabold text-surface-900 dark:text-surface-50 mb-3">
           Blog

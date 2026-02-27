@@ -14,13 +14,15 @@
     <meta property="og:url" content="https://toolspilot.work" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ToolsPilot" />
-    <meta property="og:image" content="https://toolspilot.work/og-image.png" />
+    <meta property="og:image" content="https://toolspilot.work/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ToolsPilot — Free Online Tools for Everyone" />
     <meta name="twitter:description" content="159+ free online tools — PDF, Excel, Word editors, image converters, dev tools, and more. No signup." />
-    <meta name="twitter:image" content="https://toolspilot.work/og-image.png" />
+    <meta name="twitter:image" content="https://toolspilot.work/og-image.svg" />
 
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#FF6363" />
@@ -28,13 +30,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <!-- Structured Data: WebSite with SearchAction for Sitelinks Search Box -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ToolsPilot",
+      "url": "https://toolspilot.work",
+      "description": "159+ free online tools — PDF editor, Excel editor, image converter, developer tools, and more.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://toolspilot.work/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
     <!-- Structured Data: SoftwareApplication for AI/LLM discoverability -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "ToolsPilot",
-      "url": "https://toolspilot.com",
+      "url": "https://toolspilot.work",
       "description": "159+ free online tools — PDF editor, Excel editor, Word editor, image converter, developer tools, finance calculators and more. No signup required.",
       "applicationCategory": "UtilitiesApplication",
       "operatingSystem": "Any",
@@ -55,16 +72,11 @@
         "Security Tools (Password Generator, Hash Generator, File Encryption)",
         "Spreadsheet Tools (CSV Viewer, Pivot Table, Excel to JSON)"
       ],
-      "screenshot": "https://toolspilot.com/og-image.png",
+      "screenshot": "https://toolspilot.work/og-image.png",
       "softwareVersion": "2.0",
       "author": {
         "@type": "Organization",
         "name": "ToolsPilot"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "1200"
       },
       "hasPart": [
         {
@@ -72,7 +84,7 @@
           "name": "PDF Editor",
           "applicationCategory": "UtilitiesApplication",
           "description": "Edit PDFs online — add text, images, annotations, highlights, and save",
-          "url": "https://toolspilot.com/tools/document/pdf-editor",
+          "url": "https://toolspilot.work/tools/document/pdf-editor",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
@@ -80,7 +92,7 @@
           "name": "Online Excel Editor",
           "applicationCategory": "UtilitiesApplication",
           "description": "Edit Excel spreadsheets in your browser with formulas, formatting, charts, and XLSX import/export",
-          "url": "https://toolspilot.com/tools/spreadsheet/excel-editor",
+          "url": "https://toolspilot.work/tools/spreadsheet/excel-editor",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
@@ -88,7 +100,7 @@
           "name": "Image Format Converter",
           "applicationCategory": "UtilitiesApplication",
           "description": "Convert images between PNG, JPG, WEBP, SVG, GIF, BMP, TIFF, ICO, and AVIF",
-          "url": "https://toolspilot.com/tools/image/convert",
+          "url": "https://toolspilot.work/tools/image/convert",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
@@ -96,7 +108,7 @@
           "name": "JSON / YAML / XML Formatter",
           "applicationCategory": "DeveloperApplication",
           "description": "Format, validate, and convert between JSON, YAML, and XML",
-          "url": "https://toolspilot.com/tools/developer/json-yaml-xml",
+          "url": "https://toolspilot.work/tools/developer/json-yaml-xml",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         },
         {
@@ -104,7 +116,7 @@
           "name": "Password Generator",
           "applicationCategory": "SecurityApplication",
           "description": "Generate secure random passwords and passphrases with strength indicator",
-          "url": "https://toolspilot.com/tools/security/password-generator",
+          "url": "https://toolspilot.work/tools/security/password-generator",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
         }
       ]
@@ -112,6 +124,11 @@
     </script>
   </head>
   <body>
+    <noscript>
+      <h1>ToolsPilot — Free Online Tools for Everyone</h1>
+      <p>159+ free online tools — PDF editor, Excel editor, Word editor, image converter, developer tools, finance calculators and more. No signup required.</p>
+      <p>Visit <a href="https://toolspilot.work/sitemap.xml">our sitemap</a> to browse all tools.</p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

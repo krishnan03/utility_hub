@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import tools from '../../lib/toolRegistry';
+import SEOHead from '../common/SEOHead';
 
 const containerVariants = {
   hidden: {},
@@ -46,6 +47,11 @@ export default function CategoryPage() {
 
   return (
     <div className="space-y-8">
+      <SEOHead
+        title={`${category.name} Tools`}
+        description={`Free online ${category.name.toLowerCase()} tools — ${category.description}`}
+        path={`/category/${categoryId}`}
+      />
       {/* Header */}
       <div>
         <Link

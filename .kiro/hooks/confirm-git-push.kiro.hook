@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "name": "Confirm before git push",
   "description": "Blocks git push commands and reminds the agent to ask the user for explicit confirmation before pushing. Each push triggers CI/CD and consumes GitHub Actions minutes.",
   "version": "1",

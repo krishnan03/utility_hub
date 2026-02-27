@@ -5,6 +5,7 @@ import { categories } from '../layout/Sidebar';
 import tools from '../../lib/toolRegistry';
 import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistoryStore';
 import CommandBar from '../common/CommandBar';
+import SEOHead from '../common/SEOHead';
 
 const QUICK_ACTIONS = [
   { id: 'excel-editor',       label: 'Excel Editor',   emoji: '📊' },
@@ -609,6 +610,11 @@ function SectionHeader({ title }) {
 export default function HomePage() {
   return (
     <div className="space-y-12 lg:space-y-16 pb-12">
+      <SEOHead
+        title={null}
+        description="159+ free online tools — PDF editor, Excel editor, Word editor, image converter, developer tools, finance calculators and more. No signup required."
+        path="/"
+      />
       {/* Negative margin pulls hero up to eliminate gap from AppShell padding */}
       <div className="-mt-4 sm:-mt-6 lg:-mt-8 -mx-4 sm:-mx-6 lg:-mx-8">
         <HeroSection />
