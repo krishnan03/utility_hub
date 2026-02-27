@@ -18,6 +18,24 @@
 
   <!-- Blog Posts -->
   <url>
+    <loc>https://toolspilot.work/blog/free-online-excel-editor</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolspilot.work/blog/free-online-word-editor</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolspilot.work/blog/free-online-pdf-editor</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://toolspilot.work/blog/toolspilot-api-llms-smart-search</loc>
     <lastmod>2026-02-25</lastmod>
     <changefreq>monthly</changefreq>

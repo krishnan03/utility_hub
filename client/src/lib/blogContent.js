@@ -5,6 +5,99 @@
  */
 
 const BLOG_CONTENT = {
+  'free-online-excel-editor': {
+    sections: [
+      {
+        heading: 'Why Use an Online Excel Editor?',
+        body: `Microsoft Excel costs money. Google Sheets requires a Google account. Sometimes you just need to open a spreadsheet, make a quick edit, and save it — without installing software or creating an account.\n\nToolsPilot's Online Excel Editor runs entirely in your browser. Upload an .xlsx file, edit it with full formula support, and download the result. Your data never leaves your device.`,
+      },
+      {
+        heading: 'What You Can Do',
+        body: `• Open and edit .xlsx files with full formatting preservation\n• Write formulas — SUM, AVERAGE, IF, VLOOKUP, COUNTIF, and 100+ more\n• Multi-sheet support — switch between tabs, add new sheets, rename them\n• Cell formatting — bold, italic, colors, borders, number formats, alignment\n• Resize columns and rows by dragging\n• Sort and filter data\n• Auto-save to browser storage so you don't lose work\n• Export back to .xlsx when you're done`,
+      },
+      {
+        heading: 'Common Use Cases',
+        body: `• Quick edits to a spreadsheet someone emailed you — no need to install Excel\n• Viewing CSV or Excel files on a machine without Office installed\n• Students working on assignments from a library or shared computer\n• Freelancers who need occasional spreadsheet access without a subscription\n• Converting between Excel and CSV formats while making edits`,
+      },
+      {
+        heading: 'Privacy and Security',
+        body: `Everything happens in your browser. Your spreadsheet data is never uploaded to any server. This makes it safe for sensitive financial data, employee records, or any confidential information. When you close the tab, the data is gone.`,
+      },
+      {
+        heading: 'Try These Spreadsheet Tools',
+        links: [
+          { label: 'Excel Editor', path: '/tools/spreadsheet/excel-editor', icon: '📊' },
+          { label: 'Excel to CSV', path: '/tools/spreadsheet/excel-to-csv', icon: '📄' },
+          { label: 'CSV Viewer', path: '/tools/spreadsheet/csv-viewer', icon: '👁️' },
+          { label: 'Excel to JSON', path: '/tools/spreadsheet/excel-to-json', icon: '🔀' },
+          { label: 'Pivot Table', path: '/tools/spreadsheet/pivot-table', icon: '📋' },
+          { label: 'CSV to SQL', path: '/tools/spreadsheet/csv-to-sql', icon: '🗃️' },
+        ],
+      },
+    ],
+  },
+
+  'free-online-word-editor': {
+    sections: [
+      {
+        heading: 'A Word Processor That Lives in Your Browser',
+        body: `ToolsPilot's Online Word Editor is a full rich-text document editor. It handles everything you'd expect from a word processor — headings, bold/italic/underline, bullet lists, numbered lists, tables, images, text alignment, and color formatting.\n\nThe key difference from Google Docs: no account required. Open the page, start typing or import a .docx file, and you're editing. When you're done, export to DOCX or PDF.`,
+      },
+      {
+        heading: 'Key Features',
+        body: `• Rich text formatting — headings (H1-H6), bold, italic, underline, strikethrough, text color, highlight\n• Tables — insert, resize, add/remove rows and columns\n• Images — drag and drop or paste from clipboard\n• Lists — bullet points and numbered lists with nesting\n• Text alignment — left, center, right, justify\n• DOCX import — open existing Word documents and continue editing\n• Export to DOCX or PDF — download your finished document in either format\n• Keyboard shortcuts — Ctrl+B, Ctrl+I, Ctrl+U, and all the standard ones`,
+      },
+      {
+        heading: 'When to Use It',
+        body: `• Writing a quick letter, memo, or report without installing Word\n• Editing a .docx file someone sent you\n• Students writing essays on shared or public computers\n• Converting between DOCX and PDF formats\n• Anyone who needs a word processor occasionally but doesn't want a subscription`,
+      },
+      {
+        heading: 'Try These Document Tools',
+        links: [
+          { label: 'Word Editor', path: '/tools/document/word-editor', icon: '📝' },
+          { label: 'Word to PDF', path: '/tools/document/word-to-pdf', icon: '📄' },
+          { label: 'PDF to Word', path: '/tools/document/pdf-to-word', icon: '📋' },
+          { label: 'PDF Editor', path: '/tools/document/pdf-editor', icon: '✏️' },
+          { label: 'Document Converter', path: '/tools/document/convert', icon: '🔀' },
+          { label: 'Markdown Editor', path: '/tools/text/markdown-editor', icon: '📓' },
+        ],
+      },
+    ],
+  },
+
+  'free-online-pdf-editor': {
+    sections: [
+      {
+        heading: 'Edit PDFs Without Adobe Acrobat',
+        body: `Adobe Acrobat Pro costs $20/month. Most free PDF editors either watermark your output or limit you to 3 pages. ToolsPilot's PDF Editor is completely free with no limits — add text, draw, highlight, insert images, and save. Everything runs in your browser using pdf-lib and PDF.js, so your documents never leave your device.`,
+      },
+      {
+        heading: 'What You Can Do',
+        body: `• Add text — click anywhere on the page to place text with custom font size and color\n• Draw freehand — annotate with a pen tool, adjustable stroke width and color\n• Highlight — drag to highlight sections with semi-transparent color overlays\n• Draw shapes — rectangles for callouts and emphasis\n• Insert images — place PNG, JPG, or WebP images anywhere on the page, then resize and rotate\n• Erase — remove annotations you've added\n• Multi-page — navigate between pages and annotate each one independently\n• Undo — Ctrl+Z to undo the last annotation on the current page`,
+      },
+      {
+        heading: 'How to Edit a PDF',
+        body: `1. Upload your PDF file (drag and drop or click to browse)\n2. Select a tool from the toolbar — Text, Draw, Highlight, Rectangle, or Image\n3. Click or drag on the PDF page to add your annotation\n4. Use the color picker, font size, and opacity controls to customize\n5. Navigate between pages using the page controls\n6. Click "Save PDF" to download your edited document\n\nThe output is a new PDF with your annotations baked in. The original file is never modified.`,
+      },
+      {
+        heading: 'Tips for Better Results',
+        body: `• Use the Text tool for filling in forms — click precisely where you want text to appear\n• For signatures, use the Draw tool with a thin stroke width, or use our dedicated E-Signature tool for a more polished result\n• The Image tool is great for adding logos, stamps, or photos to documents\n• Use Highlight with yellow color for marking up documents for review\n• All processing is client-side — safe for contracts, legal documents, and sensitive files`,
+      },
+      {
+        heading: 'More PDF Tools',
+        links: [
+          { label: 'PDF Editor', path: '/tools/document/pdf-editor', icon: '📄' },
+          { label: 'E-Signature', path: '/tools/pdf/esignature', icon: '✒️' },
+          { label: 'PDF Merger', path: '/tools/pdf/merge', icon: '🔗' },
+          { label: 'PDF Compressor', path: '/tools/pdf/compress', icon: '📉' },
+          { label: 'Add Watermark', path: '/tools/pdf/watermark', icon: '💦' },
+          { label: 'PDF to Word', path: '/tools/document/pdf-to-word', icon: '📋' },
+          { label: 'Add Page Numbers', path: '/tools/pdf/page-numbers', icon: '🔢' },
+        ],
+      },
+    ],
+  },
+
   'toolspilot-api-llms-smart-search': {
     sections: [
       {

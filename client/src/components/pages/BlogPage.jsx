@@ -4,6 +4,30 @@ import SEOHead from '../common/SEOHead';
 
 const BLOG_POSTS = [
   {
+    slug: 'free-online-excel-editor',
+    title: 'Free Online Excel Editor — Edit Spreadsheets Without Installing Anything',
+    excerpt: 'Open, edit, and save Excel files directly in your browser. Full formula support, multi-sheet editing, formatting, and XLSX import/export — no Microsoft Office needed.',
+    date: '2026-02-26',
+    category: 'Spreadsheets',
+    readTime: '5 min',
+  },
+  {
+    slug: 'free-online-word-editor',
+    title: 'Free Online Word Editor — Create and Edit Documents in Your Browser',
+    excerpt: 'A full-featured document editor with rich text formatting, tables, images, and DOCX import/export. Works like Google Docs but with zero signup.',
+    date: '2026-02-26',
+    category: 'Documents',
+    readTime: '5 min',
+  },
+  {
+    slug: 'free-online-pdf-editor',
+    title: 'Free Online PDF Editor — Add Text, Draw, Annotate, and Sign PDFs',
+    excerpt: 'Edit PDFs directly in your browser — add text, draw, highlight, insert images, and e-sign. No upload to servers, 100% client-side processing.',
+    date: '2026-02-26',
+    category: 'Documents',
+    readTime: '5 min',
+  },
+  {
     slug: 'toolspilot-api-llms-smart-search',
     title: 'ToolsPilot Now Has a Public API, llms.txt, and AI-Powered Smart Search',
     excerpt: 'We launched a public REST API for programmatic access to our tools, added llms.txt for AI discoverability, and shipped a Spotlight-style command bar that understands natural language like "fix messy JSON".',
