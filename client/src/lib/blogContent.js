@@ -414,6 +414,8 @@ const BLOG_CONTENT = {
           { label: 'URL Shortener', path: '/tools/utility/url-shortener', icon: '🔗' },
           { label: 'Favicon Generator', path: '/tools/design/favicon-generator', icon: '⭐' },
         ],
+      },
+    ],
   },
 
   'free-online-regex-tester': {
