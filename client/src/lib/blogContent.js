@@ -414,6 +414,68 @@ const BLOG_CONTENT = {
           { label: 'URL Shortener', path: '/tools/utility/url-shortener', icon: '🔗' },
           { label: 'Favicon Generator', path: '/tools/design/favicon-generator', icon: '⭐' },
         ],
+  },
+
+  'free-online-regex-tester': {
+    sections: [
+      {
+        heading: 'Why Every Developer Needs a Regex Tester',
+        body: `Regular expressions are powerful but notoriously hard to get right. A misplaced quantifier or forgotten escape character can turn a simple pattern into a debugging nightmare. Writing regex blind — without seeing what it matches in real time — is like writing SQL without running the query.\n\nToolsPilot's Regex Tester lets you build and debug patterns interactively. Type your regex, paste your test string, and see matches highlighted instantly. No signup, no server round-trips — everything runs in your browser using JavaScript's native RegExp engine.`,
+      },
+      {
+        heading: 'Key Features',
+        body: `• Real-time matching — matches highlight as you type, so you can iterate on patterns instantly\n• Match groups — see captured groups, named groups, and their indices for each match\n• Flags support — toggle global (g), case-insensitive (i), multiline (m), dotAll (s), and unicode (u) flags\n• Common patterns library — pre-built patterns for emails, URLs, IP addresses, dates, phone numbers, and more\n• Match count — see how many matches your pattern finds at a glance\n• Error feedback — syntax errors in your regex are flagged immediately with clear messages`,
+      },
+      {
+        heading: 'Common Regex Patterns You\'ll Use',
+        body: `• Email validation: ^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$\n• URL matching: https?:\\/\\/[\\w\\-._~:/?#[\\]@!$&'()*+,;=]+\n• IPv4 address: \\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b\n• Date (YYYY-MM-DD): \\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\\d|3[01])\n• Phone number (US): \\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}\n• Hex color: #(?:[0-9a-fA-F]{3}){1,2}\\b\n\nAll of these are available as one-click presets in the tool — no need to memorize them.`,
+      },
+      {
+        heading: 'Tips for Writing Better Regex',
+        body: `• Start simple and build up — get the basic pattern working before adding edge cases\n• Use non-capturing groups (?:...) when you don't need the captured value — it's faster\n• Be specific with character classes — [a-zA-Z0-9] is better than .* when you know what to expect\n• Anchor your patterns — use ^ and $ to avoid partial matches on longer strings\n• Test with edge cases — empty strings, special characters, and very long inputs\n• Use the multiline flag (m) when working with line-by-line data like logs`,
+      },
+      {
+        heading: 'Try These Developer Tools',
+        links: [
+          { label: 'Regex Tester', path: '/tools/developer/regex-tester', icon: '🔍' },
+          { label: 'Diff Checker', path: '/tools/developer/diff-checker', icon: '📊' },
+          { label: 'JSON Formatter', path: '/tools/developer/json-yaml-xml', icon: '🧩' },
+          { label: 'SQL Formatter', path: '/tools/developer/sql-formatter', icon: '🗃️' },
+          { label: 'Data Transformer', path: '/tools/developer/data-transformer', icon: '🔀' },
+          { label: 'Text Utilities', path: '/tools/text/utilities', icon: '📝' },
+        ],
+      },
+    ],
+  },
+
+  'decode-jwt-tokens-online': {
+    sections: [
+      {
+        heading: 'What Is a JWT and Why Would You Decode One?',
+        body: `JSON Web Tokens (JWTs) are the standard way modern apps handle authentication. When you log into an API, you typically get back a JWT — a long Base64-encoded string split into three parts: header, payload, and signature.\n\nThe problem is they look like gibberish. When you're debugging auth issues — expired tokens, wrong roles, missing claims — you need to see what's inside. ToolsPilot's JWT Decoder lets you paste any JWT and instantly see its decoded contents, expiration status, and structure.`,
+      },
+      {
+        heading: 'What You Can Do',
+        body: `• Decode any JWT — paste the token and see the header (algorithm, type) and payload (claims, expiry, issuer) formatted as readable JSON\n• Check expiration — the tool shows whether the token is expired, when it expires, and how much time is left\n• Inspect claims — see standard claims (iss, sub, aud, exp, iat) and any custom claims your app adds\n• Syntax highlighting — the decoded JSON is color-coded for easy reading\n• No data transmitted — everything runs client-side. Your tokens never leave your browser, which matters when you're debugging production auth tokens`,
+      },
+      {
+        heading: 'Common JWT Debugging Scenarios',
+        body: `• "401 Unauthorized" responses — decode the token to check if it's expired (exp claim) or issued for the wrong audience (aud claim)\n• Role-based access issues — inspect custom claims like "role" or "permissions" to verify the user has the right access level\n• Token not accepted by another service — check the issuer (iss) and algorithm (alg) match what the receiving service expects\n• Clock skew problems — compare the issued-at (iat) and expiry (exp) timestamps against the current time`,
+      },
+      {
+        heading: 'Security Note',
+        body: `JWTs are encoded, not encrypted. Anyone with the token can read the header and payload — that's by design. The signature only ensures the token hasn't been tampered with, not that its contents are secret.\n\nNever put sensitive data (passwords, credit card numbers, SSNs) in JWT claims. And never paste production tokens into online tools that send data to a server. ToolsPilot's decoder runs 100% in your browser — your tokens stay on your machine.`,
+      },
+      {
+        heading: 'Try These Developer Tools',
+        links: [
+          { label: 'JWT Decoder', path: '/tools/developer/jwt-decoder', icon: '🗝️' },
+          { label: 'JSON Formatter', path: '/tools/developer/json-yaml-xml', icon: '🧩' },
+          { label: 'Base64 Encoder', path: '/tools/developer/base64-file', icon: '🔐' },
+          { label: 'Hash Generator', path: '/tools/security/hash-generator', icon: '#️⃣' },
+          { label: 'Password Generator', path: '/tools/security/password-generator', icon: '🔒' },
+          { label: 'TOTP Generator', path: '/tools/security/totp-generator', icon: '⏱️' },
+        ],
       },
     ],
   },

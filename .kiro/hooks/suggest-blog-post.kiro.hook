@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Suggest Tool Blog Post",
+  "description": "When the agent finishes work, remind to consider adding a blog post that's related to a ToolsPilot tool. The blog post should drive traffic to the tools, not be a generic article.",
+  "version": "1",
+  "when": {
+    "type": "agentStop"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Before wrapping up, check if there are any uncommitted or unpushed changes. If there are changes ready to push, suggest adding a new blog post to client/src/components/pages/BlogPage.jsx and client/src/lib/blogContent.js that is DIRECTLY related to one of ToolsPilot's existing tools. The blog must promote a specific tool — pick one that hasn't been covered yet or could use more SEO content. Reference the blog-content-strategy steering file for format and rules. Ask the user if they'd like you to write the blog post before pushing."
+  }
+}

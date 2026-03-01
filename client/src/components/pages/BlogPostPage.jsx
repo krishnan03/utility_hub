@@ -1,9 +1,48 @@
 import { useParams, Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { BLOG_POSTS } from './BlogPage';
 import SEOHead from '../common/SEOHead';
 import BLOG_CONTENT from '../../lib/blogContent';
+
+/** Glassmorphism tool link cards — reusable grid */
+function ToolLinksGrid({ links, compact = false }) {
+  if (!links?.length) return null;
+  return (
+    <div className={compact ? 'flex flex-wrap gap-2' : 'grid grid-cols-2 sm:grid-cols-3 gap-3'}>
+      {links.map((link) => (
+        <Link
+          key={link.path}
+          to={link.path}
+          className={`group relative flex items-center gap-2 rounded-2xl text-center transition-all duration-300 hover:scale-[1.04] hover:shadow-lg hover:shadow-primary-500/10 ${compact ? 'flex-row px-4 py-2.5' : 'flex-col p-4'}`}
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,99,99,0.12)',
+            backdropFilter: 'blur(12px)',
+          }}
+        >
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/10 to-primary-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          {link.icon && (
+            <span className={`relative group-hover:scale-110 transition-transform duration-300 ${compact ? 'text-lg' : 'text-2xl'}`} aria-hidden="true">
+              {link.icon}
+            </span>
+          )}
+          <span className={`relative font-semibold text-surface-200 group-hover:text-primary-400 transition-colors duration-300 ${compact ? 'text-sm' : 'text-sm'}`}>
+            {link.label}
+          </span>
+          {!compact && (
+            <span className="relative text-xs text-primary-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-medium">
+              Try it free →
+            </span>
+          )}
+          {compact && (
+            <span className="relative text-xs text-primary-500 font-medium ml-0.5">→</span>
+          )}
+        </Link>
+      ))}
+    </div>
+  );
+}
 
 export default function BlogPostPage() {
   const { slug } = useParams();
@@ -79,54 +118,70 @@ export default function BlogPostPage() {
         {post.title}
       </h1>
 
-      <div className="prose prose-lg dark:prose-invert max-w-none">
-        <p className="text-lg text-surface-600 dark:text-surface-300 leading-relaxed mb-6">
-          {post.excerpt}
-        </p>
-
-        {BLOG_CONTENT[slug] ? (
-          <div className="space-y-8">
-            {BLOG_CONTENT[slug].sections.map((section, i) => (
-              <div key={i}>
-                {section.heading && (
-                  <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-3">
-                    {section.heading}
-                  </h2>
-                )}
-                {section.body && (
-                  <p className="text-surface-600 dark:text-surface-300 leading-relaxed whitespace-pre-line">
-                    {section.body}
-                  </p>
-                )}
-                {section.code && (
-                  <pre className="p-4 rounded-xl text-sm font-mono overflow-x-auto" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                    <code className="text-surface-200">{section.code}</code>
-                  </pre>
-                )}
-                {section.links && (
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {section.links.map((link) => (
-                      <Link key={link.path} to={link.path} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium text-primary-400 hover:text-primary-300 transition-colors" style={{ background: 'rgba(255,99,99,0.08)', border: '1px solid rgba(255,99,99,0.15)' }}>
-                        {link.icon && <span aria-hidden="true">{link.icon}</span>}
-                        {link.label} →
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="p-6 rounded-2xl bg-surface-50 dark:bg-surface-800/40 border border-surface-200/50 dark:border-surface-700/30 text-center">
-            <p className="text-surface-500 dark:text-surface-400 mb-4">
-              Full article content coming soon. In the meantime, try the tool:
+      {/* Collect all tool links from blog content */}
+      {(() => {
+        const content = BLOG_CONTENT[slug];
+        const allLinks = content?.sections?.flatMap(s => s.links || []) || [];
+        return (
+          <div className="prose prose-lg dark:prose-invert max-w-none">
+            <p className="text-lg text-surface-600 dark:text-surface-300 leading-relaxed mb-6">
+              {post.excerpt}
             </p>
-            <Link to="/" className="btn-primary inline-flex">
-              Explore All Tools →
-            </Link>
+
+            {/* Top CTA — compact tool links strip */}
+            {allLinks.length > 0 && (
+              <div className="mb-8 p-4 rounded-2xl" style={{ background: 'rgba(255,99,99,0.04)', border: '1px solid rgba(255,99,99,0.08)' }}>
+                <p className="text-xs font-bold uppercase tracking-wider text-primary-500 mb-3">🚀 Jump to tools mentioned in this article</p>
+                <ToolLinksGrid links={allLinks} compact />
+              </div>
+            )}
+
+            {content ? (
+              <div className="space-y-8">
+                {content.sections.map((section, i) => (
+                  <div key={i}>
+                    {section.heading && !section.links && (
+                      <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-3">
+                        {section.heading}
+                      </h2>
+                    )}
+                    {section.body && (
+                      <p className="text-surface-600 dark:text-surface-300 leading-relaxed whitespace-pre-line">
+                        {section.body}
+                      </p>
+                    )}
+                    {section.code && (
+                      <pre className="p-4 rounded-xl text-sm font-mono overflow-x-auto" style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                        <code className="text-surface-200">{section.code}</code>
+                      </pre>
+                    )}
+                    {/* Skip inline links rendering — we show them top & bottom instead */}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-6 rounded-2xl bg-surface-50 dark:bg-surface-800/40 border border-surface-200/50 dark:border-surface-700/30 text-center">
+                <p className="text-surface-500 dark:text-surface-400 mb-4">
+                  Full article content coming soon. In the meantime, try the tool:
+                </p>
+                <Link to="/" className="btn-primary inline-flex">
+                  Explore All Tools →
+                </Link>
+              </div>
+            )}
+
+            {/* Bottom CTA — full grid tool links */}
+            {allLinks.length > 0 && (
+              <div className="mt-10 pt-8" style={{ borderTop: '1px solid rgba(255,99,99,0.1)' }}>
+                <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-4">
+                  ✨ Try These Tools
+                </h2>
+                <ToolLinksGrid links={allLinks} />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        );
+      })()}
     </motion.article>
   );
 }

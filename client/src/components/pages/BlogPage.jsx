@@ -4,6 +4,22 @@ import SEOHead from '../common/SEOHead';
 
 const BLOG_POSTS = [
   {
+    slug: 'free-online-regex-tester',
+    title: 'Free Online Regex Tester — Build and Debug Regular Expressions Instantly',
+    excerpt: 'Test regex patterns against sample text with real-time highlighting, match groups, and common pattern library. No signup, runs entirely in your browser.',
+    date: '2026-03-01',
+    category: 'Dev Tools',
+    readTime: '5 min',
+  },
+  {
+    slug: 'decode-jwt-tokens-online',
+    title: 'How to Decode JWT Tokens Online — Inspect Headers, Payloads, and Expiry',
+    excerpt: 'Paste a JWT and instantly see its decoded header, payload, and expiration status. Verify signatures and debug auth issues without writing code.',
+    date: '2026-03-01',
+    category: 'Dev Tools',
+    readTime: '4 min',
+  },
+  {
     slug: 'free-online-excel-editor',
     title: 'Free Online Excel Editor — Edit Spreadsheets Without Installing Anything',
     excerpt: 'Open, edit, and save Excel files directly in your browser. Full formula support, multi-sheet editing, formatting, and XLSX import/export — no Microsoft Office needed.',

@@ -18,6 +18,18 @@
 
   <!-- Blog Posts -->
   <url>
+    <loc>https://toolspilot.work/blog/free-online-regex-tester</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolspilot.work/blog/decode-jwt-tokens-online</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://toolspilot.work/blog/free-online-excel-editor</loc>
     <lastmod>2026-02-26</lastmod>
     <changefreq>monthly</changefreq>
