@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
 // Cache for PDF documents and rendered thumbnails
 const pdfCache = new Map();
 
@@ -11,6 +9,7 @@ export async function loadPdfDoc(file) {
   const key = `${file.name}-${file.size}-${file.lastModified}`;
   if (pdfCache.has(key)) return pdfCache.get(key);
   const arrayBuffer = await file.arrayBuffer();
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
   pdfCache.set(key, pdf);
   return pdf;

@@ -481,6 +481,115 @@ const BLOG_CONTENT = {
       },
     ],
   },
+  'chmod-calculator-explained': {
+    sections: [
+      {
+        heading: 'What Does chmod Actually Do?',
+        body: `chmod (change mode) is the Unix/Linux command that sets who can read, write, or execute a file. Every file on a Unix system has three permission groups:\n\n• Owner — the user who created the file\n• Group — users in the file's assigned group\n• Others — everyone else\n\nEach group gets three permission bits: read (r), write (w), and execute (x). That gives you 9 bits total, which are represented as either a symbolic string like rwxr-xr-x or an octal number like 755.`,
+      },
+      {
+        heading: 'The Most Common chmod Values',
+        body: `You will use these over and over:\n\n• 755 (rwxr-xr-x) — owner can do everything, others can read and execute. The standard for scripts, executables, and directories.\n• 644 (rw-r--r--) — owner can read and write, others can only read. The default for most files like HTML, CSS, config files.\n• 600 (rw-------) — only the owner can read and write. Use this for private keys, .env files, and secrets.\n• 700 (rwx------) — only the owner can do anything. Good for private scripts and directories like ~/.ssh.\n• 777 (rwxrwxrwx) — everyone can do everything. Almost never what you want in production. If you are using 777, something is wrong.\n• 444 (r--r--r--) — read-only for everyone. Useful for files that should never be modified.\n• 664 (rw-rw-r--) — owner and group can read/write, others read-only. Common in shared development environments.`,
+      },
+      {
+        heading: 'How Octal Numbers Map to Permissions',
+        body: `Each permission has a numeric value:\n\n• Read (r) = 4\n• Write (w) = 2\n• Execute (x) = 1\n\nAdd them up for each group. For example, rwx = 4 + 2 + 1 = 7, and r-x = 4 + 0 + 1 = 5. So rwxr-xr-x becomes 755.\n\nInstead of doing this math in your head, use our Chmod Calculator. Toggle checkboxes for each permission and it gives you the octal number and the chmod command instantly.`,
+      },
+      {
+        heading: 'Common Mistakes That Break Deployments',
+        body: `• Setting 777 on web directories — this lets any user on the server modify your files. Attackers love this.\n• Forgetting execute on directories — directories need the execute bit to be traversable. A directory with 644 means nobody can cd into it or list its contents. Use 755 for directories.\n• Private keys with wrong permissions — SSH refuses to use a key file if it is readable by others. Your .pem and id_rsa files must be 600 or 400.\n• Recursive chmod on / — running chmod -R on the wrong path can brick your system. Always double-check the target path before running recursive permission changes.\n• Ignoring the sticky bit — shared directories like /tmp use the sticky bit (1777) so users can only delete their own files. Removing it creates a security hole.`,
+      },
+      {
+        heading: 'chmod in the Real World',
+        body: `• Web servers (Nginx/Apache) — HTML and asset files should be 644, directories 755, and the web server user should own them.\n• SSH keys — ~/.ssh directory should be 700, private keys 600, authorized_keys 644.\n• Deploy scripts — CI/CD scripts need 755 to be executable. A common gotcha is committing a script to git without the execute bit.\n• Docker — files copied into containers inherit host permissions. If your Dockerfile COPY brings in a script, make sure it has execute permission or add RUN chmod +x.\n• Cron jobs — scripts called by cron need to be executable (755) and owned by the user whose crontab runs them.`,
+      },
+      {
+        heading: 'Try These Developer Tools',
+        links: [
+          { label: 'Chmod Calculator', path: '/tools/developer/chmod-calculator', icon: '🔐' },
+          { label: 'Crontab Guru', path: '/tools/developer/crontab-guru', icon: '📅' },
+          { label: 'Cron Parser', path: '/tools/developer/cron-parser', icon: '⏲️' },
+          { label: 'Regex Tester', path: '/tools/developer/regex-tester', icon: '🔤' },
+          { label: 'Diff Checker', path: '/tools/developer/diff-checker', icon: '⚖️' },
+          { label: 'Hash Generator', path: '/tools/security/hash-generator', icon: '#️⃣' },
+        ],
+      },
+    ],
+  },
+  'free-online-diff-checker': {
+    sections: [
+      {
+        heading: 'Why You Need a Diff Checker',
+        body: `Comparing two versions of a file by eye is slow and error-prone. Whether you are reviewing a config change, checking what a colleague modified in a document, or debugging why a script stopped working after an edit, a diff tool shows you exactly what changed in seconds.\n\nToolsPilot's Diff Checker runs entirely in your browser. Paste two blocks of text, and it highlights every addition, deletion, and modification side by side. No file uploads, no accounts, no data leaving your machine.`,
+      },
+      {
+        heading: 'Common Use Cases',
+        body: `• Code review — paste the old and new version of a function to see what changed before committing\n• Config debugging — compare a working config file with a broken one to spot the difference\n• Contract and document review — find wording changes between two drafts\n• Database migrations — compare SQL schema dumps before and after a migration\n• API response comparison — paste two JSON responses to find what fields changed\n• Merge conflict resolution — see both sides of a conflict clearly before choosing which to keep`,
+      },
+      {
+        heading: 'How to Use the Diff Checker',
+        body: `1. Open the Diff Checker tool\n2. Paste your original text in the left panel\n3. Paste the modified text in the right panel\n4. Differences are highlighted instantly — green for additions, red for deletions, yellow for changes\n5. Scroll through the results to review each change\n\nThe comparison runs client-side using a standard diff algorithm, so even large files are processed quickly without any server round-trip.`,
+      },
+      {
+        heading: 'Tips for Better Diffs',
+        body: `• Trim trailing whitespace before comparing if you only care about content changes — whitespace differences can add noise\n• For JSON or XML, format both sides with our JSON Formatter first so structural differences are easier to spot\n• When comparing code, make sure both sides use the same indentation style (tabs vs spaces) to avoid false positives\n• For very large files, copy just the section you suspect changed rather than the entire file — it makes the output easier to scan`,
+      },
+      {
+        heading: 'Diff Checker vs Git Diff',
+        body: `Git diff is great when your files are already in a repository. But sometimes you need to compare text that is not in git — a Slack message vs a wiki page, two API responses, or a config from a remote server vs your local copy.\n\nThe Diff Checker fills that gap. No git setup, no command line, no installation. Just paste and compare. It is also useful for non-developers who need to compare documents but are not comfortable with terminal tools.`,
+      },
+      {
+        heading: 'Try These Developer Tools',
+        links: [
+          { label: 'Diff Checker', path: '/tools/developer/diff-checker', icon: '⚖️' },
+          { label: 'JSON Formatter', path: '/tools/developer/json-yaml-xml', icon: '🧩' },
+          { label: 'SQL Formatter', path: '/tools/developer/sql-formatter', icon: '🗄️' },
+          { label: 'Regex Tester', path: '/tools/developer/regex-tester', icon: '🔤' },
+          { label: 'Cron Parser', path: '/tools/developer/cron-parser', icon: '⏲️' },
+          { label: 'Data Transformer', path: '/tools/developer/data-transformer', icon: '🔀' },
+        ],
+      },
+    ],
+  },
+  'cron-expression-guide': {
+    sections: [
+      {
+        heading: 'What Is a Cron Expression?',
+        body: `A cron expression is a string of five (or six) fields that tells a scheduler exactly when to run a task. It originated in Unix systems in the 1970s and is now used everywhere — Linux crontabs, CI/CD pipelines, cloud functions, Kubernetes CronJobs, and task queues like Celery.\n\nThe five standard fields are:\n\n• Minute (0–59)\n• Hour (0–23)\n• Day of month (1–31)\n• Month (1–12)\n• Day of week (0–7, where 0 and 7 are Sunday)\n\nEach field accepts a number, a wildcard (*), a range (1-5), a list (1,3,5), or a step value (*/10). Combine them and you can express almost any recurring schedule.`,
+      },
+      {
+        heading: 'Common Cron Expressions You Will Actually Use',
+        body: `Here are the expressions developers reach for most often:\n\n• Every minute: * * * * *\n• Every 5 minutes: */5 * * * *\n• Every hour at minute 0: 0 * * * *\n• Every day at midnight: 0 0 * * *\n• Every Monday at 9 AM: 0 9 * * 1\n• First day of every month at 6 AM: 0 6 1 * *\n• Every weekday at 8:30 AM: 30 8 * * 1-5\n• Every 15 minutes during business hours: */15 9-17 * * 1-5\n• Twice a day at 8 AM and 8 PM: 0 8,20 * * *\n• Every Sunday at 2:30 AM (maintenance window): 30 2 * * 0\n\nIf you are unsure whether your expression is correct, paste it into our Cron Expression Parser to see the next scheduled run times, or use the Crontab Guru to build one visually.`,
+      },
+      {
+        heading: 'How to Read a Cron Expression in 30 Seconds',
+        body: `Read the fields left to right: minute, hour, day-of-month, month, day-of-week.\n\nExample: 30 4 1,15 * *\n\n1. Minute = 30 → at the 30th minute\n2. Hour = 4 → of 4 AM\n3. Day of month = 1,15 → on the 1st and 15th\n4. Month = * → every month\n5. Day of week = * → any day of the week\n\nResult: "At 4:30 AM on the 1st and 15th of every month."\n\nOnce you get the pattern, reading cron becomes second nature. For complex expressions, our parser gives you a plain-English translation instantly.`,
+      },
+      {
+        heading: 'Special Characters Explained',
+        body: `Beyond basic numbers and wildcards, cron supports a few special characters that unlock more precise scheduling:\n\n• * (wildcard) — matches every possible value for that field\n• , (list) — specify multiple values: 1,3,5 means "on the 1st, 3rd, and 5th"\n• - (range) — specify a range: 9-17 means "from 9 through 17"\n• / (step) — specify intervals: */10 means "every 10 units", 5/15 means "starting at 5, then every 15"\n• ? (no specific value) — used in some systems (like Quartz) for day-of-month or day-of-week when the other field is set\n• L (last) — last day of the month or last specific weekday (non-standard, supported by Quartz and Spring)\n• W (weekday) — nearest weekday to a given day of the month (non-standard)\n• # (nth weekday) — e.g., 2#3 means "third Monday" (non-standard)`,
+      },
+      {
+        heading: 'Mistakes That Will Wake You Up at 3 AM',
+        body: `Cron is deceptively simple, which makes it easy to get wrong:\n\n• Forgetting timezone — cron runs in the system timezone by default. A job scheduled for 0 9 * * * runs at 9 AM server time, not your local time. Always check what timezone your scheduler uses.\n• Day-of-month AND day-of-week — in standard cron, if both are set to non-wildcard values, the job runs when either condition is true (OR logic), not both (AND). This surprises almost everyone.\n• February 30th — scheduling on day 30 or 31 will silently skip months that do not have those days.\n• */1 vs * — they are identical. Using */1 is not wrong, just unnecessary.\n• Overlapping runs — if your job takes 10 minutes but runs every 5 minutes, you will get overlapping executions. Use a lock or check if the previous run finished.`,
+      },
+      {
+        heading: 'Where Cron Expressions Are Used',
+        body: `Cron syntax shows up in more places than just Linux crontabs:\n\n• GitHub Actions — schedule workflows with the cron field under on.schedule\n• AWS EventBridge / CloudWatch Events — schedule Lambda functions and Step Functions\n• Kubernetes CronJobs — run pods on a recurring schedule\n• Celery Beat — periodic task scheduling in Python\n• Spring @Scheduled — Java annotation-based scheduling (uses 6-field Quartz syntax)\n• Vercel / Netlify cron — serverless scheduled functions\n• Database maintenance — pg_cron for PostgreSQL, MySQL Event Scheduler\n\nThe syntax is nearly identical across all of these, with minor variations in extended fields. Our Crontab Guru handles the standard 5-field format used by most systems.`,
+      },
+      {
+        heading: 'Try These Developer Tools',
+        links: [
+          { label: 'Cron Expression Parser', path: '/tools/developer/cron-parser', icon: '⏲️' },
+          { label: 'Crontab Guru', path: '/tools/developer/crontab-guru', icon: '📅' },
+          { label: 'Timestamp Converter', path: '/tools/developer/timestamp-converter', icon: '🕐' },
+          { label: 'Regex Tester', path: '/tools/developer/regex-tester', icon: '🔤' },
+          { label: 'JSON Formatter', path: '/tools/developer/json-yaml-xml', icon: '🧩' },
+          { label: 'Diff Checker', path: '/tools/developer/diff-checker', icon: '📃' },
+        ],
+      },
+    ],
+  },
 };
 
 export default BLOG_CONTENT;

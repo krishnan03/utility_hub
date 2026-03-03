@@ -4,6 +4,30 @@ import SEOHead from '../common/SEOHead';
 
 const BLOG_POSTS = [
   {
+    slug: 'cron-expression-guide',
+    title: 'How to Read and Write Cron Expressions — Free Crontab Guru Tool',
+    excerpt: 'Learn cron schedule syntax with clear examples for every field. Build and validate cron expressions visually with our free Crontab Guru — no signup required.',
+    date: '2026-03-02',
+    category: 'Dev Tools',
+    readTime: '6 min',
+  },
+  {
+    slug: 'free-online-diff-checker',
+    title: 'Free Online Diff Checker — Compare Text and Files Side by Side',
+    excerpt: 'Paste two blocks of text or code and instantly see every addition, deletion, and change highlighted side by side. Runs in your browser — nothing is uploaded.',
+    date: '2026-03-02',
+    category: 'Dev Tools',
+    readTime: '5 min',
+  },
+  {
+    slug: 'chmod-calculator-explained',
+    title: 'Chmod Calculator — Understand Unix File Permissions in Seconds',
+    excerpt: 'Learn what chmod 755, 644, and 777 actually mean. Use our visual chmod calculator to build permission strings with checkboxes instead of memorizing octal codes.',
+    date: '2026-03-02',
+    category: 'Dev Tools',
+    readTime: '5 min',
+  },
+  {
     slug: 'free-online-regex-tester',
     title: 'Free Online Regex Tester — Build and Debug Regular Expressions Instantly',
     excerpt: 'Test regex patterns against sample text with real-time highlighting, match groups, and common pattern library. No signup, runs entirely in your browser.',

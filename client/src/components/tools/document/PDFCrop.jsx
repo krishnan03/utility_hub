@@ -4,8 +4,6 @@ import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import FileUpload from '../../common/FileUpload';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
 const APPLY_OPTIONS = [
   { id: 'all', label: 'All pages' },
   { id: 'current', label: 'Current page' },
@@ -49,6 +47,7 @@ export default function PDFCrop() {
     try {
       const arrayBuffer = await f.arrayBuffer();
       setPdfBytes(new Uint8Array(arrayBuffer));
+      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer.slice(0) }).promise;
       setPdfDoc(pdf);
       setTotalPages(pdf.numPages);
@@ -185,6 +184,7 @@ export default function PDFCrop() {
 
   const reset = () => {
     if (result?.downloadUrl?.startsWith('blob:')) URL.revokeObjectURL(result.downloadUrl);
+    if (pdfDoc) pdfDoc.destroy().catch(() => {});
     setFile(null);
     setPdfDoc(null);
     setPdfBytes(null);

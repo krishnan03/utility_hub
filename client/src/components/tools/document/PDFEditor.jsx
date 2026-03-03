@@ -5,9 +5,6 @@ import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import FileUpload from '../../common/FileUpload';
 import ProgressBar from '../../common/ProgressBar';
 
-// Set worker source — use bundled worker via Vite ?url import
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
 const TOOLS = [
   { id: 'select',    label: 'Select',    icon: '↖' },
   { id: 'text',      label: 'Text',      icon: 'T' },
@@ -24,6 +21,9 @@ const STROKE_WIDTHS = [1, 2, 4, 6];
 
 // Load PDF from ArrayBuffer
 const loadPdf = async (file) => {
+  // Re-assign worker source before every load to ensure the worker is available
+  // even after a previous document was destroyed or the worker was terminated.
+  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
   return pdf;
@@ -626,6 +626,10 @@ export default function PDFEditor() {
   const reset = () => {
     if (result?.downloadUrl?.startsWith('blob:')) {
       URL.revokeObjectURL(result.downloadUrl);
+    }
+    // Destroy the old PDF document to cleanly release its worker
+    if (pdfDoc) {
+      pdfDoc.destroy().catch(() => {});
     }
     setFile(null);
     setPdfDoc(null);

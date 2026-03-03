@@ -4,8 +4,6 @@ import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 import FileUpload from '../../common/FileUpload';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
 export default function PDFRedact() {
   const [file, setFile] = useState(null);
   const [pdfDoc, setPdfDoc] = useState(null);
@@ -38,6 +36,7 @@ export default function PDFRedact() {
     setError(null);
     try {
       const arrayBuffer = await f.arrayBuffer();
+      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
       const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       setPdfDoc(pdf);
       setTotalPages(pdf.numPages);
@@ -246,6 +245,7 @@ export default function PDFRedact() {
 
   const reset = () => {
     if (result?.downloadUrl?.startsWith('blob:')) URL.revokeObjectURL(result.downloadUrl);
+    if (pdfDoc) pdfDoc.destroy().catch(() => {});
     setFile(null);
     setPdfDoc(null);
     setTotalPages(0);

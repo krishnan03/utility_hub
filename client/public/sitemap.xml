@@ -18,6 +18,24 @@
 
   <!-- Blog Posts -->
   <url>
+    <loc>https://toolspilot.work/blog/cron-expression-guide</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolspilot.work/blog/free-online-diff-checker</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://toolspilot.work/blog/chmod-calculator-explained</loc>
+    <lastmod>2026-03-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://toolspilot.work/blog/free-online-regex-tester</loc>
     <lastmod>2026-03-01</lastmod>
     <changefreq>monthly</changefreq>
