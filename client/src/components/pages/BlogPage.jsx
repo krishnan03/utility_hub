@@ -28,6 +28,14 @@ const BLOG_POSTS = [
     readTime: '5 min',
   },
   {
+    slug: 'sign-pdf-online-free',
+    title: 'How to Sign a PDF Online for Free — Draw, Type, and Place Your Signature',
+    excerpt: 'Add your signature to any PDF with drag-and-drop placement. Draw or type your signature, position it visually on the page, and download — no account needed.',
+    date: '2026-03-04',
+    category: 'Documents',
+    readTime: '4 min',
+  },
+  {
     slug: 'free-online-regex-tester',
     title: 'Free Online Regex Tester — Build and Debug Regular Expressions Instantly',
     excerpt: 'Test regex patterns against sample text with real-time highlighting, match groups, and common pattern library. No signup, runs entirely in your browser.',

@@ -481,6 +481,41 @@ const BLOG_CONTENT = {
       },
     ],
   },
+  'sign-pdf-online-free': {
+    sections: [
+      {
+        heading: 'Why Signing PDFs Should Be Simple',
+        body: `Most PDF signing tools fall into two camps: expensive desktop software like Adobe Acrobat, or free tools that make you guess where your signature will land. You pick "bottom right", hit submit, download the file, and discover your signature is covering the date field. Then you start over.\n\nToolsPilot's E-Signature tool takes a different approach. You see the actual PDF page, create your signature, then drag it to exactly where you want it. Resize it with a corner handle until it fits. What you see is what you get.`,
+      },
+      {
+        heading: 'How It Works',
+        body: `1. Upload your PDF — the first page renders instantly in your browser\n2. Click "Create Signature" to open the signature pad\n3. Draw your signature freehand, or type your name for a clean script font\n4. Your signature appears as a draggable overlay on the PDF page\n5. Drag it to the exact position — signature line, initial box, anywhere\n6. Grab the corner handle to resize it larger or smaller\n7. Navigate to any page if you need to sign on a different one\n8. Click "Sign PDF" and download your signed document\n\nThe whole process takes about 30 seconds. No account, no watermarks, no page limits.`,
+      },
+      {
+        heading: 'Draw vs Type — Which Should You Use?',
+        body: `Drawing gives you a natural, handwritten look. Use your mouse, trackpad, or finger on a touchscreen. It looks more personal and is what most people expect on contracts and legal documents.\n\nTyping renders your name in an elegant serif font. It is faster, looks clean and professional, and works well for internal documents, approvals, and forms where a handwritten look is not required.\n\nBoth options produce a PNG image that gets embedded into the PDF at the exact coordinates you chose. The result is a flat PDF — the signature cannot be moved or edited after signing.`,
+      },
+      {
+        heading: 'Common Use Cases',
+        body: `• Signing contracts and agreements before emailing them back\n• Adding your initials to each page of a multi-page document\n• Signing rental applications, tax forms, or school permission slips\n• Approving internal documents and purchase orders\n• Freelancers signing NDAs and SOWs from clients\n• Adding a signature to a cover letter or recommendation`,
+      },
+      {
+        heading: 'Privacy and Security',
+        body: `Your PDF is uploaded to our server only for the signing step — the signature image is embedded into the PDF server-side to produce a clean, flat output. The file is encrypted at rest and automatically deleted within 24 hours. We do not store, read, or analyze your documents. No account is required, and no cookies track your activity.`,
+      },
+      {
+        heading: 'Try These Document Tools',
+        links: [
+          { label: 'E-Signature', path: '/tools/pdf/esignature', icon: '✒️' },
+          { label: 'PDF Editor', path: '/tools/document/pdf-editor', icon: '✏️' },
+          { label: 'PDF Protect', path: '/tools/pdf/protect', icon: '🔒' },
+          { label: 'PDF Merger', path: '/tools/pdf/merge', icon: '🔗' },
+          { label: 'PDF Flatten', path: '/tools/pdf/flatten', icon: '📋' },
+          { label: 'PDF Form Filler', path: '/tools/pdf/form-filler', icon: '📝' },
+        ],
+      },
+    ],
+  },
   'chmod-calculator-explained': {
     sections: [
       {
