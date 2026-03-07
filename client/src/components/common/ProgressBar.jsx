@@ -25,14 +25,14 @@ export default function ProgressBar({ progress = 0, label = 'Processing', indete
         {indeterminate ? (
           <motion.div
             className="h-full w-1/3 rounded-full"
-            style={{ background: 'linear-gradient(90deg, #FF6363, #FF9F43)' }}
+            style={{ background: 'var(--tp-gradient)' }}
             animate={{ x: ['-100%', '200%'] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
           />
         ) : (
           <motion.div
             className="h-full rounded-full"
-            style={{ background: 'linear-gradient(90deg, #FF6363, #FF9F43)' }}
+            style={{ background: 'var(--tp-gradient)' }}
             initial={{ width: 0 }}
             animate={{ width: `${clamped}%` }}
             transition={{ duration: 0.4, ease: 'easeOut' }}

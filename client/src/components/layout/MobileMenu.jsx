@@ -102,7 +102,7 @@ export default function MobileMenu({ isOpen, onClose }) {
               <span className="text-base font-bold text-surface-50">
                 Tools<span
                   style={{
-                    background: 'linear-gradient(135deg, #FF6363, #FF9F43)',
+                    background: 'var(--tp-gradient)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     backgroundClip: 'text',

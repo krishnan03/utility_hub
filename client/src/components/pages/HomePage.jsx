@@ -182,7 +182,7 @@ function HeroSection() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse at 20% 50%, rgba(255,99,99,0.08), transparent 50%), ' +
+              `radial-gradient(ellipse at 20% 50%, var(--tp-selection), transparent 50%), ` +
               'radial-gradient(ellipse at 80% 50%, rgba(59,130,246,0.08), transparent 50%), ' +
               'radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.06), transparent 50%)',
           }}
@@ -198,7 +198,7 @@ function HeroSection() {
           {/* Animated tool count badge */}
           <div
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6"
-            style={{ background: 'rgba(255,99,99,0.12)', border: '1px solid rgba(255,99,99,0.25)', color: '#FF6363' }}
+            style={{ background: 'var(--tp-selection)', border: '1px solid var(--tp-border-hover)', color: 'var(--tp-accent)' }}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
             <span className="tabular-nums">{animatedCount}</span>+ free tools
@@ -320,8 +320,8 @@ function QuickActionsStrip() {
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-surface-300 hover:text-surface-50 transition-all duration-150 whitespace-nowrap shrink-0"
               style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255,99,99,0.1)';
-                e.currentTarget.style.borderColor = 'rgba(255,99,99,0.25)';
+                e.currentTarget.style.background = 'var(--tp-selection)';
+                e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
                 e.currentTarget.style.color = '#f5f5f7';
               }}
               onMouseLeave={(e) => {
@@ -479,8 +479,8 @@ function AllToolsGrid() {
           onClick={() => setActiveFilter(null)}
           className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
           style={!activeFilter
-            ? { background: 'linear-gradient(135deg, #FF6363, #FF9F43)', color: '#fff' }
-            : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#8e8e93' }
+            ? { background: 'var(--tp-gradient)', color: '#fff' }
+            : { background: 'rgba(255,255,255,0.05)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
           }
         >
           All
@@ -492,8 +492,8 @@ function AllToolsGrid() {
             onClick={() => setActiveFilter(activeFilter === cat.id ? null : cat.id)}
             className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
             style={activeFilter === cat.id
-              ? { background: 'linear-gradient(135deg, #FF6363, #FF9F43)', color: '#fff' }
-              : { background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', color: '#8e8e93' }
+              ? { background: 'var(--tp-gradient)', color: '#fff' }
+              : { background: 'rgba(255,255,255,0.05)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
             }
           >
             <span aria-hidden="true">{cat.icon}</span>

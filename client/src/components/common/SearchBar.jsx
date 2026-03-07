@@ -185,7 +185,7 @@ export default function SearchBar() {
           aria-label="Search results"
           className="absolute z-50 mt-2 w-full max-h-80 overflow-y-auto rounded-2xl shadow-2xl"
           style={{
-            background: 'rgba(44,44,46,0.95)',
+            background: 'var(--tp-card)',
             border: '1px solid rgba(255,255,255,0.1)',
             backdropFilter: 'blur(24px)',
             WebkitBackdropFilter: 'blur(24px)',

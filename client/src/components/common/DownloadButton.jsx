@@ -39,8 +39,8 @@ export default function DownloadButton({ downloadUrl, filename, expiresAt }) {
       transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="flex flex-col items-center gap-4 p-6 rounded-2xl"
       style={{
-        background: 'rgba(44,44,46,0.8)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--tp-card)',
+        border: '1px solid var(--tp-border)',
       }}
     >
       {/* Success icon */}

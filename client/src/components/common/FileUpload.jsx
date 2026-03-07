@@ -104,7 +104,7 @@ export default function FileUpload({
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300"
             style={{
-              background: dragOver ? 'rgba(255,99,99,0.12)' : 'rgba(255,255,255,0.05)',
+              background: dragOver ? 'var(--tp-selection)' : 'rgba(255,255,255,0.05)',
             }}
           >
             <svg

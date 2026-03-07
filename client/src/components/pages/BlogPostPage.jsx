@@ -17,7 +17,7 @@ function ToolLinksGrid({ links, compact = false }) {
           className={`group relative flex items-center gap-2 rounded-2xl text-center transition-all duration-300 hover:scale-[1.04] hover:shadow-lg hover:shadow-primary-500/10 ${compact ? 'flex-row px-4 py-2.5' : 'flex-col p-4'}`}
           style={{
             background: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,99,99,0.12)',
+            border: '1px solid var(--tp-selection)',
             backdropFilter: 'blur(12px)',
           }}
         >
@@ -130,7 +130,7 @@ export default function BlogPostPage() {
 
             {/* Top CTA — compact tool links strip */}
             {allLinks.length > 0 && (
-              <div className="mb-8 p-4 rounded-2xl" style={{ background: 'rgba(255,99,99,0.04)', border: '1px solid rgba(255,99,99,0.08)' }}>
+              <div className="mb-8 p-4 rounded-2xl" style={{ background: 'var(--tp-selection)', border: '1px solid var(--tp-border-hover)' }}>
                 <p className="text-xs font-bold uppercase tracking-wider text-primary-500 mb-3">🚀 Jump to tools mentioned in this article</p>
                 <ToolLinksGrid links={allLinks} compact />
               </div>
@@ -172,7 +172,7 @@ export default function BlogPostPage() {
 
             {/* Bottom CTA — full grid tool links */}
             {allLinks.length > 0 && (
-              <div className="mt-10 pt-8" style={{ borderTop: '1px solid rgba(255,99,99,0.1)' }}>
+              <div className="mt-10 pt-8" style={{ borderTop: '1px solid var(--tp-border-hover)' }}>
                 <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-4">
                   ✨ Try These Tools
                 </h2>

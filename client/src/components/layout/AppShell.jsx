@@ -24,11 +24,11 @@ export default function AppShell({ children }) {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-surface-900 text-surface-50">
+    <div className="flex flex-col min-h-screen" style={{ background: 'var(--tp-bg)', color: 'var(--tp-text)' }}>
       {/* Subtle top gradient glow */}
       <div
         className="fixed top-0 left-0 right-0 h-px z-50 pointer-events-none"
-        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,99,99,0.6), rgba(255,159,67,0.6), transparent)' }}
+        style={{ background: `linear-gradient(90deg, transparent, var(--tp-accent), var(--tp-accent2), transparent)` }}
         aria-hidden="true"
       />
 
@@ -42,7 +42,7 @@ export default function AppShell({ children }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.15, ease: 'easeOut' }}
-          className="p-4 sm:p-6 lg:p-8 max-w-screen-xl mx-auto"
+          className="p-5 sm:p-8 lg:p-10 max-w-screen-xl mx-auto"
         >
           {children}
         </motion.div>

@@ -285,7 +285,7 @@ export default function CommandBar({ autoFocus = false }) {
                               ? 'bg-primary-500/10'
                               : 'hover:bg-white/[0.04]'
                           }`}
-                          style={isActive ? { borderLeft: '2px solid #FF6363' } : { borderLeft: '2px solid transparent' }}
+                          style={isActive ? { borderLeft: '2px solid var(--tp-accent)' } : { borderLeft: '2px solid transparent' }}
                           onMouseDown={(e) => {
                             e.preventDefault();
                             selectTool(tool);
@@ -314,9 +314,9 @@ export default function CommandBar({ autoFocus = false }) {
                             <span
                               className="ml-auto shrink-0 text-[11px] font-medium px-2 py-0.5 rounded-md"
                               style={{
-                                background: 'rgba(255,99,99,0.1)',
-                                color: '#FF6363',
-                                border: '1px solid rgba(255,99,99,0.2)',
+                                background: 'var(--tp-selection)',
+                                color: 'var(--tp-accent)',
+                                border: '1px solid var(--tp-border-hover)',
                               }}
                             >
                               {tool.action}
