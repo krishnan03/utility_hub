@@ -76,11 +76,39 @@ router.post('/redirect-check', async (req, res, next) => {
  */
 router.post('/analyze', async (req, res, next) => {
   try {
-    const { text, keyword } = req.body;
+    let { text, url, keyword } = req.body;
+
+    // If a URL is provided, fetch the page HTML and use that as the text to analyze
+    if (url && typeof url === 'string') {
+      try {
+        new URL(url); // validate
+      } catch {
+        return next(new ValidationError('Invalid URL format', 'INVALID_PARAMETER'));
+      }
+      try {
+        const response = await fetch(url, {
+          headers: { 'User-Agent': 'ToolsPilot-SEOAnalyzer/1.0' },
+          signal: AbortSignal.timeout(15000),
+          redirect: 'follow',
+        });
+        if (!response.ok) {
+          return next(new ValidationError(
+            `Failed to fetch URL (HTTP ${response.status})`,
+            'FETCH_FAILED'
+          ));
+        }
+        text = await response.text();
+      } catch (fetchErr) {
+        return next(new ValidationError(
+          `Could not fetch URL: ${fetchErr.message}`,
+          'FETCH_FAILED'
+        ));
+      }
+    }
 
     if (!text || typeof text !== 'string') {
       return next(new ValidationError(
-        'Text content is required. Provide a "text" field in the request body.',
+        'Text content is required. Provide a "text" field or a "url" to fetch.',
         'MISSING_PARAMETER'
       ));
     }
@@ -90,8 +118,11 @@ router.post('/analyze', async (req, res, next) => {
     return res.json({
       success: true,
       score: result.score,
+      seoScore: result.score,
       suggestions: result.suggestions,
       metrics: result.metrics,
+      topKeywords: result.topKeywords,
+      metaSuggestions: result.metaSuggestions,
     });
   } catch (err) {
     next(err);
