@@ -683,7 +683,7 @@ function CategoryShowcase() {
       </motion.div>
 
       {/* Category grid with inline expansion */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {categories.map((cat, i) => {
           const catTools = toolsForCategory(cat.id);
           const accent = CATEGORY_ACCENT[cat.id] || '#94a3b8';
@@ -691,90 +691,189 @@ function CategoryShowcase() {
 
           return (
             <React.Fragment key={cat.id}>
-              {/* Category card */}
+              {/* Category card with spotlight */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.3, delay: i * 0.03 }}
-                whileHover={{ scale: 1.03, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="relative rounded-2xl overflow-hidden cursor-pointer"
-                style={{
-                  background: isActive ? 'rgba(44,44,46,0.95)' : 'rgba(44,44,46,0.5)',
-                  border: `1px solid ${isActive ? accent + '60' : 'rgba(255,255,255,0.06)'}`,
-                  backdropFilter: 'blur(12px)',
-                  boxShadow: isActive ? `0 0 20px ${accent}20` : 'none',
-                  transition: 'border-color 0.2s, background 0.2s, box-shadow 0.2s',
-                }}
-                onClick={() => setExpandedCat(isActive ? null : cat.id)}
+                transition={{ duration: 0.35, delay: i * 0.03 }}
               >
-                <div
-                  className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}15, transparent 70%)` }}
-                />
-                <div className="relative z-10 p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-2xl">{cat.icon}</span>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: `${accent}20`, color: accent }}>
-                      {catTools.length}
-                    </span>
-                  </div>
-                  <h3 className="text-sm font-bold text-surface-100 mb-0.5">{cat.name}</h3>
-                  <div className="flex items-center mt-2 -space-x-1">
-                    {catTools.slice(0, 3).map((tool, j) => (
-                      <div key={tool.id} className="w-6 h-6 rounded-full flex items-center justify-center text-[10px] border-2" style={{ background: 'rgba(28,28,30,0.9)', borderColor: 'rgba(255,255,255,0.1)', zIndex: 3 - j }}>
-                        {tool.icon}
-                      </div>
-                    ))}
-                    {catTools.length > 3 && <span className="text-[10px] text-surface-500 ml-2">+{catTools.length - 3}</span>}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Expanded panel — spans full grid width, appears right after this card */}
-              {isActive && (
-                <motion.div
-                  initial={{ opacity: 0, scaleY: 0.95 }}
-                  animate={{ opacity: 1, scaleY: 1 }}
-                  exit={{ opacity: 0, scaleY: 0.95 }}
-                  transition={{ duration: 0.25, ease: 'easeOut' }}
-                  className="col-span-2 sm:col-span-3 lg:col-span-4 rounded-2xl overflow-hidden origin-top"
+                <SpotlightCard
+                  className="rounded-2xl cursor-pointer h-full"
                   style={{
-                    background: 'rgba(44,44,46,0.9)',
-                    border: `1px solid ${accent}30`,
+                    background: isActive ? 'var(--tp-card-hover)' : 'var(--tp-card)',
+                    border: `1px solid ${isActive ? accent + '60' : 'rgba(255,255,255,0.06)'}`,
                     backdropFilter: 'blur(12px)',
+                    boxShadow: isActive ? `0 0 24px ${accent}25, 0 8px 20px rgba(0,0,0,0.3)` : 'none',
+                    transition: 'border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.2s',
                   }}
+                  onClick={() => setExpandedCat(isActive ? null : cat.id)}
                 >
-                  <div className="p-5">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">{cat.icon}</span>
-                        <h3 className="text-base font-bold text-surface-100">{cat.name}</h3>
-                        <span className="text-xs text-surface-500">{catTools.length} tools</span>
+                  {/* Accent gradient top edge */}
+                  <div
+                    className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
+                    aria-hidden="true"
+                  />
+
+                  <div className="relative z-10 p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+                        style={{ background: `${accent}15`, border: `1px solid ${accent}25` }}
+                      >
+                        {cat.icon}
                       </div>
-                      <button onClick={(e) => { e.stopPropagation(); setExpandedCat(null); }} className="text-xs text-surface-400 hover:text-surface-200 transition-colors px-2 py-1 rounded-lg hover:bg-white/5">
-                        ✕ Close
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="text-[10px] font-bold px-2 py-0.5 rounded-full tabular-nums"
+                          style={{ background: `${accent}15`, color: accent, border: `1px solid ${accent}25` }}
+                        >
+                          {catTools.length} tools
+                        </span>
+                        {/* Expand indicator */}
+                        <motion.svg
+                          animate={{ rotate: isActive ? 180 : 0 }}
+                          transition={{ duration: 0.3, ease: 'easeInOut' }}
+                          className="w-3.5 h-3.5 text-surface-500"
+                          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </motion.svg>
+                      </div>
                     </div>
-                    <motion.div variants={staggerContainer} initial="hidden" animate="show" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
-                      {catTools.map((tool) => (
-                        <motion.div key={tool.id} variants={fadeUp}>
-                          <Link to={tool.path} className="group flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                            <span className="text-sm shrink-0">{tool.icon}</span>
-                            <span className="text-xs font-medium text-surface-300 group-hover:text-surface-100 truncate">{tool.name}</span>
-                          </Link>
+                    <h3 className="text-sm font-bold text-surface-100 mb-1">{cat.name}</h3>
+                    {/* Preview: top 3 tool names */}
+                    <p className="text-[11px] text-surface-500 leading-relaxed line-clamp-1">
+                      {catTools.slice(0, 3).map(t => t.name).join(' · ')}
+                    </p>
+                    {/* Tool icon stack */}
+                    <div className="flex items-center mt-3 -space-x-1.5">
+                      {catTools.slice(0, 4).map((tool, j) => (
+                        <motion.div
+                          key={tool.id}
+                          initial={{ opacity: 0, x: -8 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.1 + j * 0.05 }}
+                          className="w-7 h-7 rounded-lg flex items-center justify-center text-xs border-2"
+                          style={{
+                            background: 'var(--tp-bg)',
+                            borderColor: `${accent}30`,
+                            zIndex: 4 - j,
+                          }}
+                        >
+                          {tool.icon}
                         </motion.div>
                       ))}
-                    </motion.div>
-                    <div className="mt-4 text-center">
-                      <Link to={cat.path} className="text-xs font-semibold transition-colors hover:brightness-125" style={{ color: accent }}>
-                        View all {cat.name} tools →
-                      </Link>
+                      {catTools.length > 4 && (
+                        <span
+                          className="text-[10px] font-semibold ml-2 px-1.5 py-0.5 rounded-md"
+                          style={{ background: `${accent}10`, color: accent }}
+                        >
+                          +{catTools.length - 4}
+                        </span>
+                      )}
                     </div>
                   </div>
-                </motion.div>
-              )}
+                </SpotlightCard>
+              </motion.div>
+
+              {/* Expanded panel — full grid width */}
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    className="col-span-2 sm:col-span-3 lg:col-span-4 overflow-hidden"
+                  >
+                    <div
+                      className="rounded-2xl overflow-hidden"
+                      style={{
+                        background: 'var(--tp-card)',
+                        border: `1px solid ${accent}30`,
+                        backdropFilter: 'blur(16px)',
+                        boxShadow: `0 0 30px ${accent}10, 0 12px 40px rgba(0,0,0,0.4)`,
+                      }}
+                    >
+                      {/* Accent top bar */}
+                      <div className="h-0.5" style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }} />
+
+                      <div className="p-6">
+                        <div className="flex items-center justify-between mb-5">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="w-9 h-9 rounded-xl flex items-center justify-center text-lg"
+                              style={{ background: `${accent}15`, border: `1px solid ${accent}30` }}
+                            >
+                              {cat.icon}
+                            </div>
+                            <div>
+                              <h3 className="text-base font-bold text-surface-100">{cat.name}</h3>
+                              <span className="text-xs text-surface-500">{catTools.length} tools available</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              to={cat.path}
+                              className="text-xs font-semibold px-3 py-1.5 rounded-lg transition-all duration-200"
+                              style={{ background: `${accent}15`, color: accent, border: `1px solid ${accent}25` }}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              View all →
+                            </Link>
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setExpandedCat(null); }}
+                              className="w-7 h-7 rounded-lg flex items-center justify-center text-surface-400 hover:text-surface-200 transition-all duration-200"
+                              style={{ background: 'rgba(255,255,255,0.06)' }}
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        </div>
+
+                        <motion.div
+                          variants={staggerContainer}
+                          initial="hidden"
+                          animate="show"
+                          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+                        >
+                          {catTools.map((tool) => (
+                            <motion.div key={tool.id} variants={fadeUp}>
+                              <Link
+                                to={tool.path}
+                                className="group relative flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 overflow-hidden"
+                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.background = `${accent}10`;
+                                  e.currentTarget.style.borderColor = `${accent}30`;
+                                  e.currentTarget.style.transform = 'translateY(-1px)';
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+                                  e.currentTarget.style.transform = 'translateY(0)';
+                                }}
+                              >
+                                <span className="text-base shrink-0 group-hover:scale-110 transition-transform duration-200">{tool.icon}</span>
+                                <div className="min-w-0 flex-1">
+                                  <span className="text-xs font-semibold text-surface-200 group-hover:text-surface-50 truncate block transition-colors">{tool.name}</span>
+                                  <span className="text-[10px] text-surface-500 truncate block">{tool.description?.slice(0, 40)}...</span>
+                                </div>
+                                <svg className="w-3 h-3 text-surface-600 group-hover:text-surface-300 opacity-0 group-hover:opacity-100 transition-all duration-200 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </React.Fragment>
           );
         })}
