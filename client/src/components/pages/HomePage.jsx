@@ -85,53 +85,64 @@ function toolsForCategory(id) {
   return tools.filter((t) => t.category === id);
 }
 
-/* ─── Flagship Card ─────────────────────────────────────────────────── */
+/* ─── Flagship Card (Bento) ──────────────────────────────────────────── */
 
-function FlagshipCard({ icon, title, description, features, link, accentColor }) {
+function FlagshipCard({ icon, title, description, features, link, accentColor, featured }) {
   return (
-    <Link to={link} className="block">
+    <Link to={link} className="block h-full">
       <motion.div
-        whileHover={{ scale: 1.02, y: -4 }}
+        whileHover={{ scale: 1.015, y: -3 }}
         whileTap={{ scale: 0.98 }}
-        className="relative group rounded-3xl p-6 sm:p-8 overflow-hidden transition-all duration-300 h-full"
+        className={`relative group rounded-3xl overflow-hidden transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
         style={{
-          background: 'rgba(44,44,46,0.6)',
+          background: 'var(--tp-card)',
+          border: `1px solid ${accentColor}30`,
           backdropFilter: 'blur(20px)',
-          border: `1px solid ${accentColor}22`,
         }}
       >
         {/* Gradient glow on hover */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `radial-gradient(ellipse at 50% 0%, ${accentColor}15, transparent 70%)` }}
+          style={{ background: `radial-gradient(ellipse at 30% 0%, ${accentColor}20, transparent 60%)` }}
+          aria-hidden="true"
+        />
+        {/* Corner accent */}
+        <div
+          className="absolute top-0 right-0 w-32 h-32 opacity-20 group-hover:opacity-40 transition-opacity duration-500"
+          style={{ background: `radial-gradient(circle at 100% 0%, ${accentColor}40, transparent 70%)` }}
           aria-hidden="true"
         />
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-4xl block">{icon}</span>
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex items-center gap-3 mb-4">
+            <div
+              className={`${featured ? 'w-14 h-14 text-3xl' : 'w-10 h-10 text-xl'} rounded-2xl flex items-center justify-center shrink-0`}
+              style={{ background: `${accentColor}15`, border: `1px solid ${accentColor}30` }}
+            >
+              {icon}
+            </div>
+            {featured && (
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider" style={{ background: `${accentColor}15`, color: accentColor }}>
+                Popular
+              </span>
+            )}
           </div>
-          <h3 className="text-xl font-bold text-surface-50 mb-2">{title}</h3>
-          <p className="text-sm text-surface-400 mb-4 leading-relaxed">{description}</p>
+          <h3 className={`${featured ? 'text-2xl' : 'text-lg'} font-bold text-surface-50 mb-2`}>{title}</h3>
+          <p className={`${featured ? 'text-base' : 'text-sm'} text-surface-400 leading-relaxed mb-4`}>{description}</p>
           <div className="flex flex-wrap gap-2 mb-6">
             {features.map((f) => (
               <span
                 key={f}
                 className="px-2.5 py-1 rounded-full text-xs font-medium"
-                style={{ background: `${accentColor}15`, color: accentColor }}
+                style={{ background: `${accentColor}12`, color: accentColor, border: `1px solid ${accentColor}20` }}
               >
                 {f}
               </span>
             ))}
           </div>
-          <div className="flex items-center gap-2 text-sm font-semibold" style={{ color: accentColor }}>
+          <div className="mt-auto flex items-center gap-2 text-sm font-semibold" style={{ color: accentColor }}>
             Open Editor
-            <svg
-              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </div>
@@ -352,6 +363,7 @@ function FlagshipEditorsSection() {
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
+        <span className="section-label mb-3 block" style={{ color: 'var(--tp-accent)' }}>✦ Flagship Editors</span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-surface-50 mb-2">
           Powerful Online Editors
         </h2>
@@ -360,18 +372,25 @@ function FlagshipEditorsSection() {
         </p>
       </motion.div>
 
+      {/* Bento grid: first card spans 2 cols on md+ */}
       <motion.div
         variants={staggerContainer}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: '-60px' }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5"
       >
-        {FLAGSHIP_EDITORS.map((editor) => (
-          <motion.div key={editor.title} variants={fadeUp}>
-            <FlagshipCard {...editor} />
-          </motion.div>
-        ))}
+        {/* Featured — large card spanning full width on mobile, 1 col + full height on md */}
+        <motion.div variants={fadeUp} className="md:row-span-2">
+          <FlagshipCard {...FLAGSHIP_EDITORS[0]} featured />
+        </motion.div>
+        {/* Two smaller cards stacked */}
+        <motion.div variants={fadeUp}>
+          <FlagshipCard {...FLAGSHIP_EDITORS[1]} />
+        </motion.div>
+        <motion.div variants={fadeUp}>
+          <FlagshipCard {...FLAGSHIP_EDITORS[2]} />
+        </motion.div>
       </motion.div>
     </section>
   );
@@ -653,34 +672,58 @@ function RecentlyUsed() {
 
 /* ─── Stats Bar ─────────────────────────────────────────────────────── */
 
-function StatsBar() {
-  const stats = [
-    { label: `${tools.length}+ Tools`, icon: '🧰' },
-    { label: `${categories.length} Categories`, icon: '📂' },
-    { label: '100% Free', icon: '✨' },
-    { label: 'Privacy First', icon: '🛡️' },
-  ];
+/* ─── Animated Stat Counter ──────────────────────────────────────────── */
+
+function AnimatedStat({ value, suffix, label, icon, delay }) {
+  const [inView, setInView] = useState(false);
+  const ref = useRef(null);
+  const count = useAnimatedCounter(inView ? value : 0, 1200);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold: 0.3 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5 }}
-      className="py-8"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay, duration: 0.4 }}
+      className="relative flex flex-col items-center gap-3 py-6 rounded-2xl overflow-hidden group"
+      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
     >
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {stats.map((s) => (
-          <div
-            key={s.label}
-            className="flex flex-col items-center gap-2 py-4 rounded-2xl"
-            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-          >
-            <span className="text-lg">{s.icon}</span>
-            <span className="text-xs font-semibold text-surface-300">{s.label}</span>
-          </div>
-        ))}
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--tp-selection), transparent 70%)' }}
+        aria-hidden="true"
+      />
+      <span className="text-2xl relative z-10">{icon}</span>
+      <span className="text-2xl font-extrabold font-mono text-surface-50 tabular-nums relative z-10">
+        {count}{suffix}
+      </span>
+      <span className="text-xs font-medium text-surface-400 relative z-10">{label}</span>
+    </motion.div>
+  );
+}
+
+function StatsBar() {
+  return (
+    <section className="py-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <AnimatedStat value={tools.length} suffix="+" label="Free Tools" icon="🧰" delay={0} />
+        <AnimatedStat value={categories.length} suffix="" label="Categories" icon="📂" delay={0.1} />
+        <AnimatedStat value={0} suffix="$0" label="Always Free" icon="✨" delay={0.2} />
+        <AnimatedStat value={0} suffix="Zero" label="Data Collected" icon="🛡️" delay={0.3} />
       </div>
-    </motion.section>
+    </section>
   );
 }
 
