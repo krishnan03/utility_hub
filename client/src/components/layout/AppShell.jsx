@@ -25,11 +25,11 @@ export default function AppShell({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen" style={{ background: 'var(--tp-bg)', color: 'var(--tp-text)' }}>
-      {/* Fixed gradient mesh for glassmorphism — gives cards something to blur */}
-      <div className="fixed inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.08), transparent 70%)' }} />
-        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.05), transparent 70%)' }} />
-        <div className="absolute bottom-0 left-0 w-[700px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,91,255,0.06), transparent 70%)' }} />
+      {/* Fixed animated gradient mesh for glassmorphism */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true" style={{ zIndex: 0 }}>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full animate-mesh-1" style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.10), transparent 70%)' }} />
+        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full animate-mesh-2" style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.07), transparent 70%)' }} />
+        <div className="absolute bottom-0 left-0 w-[700px] h-[500px] rounded-full animate-mesh-3" style={{ background: 'radial-gradient(circle, rgba(99,91,255,0.08), transparent 70%)' }} />
       </div>
       {/* Subtle top gradient glow */}
       <div

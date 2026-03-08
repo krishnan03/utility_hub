@@ -203,18 +203,42 @@ function toolsForCategory(id) {
 /* ─── Flagship Card (Bento) ──────────────────────────────────────────── */
 
 function FlagshipCard({ icon, title, description, features, link, accentColor, featured }) {
+  const cardRef = useRef(null);
+  const rotateX = useSpring(0, { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(0, { stiffness: 200, damping: 20 });
+
+  function handleMouseMove(e) {
+    const el = cardRef.current;
+    if (!el) return;
+    const { left, top, width, height } = el.getBoundingClientRect();
+    const x = (e.clientX - left) / width - 0.5;
+    const y = (e.clientY - top) / height - 0.5;
+    rotateX.set(y * -8);
+    rotateY.set(x * 8);
+  }
+  function handleMouseLeave() {
+    rotateX.set(0);
+    rotateY.set(0);
+  }
+
   return (
-    <Link to={link} className="block h-full">
-      <SpotlightCard
-        className={`rounded-3xl transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
-        style={{
-          background: 'rgba(255,255,255,0.05)',
-          border: `1px solid ${accentColor}30`,
-          backdropFilter: 'blur(20px) saturate(180%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-          boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.25)`,
-        }}
+    <Link to={link} className="block h-full" style={{ perspective: '800px' }}>
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       >
+        <SpotlightCard
+          className={`rounded-3xl transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
+          style={{
+            background: 'rgba(255,255,255,0.05)',
+            border: `1px solid ${accentColor}30`,
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.25)`,
+          }}
+        >
         {/* Corner accent */}
         <div
           className="absolute top-0 right-0 w-32 h-32 opacity-30 group-hover:opacity-50 transition-opacity duration-500"
@@ -269,6 +293,7 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
           </div>
         </div>
       </SpotlightCard>
+      </motion.div>
     </Link>
   );
 }
@@ -392,6 +417,10 @@ function HeroSection() {
   const animatedCount = useAnimatedCounter(tools.length, 1400);
   const searchRef = useRef(null);
   const [searchSticky, setSearchSticky] = useState(false);
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 400], [0, -60]);
+  const searchY = useTransform(scrollY, [0, 400], [0, -30]);
+  const badgeY = useTransform(scrollY, [0, 400], [0, -15]);
 
   useEffect(() => {
     const el = searchRef.current;
@@ -479,6 +508,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="relative z-10 mb-8"
+          style={{ y: heroY }}
         >
           {/* Animated tool count badge */}
           <motion.div
@@ -521,6 +551,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
           className="relative z-20 max-w-lg mx-auto mb-10"
+          style={{ y: searchY }}
         >
           {/* Animated gradient border wrapper */}
           <div className="relative rounded-2xl p-px overflow-hidden" style={{ background: 'var(--tp-card)' }}>
@@ -545,6 +576,7 @@ function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.55, duration: 0.5 }}
           className="relative z-10 flex items-center justify-center gap-3 sm:gap-4"
+          style={{ y: badgeY }}
         >
           {[
             { icon: '🔓', label: 'No Signup' },
@@ -973,14 +1005,14 @@ function AllToolsGrid() {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
       >
         <AnimatePresence mode="popLayout">
-          {filteredTools.map((tool) => (
+          {filteredTools.map((tool, i) => (
             <motion.div
               key={tool.id}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.35, delay: Math.min(i * 0.03, 0.6), ease: [0.25, 0.46, 0.45, 0.94] }}
             >
               <Link
                 to={tool.path}
@@ -1284,10 +1316,24 @@ function StatsBar() {
 
 function SectionHeader({ title }) {
   return (
-    <div className="flex items-center gap-4 mb-6">
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className="flex items-center gap-4 mb-6"
+    >
       <h2 className="text-xl font-bold text-surface-100 shrink-0">{title}</h2>
-      <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.06)' }} aria-hidden="true" />
-    </div>
+      <motion.div
+        initial={{ scaleX: 0 }}
+        whileInView={{ scaleX: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+        className="flex-1 h-px origin-left"
+        style={{ background: 'linear-gradient(90deg, var(--tp-border-hover), transparent)' }}
+        aria-hidden="true"
+      />
+    </motion.div>
   );
 }
 
