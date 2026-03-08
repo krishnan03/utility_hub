@@ -28,8 +28,8 @@ app.use(helmet());
 app.use(cors({ origin: config.corsOrigin }));
 
 // Body parsing
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
 // Cookie parsing (required before session middleware)
 app.use(cookieParser());

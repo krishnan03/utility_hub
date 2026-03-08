@@ -97,7 +97,16 @@ router.post('/analyze', async (req, res, next) => {
             'FETCH_FAILED'
           ));
         }
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('text/') && !contentType.includes('html') && !contentType.includes('xml')) {
+          return next(new ValidationError(
+            'URL does not point to an HTML page',
+            'INVALID_CONTENT_TYPE'
+          ));
+        }
         text = await response.text();
+        // Cap raw HTML to 500KB to prevent memory issues
+        if (text.length > 500000) text = text.slice(0, 500000);
       } catch (fetchErr) {
         return next(new ValidationError(
           `Could not fetch URL: ${fetchErr.message}`,
@@ -113,7 +122,7 @@ router.post('/analyze', async (req, res, next) => {
       ));
     }
 
-    // Strip HTML tags to get plain text for analysis, and cap size to avoid OOM
+    // Strip HTML tags to get plain text for analysis, and cap size
     const plainText = text
       .replace(/<script[\s\S]*?<\/script>/gi, '')
       .replace(/<style[\s\S]*?<\/style>/gi, '')
@@ -121,7 +130,14 @@ router.post('/analyze', async (req, res, next) => {
       .replace(/&[a-z]+;/gi, ' ')
       .replace(/\s+/g, ' ')
       .trim()
-      .slice(0, 200000);
+      .slice(0, 50000); // ~50KB of plain text is plenty for SEO analysis
+
+    if (!plainText) {
+      return next(new ValidationError(
+        'Could not extract any text content from the provided input.',
+        'EMPTY_CONTENT'
+      ));
+    }
 
     const result = analyzeText(plainText, { keyword });
 

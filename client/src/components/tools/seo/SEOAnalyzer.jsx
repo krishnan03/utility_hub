@@ -53,7 +53,11 @@ export default function SEOAnalyzer() {
         credentials: 'include',
         body: JSON.stringify({ text, url: inputMode === 'url' ? url : undefined }),
       });
-      const data = await res.json();
+      const raw = await res.text();
+      let data;
+      try { data = JSON.parse(raw); } catch {
+        throw new Error('Server returned an invalid response. Please try again.');
+      }
       if (!res.ok) throw new Error(data?.error?.message || 'Analysis failed');
       setResult(data);
     } catch (e) {
