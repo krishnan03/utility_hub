@@ -57,17 +57,24 @@ function applyColorTheme(themeId) {
   const selection = theme.vars['--tp-selection'];
   const accent = theme.vars['--tp-accent'];
 
+  const isGlassCard = card.includes('rgba');
+
   sheet.textContent = `
     /* Card backgrounds — override hardcoded rgba(44,44,46,*) */
-    [style*="44, 44, 46"]:not([aria-hidden="true"]):not(.pointer-events-none) { background: ${card} !important; }
-    [style*="44,44,46"]:not([aria-hidden="true"]):not(.pointer-events-none) { background: ${card} !important; }
-    [style*="58, 58, 60"], [style*="58,58,60"] { background: ${cardHover} !important; }
+    [style*="44, 44, 46"]:not([aria-hidden="true"]):not(.pointer-events-none) { background: ${card} !important; ${isGlassCard ? 'backdrop-filter: blur(16px) saturate(180%) !important; -webkit-backdrop-filter: blur(16px) saturate(180%) !important;' : ''} }
+    [style*="44,44,46"]:not([aria-hidden="true"]):not(.pointer-events-none) { background: ${card} !important; ${isGlassCard ? 'backdrop-filter: blur(16px) saturate(180%) !important; -webkit-backdrop-filter: blur(16px) saturate(180%) !important;' : ''} }
+    [style*="58, 58, 60"], [style*="58,58,60"] { background: ${cardHover} !important; ${isGlassCard ? 'backdrop-filter: blur(20px) saturate(180%) !important; -webkit-backdrop-filter: blur(20px) saturate(180%) !important;' : ''} }
     [style*="28, 28, 30"]:not([aria-hidden="true"]):not(.pointer-events-none), [style*="28,28,30"]:not([aria-hidden="true"]):not(.pointer-events-none) { background: ${bg} !important; }
 
     /* Borders — override hardcoded rgba(255,255,255,0.08/0.06/0.1) */
     [style*="255, 255, 255, 0.08"], [style*="255,255,255,0.08"] { border-color: ${border} !important; }
     [style*="255, 255, 255, 0.06"], [style*="255,255,255,0.06"] { border-color: ${border} !important; }
     [style*="255, 255, 255, 0.1)"], [style*="255,255,255,0.1)"] { border-color: ${border} !important; }
+
+    /* Glass card extras for translucent themes */
+    ${isGlassCard ? `
+    [style*="255,255,255,0.04"], [style*="255, 255, 255, 0.04"] { background: ${card} !important; backdrop-filter: blur(12px) saturate(160%) !important; -webkit-backdrop-filter: blur(12px) saturate(160%) !important; }
+    ` : ''}
   `;
 
   // Also directly patch elements via JS for maximum reliability
@@ -77,6 +84,7 @@ function applyColorTheme(themeId) {
 /** Walk the DOM and directly override inline background/border styles */
 function patchInlineStyles(theme) {
   if (typeof document === 'undefined') return;
+  const isGlass = theme.vars['--tp-card'].includes('rgba');
   const all = document.querySelectorAll('[style]');
   all.forEach((el) => {
     const raw = el.getAttribute('style') || '';
@@ -89,12 +97,28 @@ function patchInlineStyles(theme) {
     // Card backgrounds — only override solid rgba backgrounds, not gradient meshes
     if (!isDecorative && (raw.includes('44, 44, 46') || raw.includes('44,44,46'))) {
       s.setProperty('background', theme.vars['--tp-card'], 'important');
+      if (isGlass) {
+        s.setProperty('backdrop-filter', 'blur(16px) saturate(180%)', 'important');
+        s.setProperty('-webkit-backdrop-filter', 'blur(16px) saturate(180%)', 'important');
+      }
     }
     if (!isDecorative && (raw.includes('58, 58, 60') || raw.includes('58,58,60'))) {
       s.setProperty('background', theme.vars['--tp-card-hover'], 'important');
+      if (isGlass) {
+        s.setProperty('backdrop-filter', 'blur(20px) saturate(180%)', 'important');
+        s.setProperty('-webkit-backdrop-filter', 'blur(20px) saturate(180%)', 'important');
+      }
     }
     if (!isDecorative && (raw.includes('28, 28, 30') || raw.includes('28,28,30'))) {
       s.setProperty('background', theme.vars['--tp-bg'], 'important');
+    }
+    // Also catch rgba(255,255,255,0.04) backgrounds used in many tool components
+    if (!isDecorative && (raw.includes('255,255,255,0.04') || raw.includes('255, 255, 255, 0.04'))) {
+      s.setProperty('background', theme.vars['--tp-card'], 'important');
+      if (isGlass) {
+        s.setProperty('backdrop-filter', 'blur(12px) saturate(160%)', 'important');
+        s.setProperty('-webkit-backdrop-filter', 'blur(12px) saturate(160%)', 'important');
+      }
     }
     // Gradient buttons — only match the exact primary gradient (both colors together),
     // but NOT when used as a subtle tint suffix like #FF636322 or #FF636315

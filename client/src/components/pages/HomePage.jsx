@@ -413,17 +413,17 @@ function HeroSection() {
           {/* Primary pink orb — top left */}
           <div
             className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full animate-orb-1"
-            style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.15), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.22), transparent 70%)' }}
           />
           {/* Yellow orb — top right */}
           <div
             className="absolute -top-20 -right-40 w-[400px] h-[400px] rounded-full animate-orb-2"
-            style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.08), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.14), transparent 70%)' }}
           />
           {/* Blue orb — bottom center */}
           <div
             className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full animate-orb-3"
-            style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.15), transparent 70%)' }}
           />
         </div>
 
@@ -519,7 +519,7 @@ function HeroSection() {
               }}
               aria-hidden="true"
             />
-            <div className="relative rounded-[15px]" style={{ background: 'var(--tp-card)' }}>
+            <div className="relative rounded-[15px]" style={{ background: 'var(--tp-bg)' }}>
               <CommandBar />
             </div>
           </div>
@@ -542,9 +542,10 @@ function HeroSection() {
               key={badge.label}
               className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-surface-300"
               style={{
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(8px)',
+                background: 'rgba(255,255,255,0.05)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(16px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(16px) saturate(180%)',
               }}
             >
               <span className="text-sm">{badge.icon}</span>

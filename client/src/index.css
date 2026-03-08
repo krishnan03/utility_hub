@@ -114,6 +114,8 @@
     color: var(--tp-text);
     background: var(--tp-card);
     border: 1px solid var(--tp-border);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
   }
   .cmd-input:focus {
     border-color: var(--tp-accent);
@@ -140,8 +142,10 @@
   /* Icon container */
   .icon-box {
     @apply flex items-center justify-center rounded-xl flex-shrink-0;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--tp-card);
+    border: 1px solid var(--tp-border);
+    backdrop-filter: blur(12px) saturate(160%);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
   }
 
   /* Badge */
