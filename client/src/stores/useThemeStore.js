@@ -129,7 +129,7 @@ const useThemeStore = create(
     (set, get) => ({
       mode: 'system',
       isDark: resolveIsDark('system'),
-      colorTheme: 'terminal',
+      colorTheme: 'cyberpunk',
 
       setMode: (mode) => {
         if (!MODES.includes(mode)) return;
@@ -177,7 +177,7 @@ const useThemeStore = create(
         const isDark = resolveIsDark(state.mode);
         state.isDark = isDark;
         applyDarkClass(isDark);
-        applyColorTheme(state.colorTheme || 'terminal');
+        applyColorTheme(state.colorTheme || 'cyberpunk');
       },
     },
   ),
