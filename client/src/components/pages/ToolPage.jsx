@@ -188,6 +188,7 @@ const toolComponents = {
   '/tools/pdf/crop': lazy(() => import('../tools/document/PDFCrop')),
   '/tools/pdf/redact': lazy(() => import('../tools/document/PDFRedact')),
   '/tools/pdf/signature-verify': lazy(() => import('../tools/document/PDFSignatureVerifier')),
+  '/tools/pdf/reader': lazy(() => import('../tools/document/PDFReader')),
   // Media tools
   '/tools/media/audio-convert': lazy(() => import('../tools/media/AudioConverter')),
   '/tools/media/video-convert': lazy(() => import('../tools/media/VideoConverter')),
@@ -238,9 +239,24 @@ export default function ToolPage() {
 
   const relatedTools = useMemo(() => {
     if (!tool) return [];
-    return tools
-      .filter((t) => t.category === tool.category && t.id !== tool.id)
-      .slice(0, 5);
+    const sameCategory = tools.filter((t) => t.category === tool.category && t.id !== tool.id);
+    const toolKeywords = new Set((tool.keywords || []).map((k) => k.toLowerCase()));
+
+    // High-priority tools that should always appear when in the same category
+    const priorityIds = new Set([
+      'pdf-editor', 'pdf-merge', 'pdf-split', 'pdf-compress', 'pdf-reader',
+      'pdf-to-word', 'pdf-to-excel', 'pdf-signature-verify', 'pdf-esignature',
+      'word-editor', 'excel-editor', 'image-compress', 'image-convert',
+    ]);
+
+    const scored = sameCategory.map((t) => {
+      const keywordOverlap = (t.keywords || []).filter((k) => toolKeywords.has(k.toLowerCase())).length;
+      const isPriority = priorityIds.has(t.id) ? 10 : 0;
+      return { ...t, score: isPriority + keywordOverlap };
+    });
+
+    scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    return scored.slice(0, 10);
   }, [tool]);
 
   useEffect(() => {
@@ -324,21 +340,37 @@ export default function ToolPage() {
 
       {/* Related Tools Sidebar */}
       {relatedTools.length > 0 && (
-        <aside className="lg:w-64 shrink-0" aria-label="Related tools">
-          <h2 className="text-sm font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wider mb-3">
-            Related Tools
-          </h2>
-          <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-            {relatedTools.map((rt) => (
-              <Link
-                key={rt.id}
-                to={rt.path}
-                className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm whitespace-nowrap lg:whitespace-normal hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
-              >
-                <span aria-hidden="true">{rt.icon}</span>
-                <span className="text-surface-700 dark:text-surface-300">{rt.name}</span>
-              </Link>
-            ))}
+        <aside className="lg:w-72 shrink-0" aria-label="Related tools">
+          <div className="lg:sticky lg:top-20">
+            <h2 className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: 'var(--tp-accent)' }}>
+              ✨ Related Tools
+            </h2>
+            <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-hide">
+              {relatedTools.map((rt) => (
+                <Link
+                  key={rt.id}
+                  to={rt.path}
+                  className="group flex items-center gap-3 px-3 py-3 rounded-xl text-sm whitespace-nowrap lg:whitespace-normal transition-all duration-150 min-w-[160px] lg:min-w-0"
+                  style={{ border: '1px solid var(--tp-border)' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'var(--tp-selection)';
+                    e.currentTarget.style.borderColor = 'var(--tp-accent)';
+                    e.currentTarget.style.transform = 'translateX(4px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.borderColor = 'var(--tp-border)';
+                    e.currentTarget.style.transform = 'translateX(0)';
+                  }}
+                >
+                  <span className="text-lg flex-shrink-0" aria-hidden="true">{rt.icon}</span>
+                  <div className="min-w-0">
+                    <span className="text-sm font-medium block truncate" style={{ color: 'var(--tp-text)' }}>{rt.name}</span>
+                    <span className="text-[10px] block truncate" style={{ color: 'var(--tp-muted)' }}>{rt.description?.slice(0, 50)}...</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </aside>
       )}
