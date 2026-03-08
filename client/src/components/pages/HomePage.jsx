@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useMotionValue, useMotionTemplate, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useMotionTemplate, useSpring, useScroll, useTransform } from 'framer-motion';
 import { categories } from '../layout/Sidebar';
 import tools from '../../lib/toolRegistry';
 import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistoryStore';
@@ -1036,6 +1036,158 @@ function RecentlyUsed() {
   );
 }
 
+/* ─── Horizontal Scroll Showcase (Apple-style) ─────────────────────── */
+
+const SHOWCASE_PANELS = [
+  {
+    title: 'Document Powerhouse',
+    subtitle: 'Edit PDFs, Word docs, and spreadsheets — right in your browser',
+    accent: '#60a5fa',
+    tools: ['pdf-editor', 'word-editor', 'excel-editor', 'pdf-merge'],
+    stat: { value: '25+', label: 'Document tools' },
+  },
+  {
+    title: 'Developer Toolkit',
+    subtitle: 'JSON formatting, regex testing, cron parsing, and 20+ dev utilities',
+    accent: '#34d399',
+    tools: ['json-yaml-xml', 'regex-tester', 'crontab-guru', 'diff-checker'],
+    stat: { value: '20+', label: 'Dev tools' },
+  },
+  {
+    title: 'Image Studio',
+    subtitle: 'Convert, compress, resize, and edit images with zero quality loss',
+    accent: '#f472b6',
+    tools: ['image-convert', 'image-compress', 'image-resize', 'image-edit'],
+    stat: { value: '10+', label: 'Image tools' },
+  },
+  {
+    title: 'Privacy First',
+    subtitle: 'Your files never leave your browser. No accounts, no tracking, no uploads',
+    accent: '#fbbf24',
+    tools: ['password-generator', 'hash-generator', 'file-encryption', 'uuid-generator'],
+    stat: { value: 'Zero', label: 'Data collected' },
+  },
+];
+
+function HorizontalShowcase() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ['start start', 'end end'] });
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-75%']);
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: `${SHOWCASE_PANELS.length * 100}vh`, marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}
+    >
+      <div className="sticky top-14 h-[calc(100vh-3.5rem)] overflow-hidden">
+        {/* Section label */}
+        <div className="absolute top-6 left-0 right-0 z-20 text-center pointer-events-none">
+          <motion.span
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-label inline-block px-4 py-1.5 rounded-full"
+            style={{ color: 'var(--tp-accent)', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}
+          >
+            ✦ Why ToolsPilot
+          </motion.span>
+        </div>
+
+        {/* Horizontal sliding panels */}
+        <motion.div
+          className="flex h-full"
+          style={{ x, width: `${SHOWCASE_PANELS.length * 100}vw` }}
+        >
+          {SHOWCASE_PANELS.map((panel, i) => {
+            const panelTools = panel.tools.map(id => tools.find(t => t.id === id)).filter(Boolean);
+            return (
+              <div
+                key={i}
+                className="relative flex items-center justify-center w-screen h-full px-8 sm:px-16 lg:px-24"
+                style={{ flexShrink: 0 }}
+              >
+                {/* Background glow */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: `radial-gradient(ellipse at 50% 50%, ${panel.accent}08, transparent 70%)` }}
+                  aria-hidden="true"
+                />
+
+                <div className="relative z-10 max-w-4xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                  {/* Left: text content */}
+                  <div className="flex-1 text-center lg:text-left">
+                    <div
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6"
+                      style={{ background: `${panel.accent}15`, color: panel.accent, border: `1px solid ${panel.accent}25` }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: panel.accent }} />
+                      {panel.stat.value} {panel.stat.label}
+                    </div>
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-surface-50 mb-4 leading-tight">
+                      {panel.title}
+                    </h2>
+                    <p className="text-base sm:text-lg text-surface-400 leading-relaxed max-w-md mx-auto lg:mx-0">
+                      {panel.subtitle}
+                    </p>
+                  </div>
+
+                  {/* Right: tool cards grid */}
+                  <div className="grid grid-cols-2 gap-3 w-full max-w-xs">
+                    {panelTools.map((tool, j) => (
+                      <Link
+                        key={tool.id}
+                        to={tool.path}
+                        className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl text-center transition-all duration-300 overflow-hidden"
+                        style={{
+                          background: 'var(--tp-card)',
+                          border: `1px solid ${panel.accent}20`,
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = `${panel.accent}50`;
+                          e.currentTarget.style.transform = 'translateY(-4px)';
+                          e.currentTarget.style.boxShadow = `0 12px 30px ${panel.accent}15`;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = `${panel.accent}20`;
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                      >
+                        <div
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                          style={{ background: `radial-gradient(circle at 50% 0%, ${panel.accent}15, transparent 70%)` }}
+                          aria-hidden="true"
+                        />
+                        <span className="text-3xl relative z-10 group-hover:scale-110 transition-transform duration-200">{tool.icon}</span>
+                        <span className="text-xs font-semibold text-surface-200 relative z-10">{tool.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Panel number indicator */}
+                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
+                  {SHOWCASE_PANELS.map((_, j) => (
+                    <div
+                      key={j}
+                      className="h-1 rounded-full transition-all duration-300"
+                      style={{
+                        width: i === j ? '24px' : '8px',
+                        background: i === j ? panel.accent : 'rgba(255,255,255,0.15)',
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Stats Bar ─────────────────────────────────────────────────────── */
 
 /* ─── Animated Stat Counter ──────────────────────────────────────────── */
@@ -1119,6 +1271,8 @@ export default function HomePage() {
         <HeroSection />
       </div>
       <FlagshipEditorsSection />
+      {/* Apple-style horizontal scroll showcase — full bleed */}
+      <HorizontalShowcase />
       <ToolMarquee />
       <QuickActionsStrip />
       <LiveActivityTicker />
