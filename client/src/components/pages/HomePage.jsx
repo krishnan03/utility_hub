@@ -1,11 +1,63 @@
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useMotionTemplate, useSpring } from 'framer-motion';
 import { categories } from '../layout/Sidebar';
 import tools from '../../lib/toolRegistry';
 import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistoryStore';
 import CommandBar from '../common/CommandBar';
 import SEOHead from '../common/SEOHead';
+
+/* ─── Spotlight Card Wrapper ────────────────────────────────────────── */
+
+function SpotlightCard({ children, className = '', style = {}, as: Tag = 'div', ...props }) {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove(e) {
+    const { left, top } = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
+  }
+
+  return (
+    <Tag
+      className={`group relative overflow-hidden ${className}`}
+      style={style}
+      onMouseMove={handleMouseMove}
+      {...props}
+    >
+      <motion.div
+        className="pointer-events-none absolute -inset-px rounded-[inherit] opacity-0 transition duration-300 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`radial-gradient(500px circle at ${mouseX}px ${mouseY}px, var(--tp-selection), transparent 80%)`,
+        }}
+        aria-hidden="true"
+      />
+      {children}
+    </Tag>
+  );
+}
+
+/* ─── Character-by-Character Text Reveal ────────────────────────────── */
+
+function TextReveal({ text, className = '', delay = 0 }) {
+  return (
+    <span className={className} aria-label={text}>
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ delay: delay + i * 0.025, duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="inline-block"
+          style={{ whiteSpace: char === ' ' ? 'pre' : undefined }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 /* ─── Typewriter Hook ───────────────────────────────────────────────── */
 
@@ -153,22 +205,14 @@ function toolsForCategory(id) {
 function FlagshipCard({ icon, title, description, features, link, accentColor, featured }) {
   return (
     <Link to={link} className="block h-full">
-      <motion.div
-        whileHover={{ scale: 1.015, y: -3 }}
-        whileTap={{ scale: 0.98 }}
-        className={`relative group rounded-3xl overflow-hidden transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
+      <SpotlightCard
+        className={`rounded-3xl transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
         style={{
           background: 'var(--tp-card)',
           border: `1px solid ${accentColor}30`,
           backdropFilter: 'blur(20px)',
         }}
       >
-        {/* Gradient glow on hover */}
-        <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ background: `radial-gradient(ellipse at 30% 0%, ${accentColor}20, transparent 60%)` }}
-          aria-hidden="true"
-        />
         {/* Corner accent */}
         <div
           className="absolute top-0 right-0 w-32 h-32 opacity-20 group-hover:opacity-40 transition-opacity duration-500"
@@ -210,7 +254,7 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
             </svg>
           </div>
         </div>
-      </motion.div>
+      </SpotlightCard>
     </Link>
   );
 }
@@ -383,6 +427,18 @@ function HeroSection() {
           />
         </div>
 
+        {/* Aurora bands */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div
+            className="absolute -top-1/2 left-0 w-[200%] h-[200%] animate-aurora-1 opacity-[0.07]"
+            style={{ background: 'linear-gradient(135deg, transparent 30%, var(--tp-accent) 50%, transparent 70%)', filter: 'blur(80px)' }}
+          />
+          <div
+            className="absolute -top-1/3 left-0 w-[200%] h-[200%] animate-aurora-2 opacity-[0.05]"
+            style={{ background: 'linear-gradient(225deg, transparent 30%, var(--tp-accent2) 50%, transparent 70%)', filter: 'blur(100px)' }}
+          />
+        </div>
+
         {/* Subtle grid pattern */}
         <div
           className="absolute inset-0 animate-grid-pulse pointer-events-none"
@@ -428,14 +484,9 @@ function HeroSection() {
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
-            <span className="text-surface-50">Free Online Tools</span>
+            <TextReveal text="Free Online Tools" className="text-surface-50" delay={0.1} />
             <br />
-            <span
-              className="text-gradient"
-              style={{ WebkitTextStroke: '0.5px rgba(255,255,255,0.1)' }}
-            >
-              Built for Everyone
-            </span>
+            <TextReveal text="Built for Everyone" className="text-gradient" delay={0.6} />
           </h1>
         </motion.div>
 
