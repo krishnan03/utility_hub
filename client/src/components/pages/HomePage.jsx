@@ -1114,8 +1114,8 @@ export default function HomePage() {
         description="159+ free online tools — PDF editor, Excel editor, Word editor, image converter, developer tools, finance calculators and more. No signup required."
         path="/"
       />
-      {/* Negative margin pulls hero up to eliminate gap from AppShell padding */}
-      <div className="-mt-4 sm:-mt-6 lg:-mt-8 -mx-4 sm:-mx-6 lg:-mx-8">
+      {/* Full-bleed hero — breaks out of AppShell container to span full viewport width */}
+      <div className="-mt-5 sm:-mt-8 lg:-mt-10" style={{ marginLeft: 'calc(-50vw + 50%)', marginRight: 'calc(-50vw + 50%)', width: '100vw' }}>
         <HeroSection />
       </div>
       <FlagshipEditorsSection />
