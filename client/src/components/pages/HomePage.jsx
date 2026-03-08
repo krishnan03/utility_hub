@@ -141,6 +141,41 @@ function FlagshipCard({ icon, title, description, features, link, accentColor })
   );
 }
 
+/* ─── Floating Particles ────────────────────────────────────────────── */
+
+function FloatingParticles() {
+  const particles = useMemo(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      size: Math.random() * 3 + 1,
+      duration: Math.random() * 8 + 6,
+      delay: Math.random() * 6,
+      opacity: Math.random() * 0.4 + 0.1,
+    })),
+  []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="absolute rounded-full"
+          style={{
+            left: p.left,
+            bottom: '-10px',
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            background: p.id % 3 === 0 ? 'var(--tp-accent)' : p.id % 3 === 1 ? 'var(--tp-accent2)' : 'rgba(255,255,255,0.6)',
+            animation: `float-particle ${p.duration}s linear ${p.delay}s infinite`,
+            opacity: 0,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 /* ─── Hero ─────────────────────────────────────────────────────────── */
 
 function HeroSection() {
@@ -161,11 +196,11 @@ function HeroSection() {
 
   return (
     <>
-      {/* Sticky search — dark Raycast style */}
+      {/* Sticky search */}
       <div
         className={`fixed top-14 left-0 right-0 z-30 py-3 px-4 transition-all duration-200 ${searchSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}
         style={{
-          background: 'rgba(28,28,30,0.92)',
+          background: 'rgba(26,26,46,0.92)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
           borderBottom: '1px solid rgba(255,255,255,0.06)',
@@ -176,83 +211,129 @@ function HeroSection() {
         </div>
       </div>
 
-      <section className="relative text-center pt-6 pb-16 lg:pt-8 lg:pb-24 overflow-hidden">
-        {/* Animated gradient mesh background */}
+      <section className="relative text-center pt-12 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
+        {/* Animated gradient orbs */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          {/* Primary pink orb — top left */}
+          <div
+            className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full animate-orb-1"
+            style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.15), transparent 70%)' }}
+          />
+          {/* Yellow orb — top right */}
+          <div
+            className="absolute -top-20 -right-40 w-[400px] h-[400px] rounded-full animate-orb-2"
+            style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.08), transparent 70%)' }}
+          />
+          {/* Blue orb — bottom center */}
+          <div
+            className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full animate-orb-3"
+            style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.1), transparent 70%)' }}
+          />
+        </div>
+
+        {/* Subtle grid pattern */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 animate-grid-pulse pointer-events-none"
           style={{
-            background:
-              `radial-gradient(ellipse at 20% 50%, var(--tp-selection), transparent 50%), ` +
-              'radial-gradient(ellipse at 80% 50%, rgba(59,130,246,0.08), transparent 50%), ' +
-              'radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.06), transparent 50%)',
+            backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
           }}
           aria-hidden="true"
         />
 
+        {/* Floating particles */}
+        <FloatingParticles />
+
+        {/* Gradient line accent */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, var(--tp-accent), var(--tp-accent2), transparent)' }}
+          aria-hidden="true"
+        />
+
+        {/* Content */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative z-10 mb-6"
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="relative z-10 mb-8"
         >
           {/* Animated tool count badge */}
-          <div
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6"
-            style={{ background: 'var(--tp-selection)', border: '1px solid var(--tp-border-hover)', color: 'var(--tp-accent)' }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 20 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-8"
+            style={{
+              background: 'rgba(255,45,120,0.1)',
+              border: '1px solid rgba(255,45,120,0.3)',
+              color: 'var(--tp-accent)',
+              backdropFilter: 'blur(8px)',
+            }}
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-            <span className="tabular-nums">{animatedCount}</span>+ free tools
-          </div>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--tp-accent)', boxShadow: '0 0 8px var(--tp-accent)' }} />
+            <span className="tabular-nums font-mono">{animatedCount}</span>+ free tools — no signup
+          </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1]">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05]">
             <span className="text-surface-50">Free Online Tools</span>
             <br />
-            <span className="text-gradient">Built for Everyone</span>
+            <span
+              className="text-gradient"
+              style={{ WebkitTextStroke: '0.5px rgba(255,255,255,0.1)' }}
+            >
+              Built for Everyone
+            </span>
           </h1>
         </motion.div>
 
         <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.25, duration: 0.4 }}
-          className="relative z-10 text-surface-400 text-base max-w-xl mx-auto leading-relaxed mb-8"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="relative z-10 text-surface-400 text-lg max-w-2xl mx-auto leading-relaxed mb-10"
         >
           PDF, Excel & Word editors. Image converters. Dev tools. Finance calculators.
           <br className="hidden sm:block" />
-          {tools.length}+ tools, zero signup, 100% free.
+          <span className="text-surface-300 font-medium">{tools.length}+ tools</span>, zero signup, <span className="text-surface-300 font-medium">100% free</span>.
         </motion.p>
 
         <motion.div
           ref={searchRef}
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.4 }}
-          className="relative z-20 max-w-lg mx-auto mb-8"
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="relative z-20 max-w-lg mx-auto mb-10"
         >
           <CommandBar />
         </motion.div>
 
-        {/* Trust badges */}
+        {/* Trust badges — glass cards */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.45, duration: 0.4 }}
-          className="relative z-0 flex items-center justify-center gap-4 sm:gap-6 text-xs text-surface-500 font-medium"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.5 }}
+          className="relative z-10 flex items-center justify-center gap-3 sm:gap-4"
         >
-          <span className="flex items-center gap-1.5">
-            <span className="text-sm" aria-hidden="true">🔓</span>
-            No Signup Required
-          </span>
-          <span className="w-1 h-1 rounded-full bg-surface-700" aria-hidden="true" />
-          <span className="flex items-center gap-1.5">
-            <span className="text-sm" aria-hidden="true">✨</span>
-            100% Free
-          </span>
-          <span className="w-1 h-1 rounded-full bg-surface-700" aria-hidden="true" />
-          <span className="flex items-center gap-1.5">
-            <span className="text-sm" aria-hidden="true">🛡️</span>
-            Privacy First
-          </span>
+          {[
+            { icon: '🔓', label: 'No Signup' },
+            { icon: '✨', label: '100% Free' },
+            { icon: '🛡️', label: 'Privacy First' },
+            { icon: '⚡', label: 'Instant Results' },
+          ].map((badge) => (
+            <div
+              key={badge.label}
+              className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-surface-300"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(8px)',
+              }}
+            >
+              <span className="text-sm">{badge.icon}</span>
+              <span className="hidden sm:inline">{badge.label}</span>
+            </div>
+          ))}
         </motion.div>
       </section>
     </>
