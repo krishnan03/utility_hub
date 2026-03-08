@@ -82,8 +82,8 @@ export default function BlogPostPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
         <span className="text-5xl mb-4" aria-hidden="true">📝</span>
-        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50 mb-2">Post Not Found</h1>
-        <p className="text-surface-500 dark:text-surface-400 mb-6">This blog post doesn't exist.</p>
+        <h1 className="text-2xl font-bold text-surface-50 mb-2">Post Not Found</h1>
+        <p className="text-surface-400 mb-6">This blog post doesn't exist.</p>
         <Link to="/blog" className="btn-primary">← Back to Blog</Link>
       </div>
     );
@@ -105,16 +105,16 @@ export default function BlogPostPage() {
       </Link>
 
       <div className="flex items-center gap-3 mb-4">
-        <span className="text-xs font-bold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-2.5 py-1 rounded-full">
+        <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full" style={{ background: 'var(--tp-selection)', color: 'var(--tp-accent)', border: '1px solid var(--tp-border-hover)' }}>
           {post.category}
         </span>
-        <span className="text-xs text-surface-400 dark:text-surface-500">{post.readTime} read</span>
-        <time className="text-xs text-surface-400 dark:text-surface-500">
+        <span className="text-xs text-surface-500">{post.readTime} read</span>
+        <time className="text-xs text-surface-500">
           {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
       </div>
 
-      <h1 className="text-3xl lg:text-4xl font-extrabold text-surface-900 dark:text-surface-50 mb-6 leading-tight">
+      <h1 className="text-3xl lg:text-4xl font-extrabold text-surface-50 mb-6 leading-tight">
         {post.title}
       </h1>
 
@@ -123,8 +123,8 @@ export default function BlogPostPage() {
         const content = BLOG_CONTENT[slug];
         const allLinks = content?.sections?.flatMap(s => s.links || []) || [];
         return (
-          <div className="prose prose-lg dark:prose-invert max-w-none">
-            <p className="text-lg text-surface-600 dark:text-surface-300 leading-relaxed mb-6">
+          <div className="prose prose-lg prose-invert max-w-none">
+            <p className="text-lg text-surface-300 leading-relaxed mb-6">
               {post.excerpt}
             </p>
 
@@ -141,12 +141,12 @@ export default function BlogPostPage() {
                 {content.sections.map((section, i) => (
                   <div key={i}>
                     {section.heading && !section.links && (
-                      <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-3">
+                      <h2 className="text-xl font-bold text-surface-50 mb-3">
                         {section.heading}
                       </h2>
                     )}
                     {section.body && (
-                      <p className="text-surface-600 dark:text-surface-300 leading-relaxed whitespace-pre-line">
+                      <p className="text-surface-300 leading-relaxed whitespace-pre-line">
                         {section.body}
                       </p>
                     )}
@@ -160,8 +160,8 @@ export default function BlogPostPage() {
                 ))}
               </div>
             ) : (
-              <div className="p-6 rounded-2xl bg-surface-50 dark:bg-surface-800/40 border border-surface-200/50 dark:border-surface-700/30 text-center">
-                <p className="text-surface-500 dark:text-surface-400 mb-4">
+              <div className="p-6 rounded-2xl border text-center" style={{ background: 'var(--tp-card)', borderColor: 'var(--tp-border)' }}>
+                <p className="text-surface-400 mb-4">
                   Full article content coming soon. In the meantime, try the tool:
                 </p>
                 <Link to="/" className="btn-primary inline-flex">
@@ -173,7 +173,7 @@ export default function BlogPostPage() {
             {/* Bottom CTA — full grid tool links */}
             {allLinks.length > 0 && (
               <div className="mt-10 pt-8" style={{ borderTop: '1px solid var(--tp-border-hover)' }}>
-                <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 mb-4">
+                <h2 className="text-xl font-bold text-surface-50 mb-4">
                   ✨ Try These Tools
                 </h2>
                 <ToolLinksGrid links={allLinks} />
