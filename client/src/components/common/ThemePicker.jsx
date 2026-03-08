@@ -84,7 +84,7 @@ export default function ThemePicker() {
                 <div className="flex-1 min-w-0">
                   <div className="text-xs font-semibold truncate" style={{ color: 'var(--tp-text)' }}>
                     {theme.name}
-                    {theme.id === 'default' && (
+                    {theme.id === 'terminal' && (
                       <span className="ml-1.5 text-[10px] font-medium px-1.5 py-0.5 rounded-full" style={{ background: 'var(--tp-selection)', color: 'var(--tp-accent)' }}>
                         Default
                       </span>

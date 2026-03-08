@@ -222,4 +222,16 @@
     50% { opacity: 0.08; }
   }
   .animate-grid-pulse { animation: grid-pulse 4s ease-in-out infinite; }
+
+  /* Infinite marquee scroll */
+  @keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Animated gradient border */
+  @keyframes border-rotate {
+    0% { --angle: 0deg; }
+    100% { --angle: 360deg; }
+  }
 }

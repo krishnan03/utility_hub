@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { categories } from '../layout/Sidebar';
@@ -6,6 +6,69 @@ import tools from '../../lib/toolRegistry';
 import useHistoryStore, { getRecentToolObjects } from '../../stores/useHistoryStore';
 import CommandBar from '../common/CommandBar';
 import SEOHead from '../common/SEOHead';
+
+/* ─── Typewriter Hook ───────────────────────────────────────────────── */
+
+function useTypewriter(phrases, typingSpeed = 80, deletingSpeed = 40, pauseTime = 2000) {
+  const [text, setText] = useState('');
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentPhrase = phrases[phraseIndex];
+    let timeout;
+
+    if (!isDeleting && text === currentPhrase) {
+      timeout = setTimeout(() => setIsDeleting(true), pauseTime);
+    } else if (isDeleting && text === '') {
+      setIsDeleting(false);
+      setPhraseIndex((prev) => (prev + 1) % phrases.length);
+    } else {
+      timeout = setTimeout(() => {
+        setText(currentPhrase.substring(0, text.length + (isDeleting ? -1 : 1)));
+      }, isDeleting ? deletingSpeed : typingSpeed);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [text, phraseIndex, isDeleting, phrases, typingSpeed, deletingSpeed, pauseTime]);
+
+  return text;
+}
+
+/* ─── Infinite Marquee ──────────────────────────────────────────────── */
+
+function ToolMarquee() {
+  const marqueeTools = useMemo(() => {
+    const shuffled = [...tools].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 24);
+  }, []);
+
+  // Double the array for seamless loop
+  const doubled = [...marqueeTools, ...marqueeTools];
+
+  return (
+    <div className="relative overflow-hidden py-6" aria-hidden="true">
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(90deg, var(--tp-bg), transparent)' }} />
+      <div className="absolute right-0 top-0 bottom-0 w-20 z-10" style={{ background: 'linear-gradient(270deg, var(--tp-bg), transparent)' }} />
+      <div
+        className="flex gap-3 whitespace-nowrap"
+        style={{ animation: 'marquee-scroll 40s linear infinite', width: 'max-content' }}
+      >
+        {doubled.map((tool, i) => (
+          <div
+            key={`${tool.id}-${i}`}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-surface-400 shrink-0"
+            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
+          >
+            <span className="text-sm">{tool.icon}</span>
+            {tool.name}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const QUICK_ACTIONS = [
   { id: 'pdf-signature-verify', label: 'Verify Signature', emoji: '🔏' },
@@ -149,6 +212,28 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
         </div>
       </motion.div>
     </Link>
+  );
+}
+
+/* ─── Typewriter Subtitle ────────────────────────────────────────────── */
+
+const TYPEWRITER_PHRASES = [
+  'Edit PDFs, Excel & Word files',
+  'Convert and compress images',
+  'Format JSON, YAML & XML',
+  'Generate secure passwords',
+  'Build cron expressions visually',
+  'Calculate finance & investments',
+  'Analyze SEO & meta tags',
+];
+
+function TypewriterSubtitle() {
+  const text = useTypewriter(TYPEWRITER_PHRASES, 60, 30, 2200);
+  return (
+    <span className="text-surface-300 font-medium">
+      {text}
+      <span className="inline-block w-0.5 h-5 ml-0.5 align-middle animate-pulse" style={{ background: 'var(--tp-accent)' }} />
+    </span>
   );
 }
 
@@ -304,8 +389,8 @@ function HeroSection() {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="relative z-10 text-surface-400 text-lg max-w-2xl mx-auto leading-relaxed mb-10"
         >
-          PDF, Excel & Word editors. Image converters. Dev tools. Finance calculators.
-          <br className="hidden sm:block" />
+          <TypewriterSubtitle />
+          <br />
           <span className="text-surface-300 font-medium">{tools.length}+ tools</span>, zero signup, <span className="text-surface-300 font-medium">100% free</span>.
         </motion.p>
 
@@ -768,7 +853,7 @@ function AnimatedStat({ value, suffix, label, icon, delay }) {
       />
       <span className="text-2xl relative z-10">{icon}</span>
       <span className="text-2xl font-extrabold font-mono text-surface-50 tabular-nums relative z-10">
-        {count}{suffix}
+        {value === 0 ? suffix || '—' : `${count}${suffix}`}
       </span>
       <span className="text-xs font-medium text-surface-400 relative z-10">{label}</span>
     </motion.div>
@@ -781,8 +866,8 @@ function StatsBar() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <AnimatedStat value={tools.length} suffix="+" label="Free Tools" icon="🧰" delay={0} />
         <AnimatedStat value={categories.length} suffix="" label="Categories" icon="📂" delay={0.1} />
-        <AnimatedStat value={0} suffix="$0" label="Always Free" icon="✨" delay={0.2} />
-        <AnimatedStat value={0} suffix="Zero" label="Data Collected" icon="🛡️" delay={0.3} />
+        <AnimatedStat value={100} suffix="%" label="Always Free" icon="✨" delay={0.2} />
+        <AnimatedStat value={0} suffix="" label="No Data Collected" icon="🛡️" delay={0.3} />
       </div>
     </section>
   );
@@ -814,6 +899,7 @@ export default function HomePage() {
         <HeroSection />
       </div>
       <FlagshipEditorsSection />
+      <ToolMarquee />
       <QuickActionsStrip />
       <RecentlyUsed />
       <CategoryShowcase />
