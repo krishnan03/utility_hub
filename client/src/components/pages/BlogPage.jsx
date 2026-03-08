@@ -4,6 +4,14 @@ import SEOHead from '../common/SEOHead';
 
 const BLOG_POSTS = [
   {
+    slug: 'verify-pdf-digital-signatures-online',
+    title: 'How to Verify Digital Signatures in PDFs — Free Online Tool',
+    excerpt: 'Upload a signed PDF and instantly see signer details, certificate validity, and whether the document has been modified. 100% client-side, no uploads to any server.',
+    date: '2026-03-07',
+    category: 'Documents',
+    readTime: '5 min',
+  },
+  {
     slug: 'cron-expression-guide',
     title: 'How to Read and Write Cron Expressions — Free Crontab Guru Tool',
     excerpt: 'Learn cron schedule syntax with clear examples for every field. Build and validate cron expressions visually with our free Crontab Guru — no signup required.',

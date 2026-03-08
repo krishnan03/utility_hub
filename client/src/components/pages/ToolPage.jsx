@@ -187,6 +187,7 @@ const toolComponents = {
   '/tools/pdf/unlock': lazy(() => import('../tools/document/PDFUnlock')),
   '/tools/pdf/crop': lazy(() => import('../tools/document/PDFCrop')),
   '/tools/pdf/redact': lazy(() => import('../tools/document/PDFRedact')),
+  '/tools/pdf/signature-verify': lazy(() => import('../tools/document/PDFSignatureVerifier')),
   // Media tools
   '/tools/media/audio-convert': lazy(() => import('../tools/media/AudioConverter')),
   '/tools/media/video-convert': lazy(() => import('../tools/media/VideoConverter')),

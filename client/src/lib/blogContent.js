@@ -5,6 +5,37 @@
  */
 
 const BLOG_CONTENT = {
+  'verify-pdf-digital-signatures-online': {
+    sections: [
+      {
+        heading: 'What Is a Digital Signature in a PDF?',
+        body: `A digital signature is not the same as a scanned image of your handwriting pasted onto a page. It is a cryptographic proof embedded inside the PDF file itself. When someone digitally signs a PDF, the signing software creates a hash of the document content, encrypts it with the signer's private key, and embeds the result along with their certificate into the file.\n\nThis means you can verify two things: who signed the document, and whether the document has been modified since it was signed. Government agencies, notaries, banks, and legal firms use digital signatures to make PDFs tamper-evident.`,
+      },
+      {
+        heading: 'How Our PDF Signature Verifier Works',
+        body: `Upload any PDF and the tool instantly extracts all embedded digital signatures. For each signature, you will see:\n\n• Signer name, organization, and email (from the X.509 certificate)\n• Signing date and time\n• Certificate validity period (not before / not after)\n• Whether the certificate has expired\n• Signature filter and sub-filter (e.g., Adobe.PPKLite, adbe.pkcs7.detached)\n• Whether the signature covers the entire document or only part of it\n• PKCS#7 signature size\n\nEverything runs in your browser. The PDF is parsed client-side using JavaScript — no file is uploaded to any server. This makes it safe for confidential government documents, legal contracts, and financial records.`,
+      },
+      {
+        heading: 'Common Types of Signed PDFs',
+        body: `• Government documents — tax returns, Aadhaar e-KYC, DigiLocker certificates, court filings\n• Notarized documents — digitally notarized contracts and affidavits\n• Bank statements — many banks digitally sign PDF statements for authenticity\n• Corporate filings — annual reports, board resolutions, regulatory submissions\n• Academic transcripts — universities increasingly issue digitally signed mark sheets\n• Insurance policies — digitally signed policy documents and claim settlements\n\nIf someone sends you a "signed" PDF and our tool finds zero signatures, it likely has a visual-only signature (just an image) with no cryptographic backing.`,
+      },
+      {
+        heading: 'What This Tool Cannot Do',
+        body: `This tool extracts and displays signature metadata — it does not perform full cryptographic chain-of-trust verification. That means:\n\n• It shows you who the certificate claims to be, but does not verify the certificate against a root CA\n• It cannot confirm the signature is mathematically valid (that requires the signer's public key and CA chain)\n• It does not check certificate revocation lists (CRL) or OCSP status\n\nFor legally binding verification, use Adobe Acrobat Reader (free) or your government's official verification portal (e.g., India's CCA portal for DSC verification). Our tool is ideal for quick inspection — checking if a PDF is signed at all, who signed it, and when.`,
+      },
+      {
+        heading: 'Try These Document Tools',
+        links: [
+          { label: 'PDF Signature Verifier', path: '/tools/pdf/signature-verify', icon: '🔏' },
+          { label: 'E-Sign PDF', path: '/tools/pdf/esignature', icon: '✍️' },
+          { label: 'PDF Editor', path: '/tools/document/pdf-editor', icon: '✏️' },
+          { label: 'PDF Protect', path: '/tools/pdf/protect', icon: '🔒' },
+          { label: 'PDF Unlock', path: '/tools/pdf/unlock', icon: '🔓' },
+          { label: 'PDF Redact', path: '/tools/pdf/redact', icon: '█' },
+        ],
+      },
+    ],
+  },
   'free-online-excel-editor': {
     sections: [
       {

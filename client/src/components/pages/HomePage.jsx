@@ -8,6 +8,7 @@ import CommandBar from '../common/CommandBar';
 import SEOHead from '../common/SEOHead';
 
 const QUICK_ACTIONS = [
+  { id: 'pdf-signature-verify', label: 'Verify Signature', emoji: '🔏' },
   { id: 'excel-editor',       label: 'Excel Editor',   emoji: '📊' },
   { id: 'word-editor',        label: 'Word Editor',    emoji: '📝' },
   { id: 'pdf-editor',         label: 'PDF Editor',     emoji: '📄' },
@@ -15,7 +16,6 @@ const QUICK_ACTIONS = [
   { id: 'image-compress',     label: 'Compress Image', emoji: '🗜️' },
   { id: 'json-yaml-xml',      label: 'Format JSON',    emoji: '🧩' },
   { id: 'password-generator', label: 'Password',       emoji: '🔐' },
-  { id: 'ai-detector',        label: 'Detect AI',      emoji: '🧠' },
 ];
 
 const FLAGSHIP_EDITORS = [
