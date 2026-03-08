@@ -113,7 +113,17 @@ router.post('/analyze', async (req, res, next) => {
       ));
     }
 
-    const result = analyzeText(text, { keyword });
+    // Strip HTML tags to get plain text for analysis, and cap size to avoid OOM
+    const plainText = text
+      .replace(/<script[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[\s\S]*?<\/style>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&[a-z]+;/gi, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 200000);
+
+    const result = analyzeText(plainText, { keyword });
 
     return res.json({
       success: true,
