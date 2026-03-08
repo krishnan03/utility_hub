@@ -25,6 +25,12 @@ export default function AppShell({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen" style={{ background: 'var(--tp-bg)', color: 'var(--tp-text)' }}>
+      {/* Fixed gradient mesh for glassmorphism — gives cards something to blur */}
+      <div className="fixed inset-0 pointer-events-none" aria-hidden="true" style={{ zIndex: 0 }}>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,45,120,0.08), transparent 70%)' }} />
+        <div className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,230,0,0.05), transparent 70%)' }} />
+        <div className="absolute bottom-0 left-0 w-[700px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(99,91,255,0.06), transparent 70%)' }} />
+      </div>
       {/* Subtle top gradient glow */}
       <div
         className="fixed top-0 left-0 right-0 h-px z-50 pointer-events-none"
@@ -35,7 +41,7 @@ export default function AppShell({ children }) {
       <Navbar onToggleMobileMenu={handleToggleMobileMenu} />
       <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
 
-      <main className="flex-1" role="main" aria-label="Main content">
+      <main className="flex-1 relative z-10" role="main" aria-label="Main content">
         {/* Simple fade-in on route change only — no exit animation to prevent flicker */}
         <motion.div
           key={location.pathname}

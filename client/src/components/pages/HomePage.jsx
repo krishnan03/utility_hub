@@ -208,15 +208,23 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
       <SpotlightCard
         className={`rounded-3xl transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
         style={{
-          background: 'var(--tp-card)',
+          background: 'rgba(255,255,255,0.05)',
           border: `1px solid ${accentColor}30`,
-          backdropFilter: 'blur(20px)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.25)`,
         }}
       >
         {/* Corner accent */}
         <div
-          className="absolute top-0 right-0 w-32 h-32 opacity-20 group-hover:opacity-40 transition-opacity duration-500"
-          style={{ background: `radial-gradient(circle at 100% 0%, ${accentColor}40, transparent 70%)` }}
+          className="absolute top-0 right-0 w-32 h-32 opacity-30 group-hover:opacity-50 transition-opacity duration-500"
+          style={{ background: `radial-gradient(circle at 100% 0%, ${accentColor}50, transparent 70%)` }}
+          aria-hidden="true"
+        />
+        {/* Top edge highlight */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: `linear-gradient(90deg, transparent, ${accentColor}40, transparent)` }}
           aria-hidden="true"
         />
 
@@ -241,7 +249,13 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
               <span
                 key={f}
                 className="px-2.5 py-1 rounded-full text-xs font-medium"
-                style={{ background: `${accentColor}12`, color: accentColor, border: `1px solid ${accentColor}20` }}
+                style={{
+                  background: `${accentColor}10`,
+                  color: accentColor,
+                  border: `1px solid ${accentColor}20`,
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                }}
               >
                 {f}
               </span>
@@ -293,7 +307,7 @@ function LiveActivityTicker() {
     >
       <div
         className="inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs overflow-hidden"
-        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+        style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(12px) saturate(160%)', WebkitBackdropFilter: 'blur(12px) saturate(160%)' }}
       >
         <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse shrink-0" />
         <AnimatePresence mode="wait">
@@ -702,10 +716,13 @@ function CategoryShowcase() {
                 <SpotlightCard
                   className="rounded-2xl cursor-pointer h-full"
                   style={{
-                    background: isActive ? 'var(--tp-card-hover)' : 'var(--tp-card)',
-                    border: `1px solid ${isActive ? accent + '60' : 'rgba(255,255,255,0.06)'}`,
-                    backdropFilter: 'blur(12px)',
-                    boxShadow: isActive ? `0 0 24px ${accent}25, 0 8px 20px rgba(0,0,0,0.3)` : 'none',
+                    background: isActive ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+                    border: `1px solid ${isActive ? accent + '60' : 'rgba(255,255,255,0.08)'}`,
+                    backdropFilter: 'blur(16px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                    boxShadow: isActive
+                      ? `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 0 24px ${accent}25, 0 8px 20px rgba(0,0,0,0.3)`
+                      : 'inset 0 1px 0 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.15)',
                     transition: 'border-color 0.3s, background 0.3s, box-shadow 0.3s, transform 0.2s',
                   }}
                   onClick={() => setExpandedCat(isActive ? null : cat.id)}
@@ -793,10 +810,11 @@ function CategoryShowcase() {
                     <div
                       className="rounded-2xl overflow-hidden"
                       style={{
-                        background: 'var(--tp-card)',
+                        background: 'rgba(255,255,255,0.04)',
                         border: `1px solid ${accent}30`,
-                        backdropFilter: 'blur(16px)',
-                        boxShadow: `0 0 30px ${accent}10, 0 12px 40px rgba(0,0,0,0.4)`,
+                        backdropFilter: 'blur(20px) saturate(180%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                        boxShadow: `inset 0 1px 0 0 rgba(255,255,255,0.06), 0 0 30px ${accent}10, 0 12px 40px rgba(0,0,0,0.4)`,
                       }}
                     >
                       {/* Accent top bar */}
@@ -846,16 +864,24 @@ function CategoryShowcase() {
                               <Link
                                 to={tool.path}
                                 className="group relative flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-200 overflow-hidden"
-                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+                                style={{
+                                  background: 'rgba(255,255,255,0.04)',
+                                  border: '1px solid rgba(255,255,255,0.08)',
+                                  backdropFilter: 'blur(12px)',
+                                  WebkitBackdropFilter: 'blur(12px)',
+                                  boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.05)',
+                                }}
                                 onMouseEnter={(e) => {
                                   e.currentTarget.style.background = `${accent}10`;
                                   e.currentTarget.style.borderColor = `${accent}30`;
-                                  e.currentTarget.style.transform = 'translateY(-1px)';
+                                  e.currentTarget.style.transform = 'translateY(-2px)';
+                                  e.currentTarget.style.boxShadow = `inset 0 1px 0 0 rgba(255,255,255,0.08), 0 4px 12px rgba(0,0,0,0.2)`;
                                 }}
                                 onMouseLeave={(e) => {
-                                  e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)';
+                                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
+                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
                                   e.currentTarget.style.transform = 'translateY(0)';
+                                  e.currentTarget.style.boxShadow = 'inset 0 1px 0 0 rgba(255,255,255,0.05)';
                                 }}
                               >
                                 <span className="text-base shrink-0 group-hover:scale-110 transition-transform duration-200">{tool.icon}</span>
@@ -959,16 +985,24 @@ function AllToolsGrid() {
               <Link
                 to={tool.path}
                 className="group relative flex items-start gap-3 p-4 h-full rounded-2xl overflow-hidden transition-all duration-200"
-                style={{ background: 'var(--tp-card)', border: '1px solid var(--tp-border)' }}
+                style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid var(--tp-border)',
+                  backdropFilter: 'blur(16px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+                  boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.2)',
+                }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.boxShadow = 'inset 0 1px 0 0 rgba(255,255,255,0.1), 0 12px 28px rgba(0,0,0,0.35), 0 0 20px var(--tp-glow)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = 'var(--tp-border)';
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
+                  e.currentTarget.style.boxShadow = 'inset 0 1px 0 0 rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.2)';
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
                 }}
               >
                 <div
