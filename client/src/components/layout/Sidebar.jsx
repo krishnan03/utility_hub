@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 const categories = [
   { id: 'image',       name: 'Images',       icon: '🎯', path: '/category/image' },
   { id: 'document',    name: 'Documents',    icon: '📋', path: '/category/document' },
+  { id: 'spreadsheet', name: 'Spreadsheets', icon: '📊', path: '/category/spreadsheet' },
   { id: 'text',        name: 'Text & Writing',icon: '✍️', path: '/category/text' },
   { id: 'developer',   name: 'Dev Tools',    icon: '⚡', path: '/category/developer' },
   { id: 'media',       name: 'Audio & Video',icon: '🎧', path: '/category/media' },
@@ -13,7 +14,6 @@ const categories = [
   { id: 'security',    name: 'Privacy',      icon: '🛡️', path: '/category/security' },
   { id: 'seo',         name: 'SEO & Web',    icon: '🌐', path: '/category/seo' },
   { id: 'utility',     name: 'Converters',   icon: '⚙️', path: '/category/utility' },
-  { id: 'spreadsheet', name: 'Spreadsheets', icon: '📊', path: '/category/spreadsheet' },
 ];
 
 export default function Sidebar() {
