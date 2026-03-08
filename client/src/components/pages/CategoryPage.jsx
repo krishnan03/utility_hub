@@ -60,11 +60,12 @@ export default function CategoryPage() {
         >
           ← Back to all tools
         </Link>
-        <h1 className="text-3xl font-bold text-surface-50 flex items-center gap-3">
+        <h1 className="text-3xl font-extrabold text-surface-50 flex items-center gap-3">
           <span aria-hidden="true">{category.icon}</span>
           {category.name} Tools
         </h1>
         <p className="text-surface-400 mt-2">{category.description}</p>
+        <p className="text-xs text-surface-500 mt-1">{categoryTools.length} tools available</p>
       </div>
 
       {/* Tools grid */}
@@ -76,13 +77,40 @@ export default function CategoryPage() {
       >
         {categoryTools.map((tool) => (
           <motion.div key={tool.id} variants={cardVariants}>
-            <Link to={tool.path} className="card-hover flex items-start gap-4 p-5 h-full">
-              <div className="icon-box w-10 h-10 text-xl shrink-0">
+            <Link
+              to={tool.path}
+              className="group relative flex items-start gap-4 p-5 h-full rounded-2xl overflow-hidden transition-all duration-300"
+              style={{
+                background: 'var(--tp-card)',
+                border: '1px solid var(--tp-border)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--tp-border)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              {/* Hover glow */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--tp-selection), transparent 70%)' }}
+                aria-hidden="true"
+              />
+              <div className="relative z-10 icon-box w-10 h-10 text-xl shrink-0">
                 <span aria-hidden="true">{tool.icon}</span>
               </div>
-              <div className="min-w-0">
-                <h2 className="font-semibold text-surface-100">{tool.name}</h2>
+              <div className="relative z-10 min-w-0">
+                <h2 className="font-semibold text-surface-100 group-hover:text-surface-50 transition-colors">{tool.name}</h2>
                 <p className="text-sm text-surface-500 mt-1 leading-relaxed">{tool.description}</p>
+                <span className="inline-flex items-center gap-1 mt-3 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: 'var(--tp-accent)' }}>
+                  Open tool
+                  <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </span>
               </div>
             </Link>
           </motion.div>

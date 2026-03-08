@@ -573,21 +573,30 @@ function RecentlyUsed() {
 /* ─── Stats Bar ─────────────────────────────────────────────────────── */
 
 function StatsBar() {
-  const stats = [`${tools.length}+ Tools`, `${categories.length} Categories`, '100% Free', 'Privacy First'];
+  const stats = [
+    { label: `${tools.length}+ Tools`, icon: '🧰' },
+    { label: `${categories.length} Categories`, icon: '📂' },
+    { label: '100% Free', icon: '✨' },
+    { label: 'Privacy First', icon: '🛡️' },
+  ];
   return (
     <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5 }}
-      className="py-6"
+      className="py-8"
     >
-      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-surface-600 font-medium">
-        {stats.map((s, i) => (
-          <span key={s} className="flex items-center gap-4">
-            {i > 0 && <span className="w-1 h-1 rounded-full bg-surface-700" aria-hidden="true" />}
-            {s}
-          </span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {stats.map((s) => (
+          <div
+            key={s.label}
+            className="flex flex-col items-center gap-2 py-4 rounded-2xl"
+            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+          >
+            <span className="text-lg">{s.icon}</span>
+            <span className="text-xs font-semibold text-surface-300">{s.label}</span>
+          </div>
         ))}
       </div>
     </motion.section>

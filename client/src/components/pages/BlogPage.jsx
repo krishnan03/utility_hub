@@ -194,10 +194,10 @@ export default function BlogPage() {
         path="/blog"
       />
       <div>
-        <h1 className="text-4xl lg:text-5xl font-extrabold text-surface-900 dark:text-surface-50 mb-3">
+        <h1 className="text-4xl lg:text-5xl font-extrabold text-surface-50 mb-3">
           Blog
         </h1>
-        <p className="text-lg text-surface-500 dark:text-surface-400">
+        <p className="text-lg text-surface-400">
           Tips, guides, and tutorials for getting the most out of your tools.
         </p>
       </div>
@@ -206,31 +206,62 @@ export default function BlogPage() {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        className="grid grid-cols-1 md:grid-cols-2 gap-5"
       >
-        {BLOG_POSTS.map((post) => (
+        {BLOG_POSTS.map((post, i) => (
           <motion.article key={post.slug} variants={cardVariants}>
             <Link
               to={`/blog/${post.slug}`}
-              className="group block p-6 rounded-3xl bg-white dark:bg-surface-900/50 border border-surface-200/60 dark:border-surface-800/60 hover:border-primary-400/30 dark:hover:border-primary-500/20 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300"
+              className="group block relative p-6 rounded-2xl overflow-hidden transition-all duration-300"
+              style={{
+                background: 'var(--tp-card)',
+                border: '1px solid var(--tp-border)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
+                e.currentTarget.style.transform = 'translateY(-3px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--tp-border)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary-500 bg-primary-500/10 px-2.5 py-1 rounded-full">
-                  {post.category}
-                </span>
-                <span className="text-xs text-surface-400 dark:text-surface-500">
-                  {post.readTime} read
-                </span>
+              {/* Hover gradient glow */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--tp-selection), transparent 70%)' }}
+                aria-hidden="true"
+              />
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-3">
+                  <span
+                    className="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
+                    style={{ background: 'var(--tp-selection)', color: 'var(--tp-accent)', border: '1px solid var(--tp-border-hover)' }}
+                  >
+                    {post.category}
+                  </span>
+                  <span className="text-xs text-surface-500">
+                    {post.readTime} read
+                  </span>
+                </div>
+                <h2 className="text-lg font-bold text-surface-50 group-hover:text-gradient transition-colors mb-2">
+                  {post.title}
+                </h2>
+                <p className="text-sm text-surface-400 leading-relaxed">
+                  {post.excerpt}
+                </p>
+                <div className="flex items-center justify-between mt-4">
+                  <time className="text-xs text-surface-500">
+                    {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  <span className="text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ color: 'var(--tp-accent)' }}>
+                    Read more
+                    <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </span>
+                </div>
               </div>
-              <h2 className="text-lg font-bold text-surface-900 dark:text-surface-50 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors mb-2">
-                {post.title}
-              </h2>
-              <p className="text-sm text-surface-500 dark:text-surface-400 leading-relaxed">
-                {post.excerpt}
-              </p>
-              <time className="block mt-3 text-xs text-surface-400 dark:text-surface-500">
-                {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-              </time>
             </Link>
           </motion.article>
         ))}

@@ -291,18 +291,18 @@ export default function ToolPage() {
       {/* Main content */}
       <div className="flex-1 min-w-0">
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="text-sm text-surface-500 dark:text-surface-400 mb-4 flex items-center gap-1.5">
-          <Link to="/" className="hover:text-primary-600 dark:hover:text-primary-400">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-surface-500 mb-4 flex items-center gap-1.5">
+          <Link to="/" className="hover:text-primary-400 transition-colors">Home</Link>
           <span aria-hidden="true">›</span>
           {category && (
             <>
-              <Link to={category.path} className="hover:text-primary-600 dark:hover:text-primary-400">
+              <Link to={category.path} className="hover:text-primary-400 transition-colors">
                 {category.name}
               </Link>
               <span aria-hidden="true">›</span>
             </>
           )}
-          <span className="text-surface-900 dark:text-surface-50">{tool.name}</span>
+          <span className="text-surface-200">{tool.name}</span>
         </nav>
 
         <motion.div
@@ -310,13 +310,31 @@ export default function ToolPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
         >
-          <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 flex items-center gap-3 mb-2">
-            <span aria-hidden="true">{tool.icon}</span>
-            {tool.name}
-          </h1>
-          <p className="text-surface-500 dark:text-surface-400 mb-8">
-            {tool.description}
-          </p>
+          {/* Tool header with gradient accent */}
+          <div className="relative mb-8 pb-6" style={{ borderBottom: '1px solid var(--tp-border)' }}>
+            <div className="flex items-start gap-4">
+              <div
+                className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0"
+                style={{ background: 'var(--tp-selection)', border: '1px solid var(--tp-border-hover)' }}
+              >
+                <span aria-hidden="true">{tool.icon}</span>
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-surface-50">
+                  {tool.name}
+                </h1>
+                <p className="text-surface-400 mt-1">
+                  {tool.description}
+                </p>
+                {tool.isClientSide && (
+                  <span className="inline-flex items-center gap-1.5 mt-2 text-xs text-accent-green font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-green" aria-hidden="true" />
+                    Runs in your browser — no data uploaded
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
 
           {/* Tool component */}
           <div className="card">
@@ -328,8 +346,8 @@ export default function ToolPage() {
                 })()}
               </Suspense>
             ) : (
-              <div className="flex items-center justify-center min-h-[300px] border-2 border-dashed border-surface-200 dark:border-surface-700 rounded-xl">
-                <p className="text-surface-400 dark:text-surface-500 text-center">
+              <div className="flex items-center justify-center min-h-[300px] border-2 border-dashed rounded-xl" style={{ borderColor: 'var(--tp-border)' }}>
+                <p className="text-surface-500 text-center">
                   This tool is coming soon
                 </p>
               </div>
