@@ -215,6 +215,62 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
   );
 }
 
+/* ─── Live Activity Ticker ───────────────────────────────────────────── */
+
+const ACTIVITY_MESSAGES = [
+  { emoji: '📄', text: 'Someone just merged 3 PDFs', time: '2s ago' },
+  { emoji: '🖼️', text: 'An image was compressed by 74%', time: '5s ago' },
+  { emoji: '🔐', text: 'A 32-char password was generated', time: '8s ago' },
+  { emoji: '📊', text: 'Excel file converted to CSV', time: '12s ago' },
+  { emoji: '🧩', text: 'JSON formatted and validated', time: '15s ago' },
+  { emoji: '✂️', text: 'PDF split into 5 pages', time: '18s ago' },
+  { emoji: '🔤', text: 'Regex pattern tested successfully', time: '22s ago' },
+  { emoji: '📝', text: 'Word document exported to PDF', time: '25s ago' },
+];
+
+function LiveActivityTicker() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % ACTIVITY_MESSAGES.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const msg = ACTIVITY_MESSAGES[index];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      className="flex justify-center"
+    >
+      <div
+        className="inline-flex items-center gap-3 px-4 py-2 rounded-full text-xs overflow-hidden"
+        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-accent-green animate-pulse shrink-0" />
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={index}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="text-surface-400 whitespace-nowrap"
+          >
+            <span className="mr-1.5">{msg.emoji}</span>
+            {msg.text}
+            <span className="text-surface-600 ml-2">{msg.time}</span>
+          </motion.span>
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
+
 /* ─── Typewriter Subtitle ────────────────────────────────────────────── */
 
 const TYPEWRITER_PHRASES = [
@@ -401,7 +457,21 @@ function HeroSection() {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="relative z-20 max-w-lg mx-auto mb-10"
         >
-          <CommandBar />
+          {/* Animated gradient border wrapper */}
+          <div className="relative rounded-2xl p-px overflow-hidden" style={{ background: 'var(--tp-card)' }}>
+            <div
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                background: 'conic-gradient(from var(--border-angle, 0deg), var(--tp-accent), var(--tp-accent2), var(--tp-accent), var(--tp-accent2), var(--tp-accent))',
+                animation: 'spin-border 4s linear infinite',
+                opacity: 0.6,
+              }}
+              aria-hidden="true"
+            />
+            <div className="relative rounded-[15px]" style={{ background: 'var(--tp-card)' }}>
+              <CommandBar />
+            </div>
+          </div>
         </motion.div>
 
         {/* Trust badges — glass cards */}
@@ -853,7 +923,7 @@ function AnimatedStat({ value, suffix, label, icon, delay }) {
       />
       <span className="text-2xl relative z-10">{icon}</span>
       <span className="text-2xl font-extrabold font-mono text-surface-50 tabular-nums relative z-10">
-        {value === 0 ? suffix || '—' : `${count}${suffix}`}
+        {value === 0 ? (suffix !== '' ? suffix : '✓') : `${count}${suffix}`}
       </span>
       <span className="text-xs font-medium text-surface-400 relative z-10">{label}</span>
     </motion.div>
@@ -867,7 +937,7 @@ function StatsBar() {
         <AnimatedStat value={tools.length} suffix="+" label="Free Tools" icon="🧰" delay={0} />
         <AnimatedStat value={categories.length} suffix="" label="Categories" icon="📂" delay={0.1} />
         <AnimatedStat value={100} suffix="%" label="Always Free" icon="✨" delay={0.2} />
-        <AnimatedStat value={0} suffix="" label="No Data Collected" icon="🛡️" delay={0.3} />
+        <AnimatedStat value={0} suffix="Zero" label="Data Collected" icon="🛡️" delay={0.3} />
       </div>
     </section>
   );
@@ -901,6 +971,7 @@ export default function HomePage() {
       <FlagshipEditorsSection />
       <ToolMarquee />
       <QuickActionsStrip />
+      <LiveActivityTicker />
       <RecentlyUsed />
       <CategoryShowcase />
       <StatsBar />
