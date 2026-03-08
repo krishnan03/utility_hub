@@ -450,7 +450,7 @@ function HeroSection() {
         </div>
       </div>
 
-      <section className="relative text-center pt-12 pb-20 lg:pt-20 lg:pb-32 overflow-hidden">
+      <section className="relative text-center pt-12 pb-28 lg:pt-20 lg:pb-36">
         {/* Animated gradient orbs */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           {/* Primary pink orb — top left */}
@@ -488,6 +488,8 @@ function HeroSection() {
           style={{
             backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
             backgroundSize: '60px 60px',
+            maskImage: 'linear-gradient(to bottom, black 50%, transparent 90%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 90%)',
           }}
           aria-hidden="true"
         />
@@ -599,6 +601,13 @@ function HeroSection() {
             </div>
           ))}
         </motion.div>
+
+        {/* Smooth gradient fade — hero melts into next section */}
+        <div
+          className="absolute -bottom-1 left-0 right-0 h-48 pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, transparent, var(--tp-bg))' }}
+          aria-hidden="true"
+        />
       </section>
     </>
   );
