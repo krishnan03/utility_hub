@@ -230,7 +230,7 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
         style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
       >
         <SpotlightCard
-          className={`rounded-3xl transition-all duration-300 h-full ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
+          className={`rounded-3xl transition-all duration-300 h-full shimmer-on-enter ${featured ? 'p-8 sm:p-10' : 'p-6'}`}
           style={{
             background: 'rgba(255,255,255,0.05)',
             border: `1px solid ${accentColor}30`,
@@ -285,7 +285,7 @@ function FlagshipCard({ icon, title, description, features, link, accentColor, f
               </span>
             ))}
           </div>
-          <div className="mt-auto flex items-center gap-2 text-sm font-semibold" style={{ color: accentColor }}>
+          <div className="mt-auto flex items-center gap-2 text-sm font-semibold hover-glow-pulse rounded-lg px-3 py-1.5 -mx-3 -mb-1.5 transition-all duration-200" style={{ color: accentColor }}>
             Open Editor
             <svg className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -1016,7 +1016,7 @@ function AllToolsGrid() {
             >
               <Link
                 to={tool.path}
-                className="group relative flex items-start gap-3 p-4 h-full rounded-2xl overflow-hidden transition-all duration-200"
+                className="group relative flex items-start gap-3 p-4 h-full rounded-2xl overflow-hidden transition-all duration-200 shimmer-on-enter"
                 style={{
                   background: 'rgba(255,255,255,0.05)',
                   border: '1px solid var(--tp-border)',
@@ -1040,6 +1040,16 @@ function AllToolsGrid() {
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--tp-selection), transparent 70%)' }}
+                  aria-hidden="true"
+                />
+                {/* Matte noise texture */}
+                <div
+                  className="absolute inset-0 pointer-events-none rounded-2xl"
+                  style={{
+                    backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E\")",
+                    backgroundSize: '128px 128px',
+                    zIndex: 1,
+                  }}
                   aria-hidden="true"
                 />
                 <div className="relative z-10 icon-box w-9 h-9 text-lg shrink-0 group-hover:scale-110 transition-transform duration-200">
