@@ -411,28 +411,43 @@ function QuickActionsStrip() {
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.4 }}
       >
-        <p className="section-label mb-3 text-center">Quick actions</p>
-        <div className="flex gap-2 overflow-x-auto py-1 pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
-          {quickTools.map((qa) => (
-            <Link
+        <p className="section-label mb-4 text-center" style={{ color: 'var(--tp-accent)' }}>⚡ Quick actions</p>
+        <div className="flex gap-2.5 overflow-x-auto py-1 pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
+          {quickTools.map((qa, i) => (
+            <motion.div
               key={qa.id}
-              to={qa.tool.path}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-surface-300 hover:text-surface-50 transition-all duration-150 whitespace-nowrap shrink-0"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--tp-selection)';
-                e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
-                e.currentTarget.style.color = '#f5f5f7';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                e.currentTarget.style.color = '';
-              }}
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              whileInView={{ opacity: 1, scale: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, type: 'spring', stiffness: 300, damping: 20 }}
             >
-              <span aria-hidden="true">{qa.emoji}</span>
-              {qa.label}
-            </Link>
+              <Link
+                to={qa.tool.path}
+                className="group relative flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-medium text-surface-300 whitespace-nowrap shrink-0 transition-all duration-200 overflow-hidden"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'var(--tp-selection)';
+                  e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                {/* Shimmer on hover */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent)' }}
+                  aria-hidden="true"
+                />
+                <span className="text-lg relative z-10" aria-hidden="true">{qa.emoji}</span>
+                <span className="relative z-10 group-hover:text-surface-50 transition-colors">{qa.label}</span>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </motion.div>
@@ -447,12 +462,19 @@ function CategoryShowcase() {
 
   return (
     <section>
-      <div className="text-center mb-10">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-10"
+      >
+        <span className="section-label mb-3 block" style={{ color: 'var(--tp-accent)' }}>🗂️ Browse by Category</span>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-surface-50 mb-2">
-          {tools.length}+ Tools, 13 Categories
+          {tools.length}+ Tools, {categories.length} Categories
         </h2>
         <p className="text-sm text-surface-400">Click a category to explore.</p>
-      </div>
+      </motion.div>
 
       {/* Category grid with inline expansion */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -567,64 +589,103 @@ function AllToolsGrid() {
 
   return (
     <section>
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-5">
-        <h2 className="text-xl font-bold text-surface-100 shrink-0">All {tools.length} Tools</h2>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col sm:flex-row sm:items-center gap-4 mb-5"
+      >
+        <span className="section-label" style={{ color: 'var(--tp-accent)' }}>🔧 All Tools</span>
+        <h2 className="text-xl font-bold text-surface-100 shrink-0">{filteredTools.length} Tools</h2>
         <div className="flex-1 h-px hidden sm:block" style={{ background: 'rgba(255,255,255,0.06)' }} />
-      </div>
+      </motion.div>
 
       {/* Filter pills */}
-      <div className="flex gap-2 overflow-x-auto pb-3 mb-5 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-        <button
+      <div className="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+        <motion.button
           type="button"
           onClick={() => setActiveFilter(null)}
-          className="shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200"
           style={!activeFilter
-            ? { background: 'var(--tp-gradient)', color: '#fff' }
-            : { background: 'rgba(255,255,255,0.05)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
+            ? { background: 'var(--tp-gradient)', color: '#fff', boxShadow: '0 2px 12px var(--tp-glow)' }
+            : { background: 'rgba(255,255,255,0.04)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
           }
         >
           All
-        </button>
+        </motion.button>
         {categories.map((cat) => (
-          <button
+          <motion.button
             key={cat.id}
             type="button"
             onClick={() => setActiveFilter(activeFilter === cat.id ? null : cat.id)}
-            className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="shrink-0 flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200"
             style={activeFilter === cat.id
-              ? { background: 'var(--tp-gradient)', color: '#fff' }
-              : { background: 'rgba(255,255,255,0.05)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
+              ? { background: 'var(--tp-gradient)', color: '#fff', boxShadow: '0 2px 12px var(--tp-glow)' }
+              : { background: 'rgba(255,255,255,0.04)', border: '1px solid var(--tp-border)', color: 'var(--tp-muted)' }
             }
           >
             <span aria-hidden="true">{cat.icon}</span>
             {cat.name}
-          </button>
+          </motion.button>
         ))}
       </div>
 
-      {/* Tools grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-        {filteredTools.map((tool) => (
-          <div key={tool.id}>
-            <Link
-              to={tool.path}
-              className="card-hover group flex items-start gap-3 p-4 h-full"
+      {/* Tools grid — animated layout */}
+      <motion.div
+        layout
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3"
+      >
+        <AnimatePresence mode="popLayout">
+          {filteredTools.map((tool) => (
+            <motion.div
+              key={tool.id}
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <div className="icon-box w-9 h-9 text-lg shrink-0">
-                <span aria-hidden="true">{tool.icon}</span>
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-semibold text-surface-100 truncate group-hover:text-primary-400 transition-colors">
-                  {tool.name}
-                </h3>
-                <p className="text-xs text-surface-500 line-clamp-2 mt-0.5 leading-relaxed">
-                  {tool.description}
-                </p>
-              </div>
-            </Link>
-          </div>
-        ))}
-      </div>
+              <Link
+                to={tool.path}
+                className="group relative flex items-start gap-3 p-4 h-full rounded-2xl overflow-hidden transition-all duration-200"
+                style={{ background: 'var(--tp-card)', border: '1px solid var(--tp-border)' }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--tp-border-hover)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--tp-border)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse at 50% 0%, var(--tp-selection), transparent 70%)' }}
+                  aria-hidden="true"
+                />
+                <div className="relative z-10 icon-box w-9 h-9 text-lg shrink-0 group-hover:scale-110 transition-transform duration-200">
+                  <span aria-hidden="true">{tool.icon}</span>
+                </div>
+                <div className="relative z-10 min-w-0 flex-1">
+                  <h3 className="text-sm font-semibold text-surface-100 truncate group-hover:text-surface-50 transition-colors">
+                    {tool.name}
+                  </h3>
+                  <p className="text-xs text-surface-500 line-clamp-2 mt-0.5 leading-relaxed">
+                    {tool.description}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
     </section>
   );
 }
