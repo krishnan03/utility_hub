@@ -33,14 +33,15 @@ export default function SEOHead({ title, description, path, tool = null }) {
     // Standard meta
     setMeta('name', 'description', desc);
 
-    // Canonical
+    // Canonical — always use clean URL without query params
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
       canonical.setAttribute('rel', 'canonical');
       document.head.appendChild(canonical);
     }
-    canonical.setAttribute('href', url);
+    const cleanUrl = url.split('?')[0];
+    canonical.setAttribute('href', cleanUrl);
 
     // Open Graph
     setMeta('property', 'og:title', fullTitle);
